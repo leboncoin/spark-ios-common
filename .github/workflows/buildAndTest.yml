@@ -16,7 +16,7 @@ jobs:
     runs-on: macos-14
     steps:
     - name: "Check configuration"
-      if: ${{ vars.SPM_NAME }}" := ''
+      if: ${{ vars.SPM_NAME != '' }}
       run: |
         echo "::error::SPM_NAME variable is NOT set on the repository settings"
         exit 1
@@ -42,7 +42,7 @@ jobs:
     runs-on: macos-14
     steps:
     - name: "Check configuration"
-      if: ${{ vars.SPM_NAME }}" := ''
+      if: ${{ vars.SPM_NAME != '' }}
       run: |
         echo "::error::SPM_NAME variable is NOT set on the repository settings"
         exit 1
