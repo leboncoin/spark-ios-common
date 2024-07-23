@@ -79,6 +79,9 @@ jobs:
         do
           cd ${{ github.workspace }}
           cd "$file"
+          if [[ ${{ vars.SPM_NAME }} == "SparkCommon" ]]; then
+            sed -i '' 's|../spark-ios-common|../../../../|g' '.sourcery.yml'
+          fi
           echo "Dependencies: $file"
           sourcery
         done

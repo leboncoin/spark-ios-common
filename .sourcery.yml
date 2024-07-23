@@ -6,7 +6,7 @@ configurations:
         - Sources/Testing/
         - Sources/SnapshotTesting/
     templates:
-      - ../spark-ios-common/.sourcery/template/
+      - .sourcery/template
     output: Sources/Testing/Generated/Sourcery.generated.swift
     args:
       autoMockableImports: [Combine, SparkTheming]
