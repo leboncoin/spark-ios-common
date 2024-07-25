@@ -26,12 +26,16 @@ import SwiftUI
     // MARK: - View
 
     public func body(content: Content) -> some View {
-        content
-            .if(identifier != nil) {
-                $0.accessibilityIdentifier(identifier ?? "")
-            }
-            .if(label != nil) {
-                $0.accessibilityLabel(label ?? "")
-            }
+        if let identifier, let label {
+            content
+                .accessibilityIdentifier(identifier)
+                .accessibilityLabel(label)
+        } else if let identifier {
+            content.accessibilityIdentifier(identifier)
+        } else if let label {
+            content.accessibilityLabel(label)
+        } else {
+            content
+        }
     }
 }
