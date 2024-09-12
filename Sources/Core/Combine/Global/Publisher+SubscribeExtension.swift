@@ -2,7 +2,7 @@
 //  Publisher+SubscribeExtension.swift
 //  SparkCommon
 //
-//  Created by michael.zimmermann on 06.07.23.
+//  Created by michael.zimmermann on 05.07.23.
 //  Copyright © 2023 Adevinta. All rights reserved.
 //
 
