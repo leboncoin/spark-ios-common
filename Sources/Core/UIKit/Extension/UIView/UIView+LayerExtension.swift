@@ -13,7 +13,7 @@ import SparkTheming
 
     /// CGColors need to be refreshed on trait changes
     func setBorderColor(from colorToken: any ColorToken) {
-        self.layer.borderColor = colorToken.uiColor.cgColor
+        self.layer.borderColor = colorToken.uiColor.resolvedColor(with: self.traitCollection).cgColor
     }
 
     func setBorderWidth(_ borderWidth: CGFloat) {
