@@ -65,7 +65,7 @@ jobs:
         if: ${{ failure() }}
         with:
           name: ${{ env.app_name }}-${{ github.run_number }}.xcresult
-          path: ${{ env.app_name }}.xcresult
+          path: spark-ios/${{ env.app_name }}.xcresult
           retention-days: 15
 
       - name: Upload demo app file
