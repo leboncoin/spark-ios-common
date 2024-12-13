@@ -14,11 +14,11 @@ internal struct BellAnimationModifier: ViewModifier {
 
     private let rotation: CGFloat = BellConstants.rotationInDegress
     @State private var ringBell: Bool = false
-    @State private var count: Int = 0
+    @State private var counter: Int = 0
 
     private let delay: TimeInterval
     private let `repeat`: SparkAnimationRepeat
-    private var completion: (() -> Void)? = nil
+    private var completion: (() -> Void)?
 
     // MARK: - Initialization
 
@@ -55,14 +55,14 @@ internal struct BellAnimationModifier: ViewModifier {
             .onChange(of: self.ringBell) { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
 
-                    self.count += 1
-                    if self.repeat.canContinue(count: self.count) {
+                    self.counter += 1
+                    if self.repeat.canContinue(counter: self.counter) {
                         self.ringBell.toggle()
                     } else {
                         self.completion?()
                     }
                 })
             }
-            .id("bell-animation-\(self.count)") // Needed to reload the animation from the initial position
+            .id("bell-animation-\(self.counter)") // Needed to reload the animation from the initial position
     }
 }

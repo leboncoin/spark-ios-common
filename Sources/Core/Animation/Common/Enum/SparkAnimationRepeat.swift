@@ -17,13 +17,12 @@ public enum SparkAnimationRepeat {
 
     // MARK: - Methods
 
-    // TODO: add test
-    internal func canContinue(count: Int) -> Bool {
+    internal func canContinue(counter: Int) -> Bool {
         return switch self {
         case .once:
             false
         case .limited(let occurence):
-            count < occurence
+            counter < occurence
         case .unlimited:
             true
         }

@@ -27,14 +27,14 @@ internal extension UIView {
     }
 
     private func animate(
-        count: Int = 0,
+        counter: Int = 0,
         delay: TimeInterval,
         repeat: SparkAnimationRepeat,
         completion: ((Bool) -> Void)?
     ) {
         UIView.animate(
             withDuration: 0.1,
-            delay: count == 0 ? delay : 2.0,
+            delay: counter == 0 ? delay : 2.0,
             animations: { [weak self] in
                 self?.transform = .init(rotationAngle: -BellConstants.rotationInDegress.degreesToRadians)
             }, completion: { [weak self] result1 in
@@ -50,10 +50,10 @@ internal extension UIView {
                     }, completion: { [weak self] result2 in
                         guard result2 else { return }
                         // Restart the animation if needed
-                        let count = count + 1
-                        if `repeat`.canContinue(count: count) {
+                        let counter = counter + 1
+                        if `repeat`.canContinue(counter: counter) {
                             self?.animate(
-                                count: count,
+                                counter: counter,
                                 delay: delay,
                                 repeat: `repeat`,
                                 completion: completion
