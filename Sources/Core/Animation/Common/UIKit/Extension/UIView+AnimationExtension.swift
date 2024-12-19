@@ -14,17 +14,17 @@ public extension UIView {
     /// - parameter type: the spark animation type.
     /// - parameter view: the view to animate.
     /// - parameter delay: the delay before before starting the animation. Default is *.zero*.
-    /// - parameter repeat: the repeat type of the animation. Default is *.once*.
+    /// - parameter repeat: the repeat type of the animation. Default is *.none*.
     /// - parameter completion: the completion when the animation is finished. *Optional*. Default is *nil*.
     class func animate(
-        withType type: SparkAnimationType,
+        type: SparkAnimationType,
         on view: UIView,
         delay: TimeInterval = .zero,
-        repeat: SparkAnimationRepeat = .once,
+        repeat: SparkAnimationRepeat = .none,
         completion: ((Bool) -> Void)? = nil
     ) {
         self.animate(
-            withType: type,
+            type: type,
             on: [view],
             delay: delay,
             repeat: `repeat`,
@@ -35,13 +35,13 @@ public extension UIView {
     /// - parameter type: the spark animation type.
     /// - parameter views: the views to animate.
     /// - parameter delay: the delay before before starting the animation. Default is *.zero*.
-    /// - parameter repeat: the repeat type of the animation. Default is *.once*.
+    /// - parameter repeat: the repeat type of the animation. Default is *.none*.
     /// - parameter completion: the completion when the animation is finished. *Optional*. Default is *nil*.
     class func animate(
-        withType type: SparkAnimationType,
+        type: SparkAnimationType,
         on views: [UIView],
         delay: TimeInterval = .zero,
-        repeat: SparkAnimationRepeat = .once,
+        repeat: SparkAnimationRepeat = .none,
         completion: ((Bool) -> Void)? = nil
     ) {
         switch type {

@@ -9,7 +9,7 @@
 /// The Spark animations repeat options.
 public enum SparkAnimationRepeat {
     /// The animations is played only once.
-    case once
+    case none
     /// The animations is played X times.
     case limited(_ value: Int)
     /// The animations is played indefinitely.
@@ -19,7 +19,7 @@ public enum SparkAnimationRepeat {
 
     internal func canContinue(counter: Int) -> Bool {
         return switch self {
-        case .once:
+        case .none:
             false
         case .limited(let occurence):
             counter < occurence

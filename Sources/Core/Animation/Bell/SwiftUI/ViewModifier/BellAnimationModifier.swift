@@ -12,7 +12,7 @@ internal struct BellAnimationModifier: ViewModifier {
 
     // MARK: - Properties
 
-    private let rotation: CGFloat = BellConstants.rotationInDegress
+    private let rotation: CGFloat = 10
     @State private var ringBell: Bool = false
     @State private var counter: Int = 0
 
@@ -48,12 +48,19 @@ internal struct BellAnimationModifier: ViewModifier {
             )
             .animation(.easeOut, value: self.ringBell)
             .onAppear() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.delay, execute: {
+                // If we go back to the view, to avoid a multiple animation, we check if the rightBell is always false.
+                guard !self.ringBell else { return }
+
+                Task { @MainActor in
+                    let nanoseconds = UInt64(self.delay * 1_000_000_000)
+                    try await Task.sleep(nanoseconds: nanoseconds)
                     self.ringBell.toggle()
-                })
+                }
             }
             .onChange(of: self.ringBell) { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                Task { @MainActor in
+                    let nanoseconds = UInt64(3 * 1_000_000_000)
+                    try await Task.sleep(nanoseconds: nanoseconds)
 
                     self.counter += 1
                     if self.repeat.canContinue(counter: self.counter) {
@@ -61,7 +68,7 @@ internal struct BellAnimationModifier: ViewModifier {
                     } else {
                         self.completion?()
                     }
-                })
+                }
             }
             .id("bell-animation-\(self.counter)") // Needed to reload the animation from the initial position
     }
