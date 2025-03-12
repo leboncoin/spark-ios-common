@@ -3,7 +3,7 @@
 //  SparkCoreTests
 //
 //  Created by michael.zimmermann on 19.06.23.
-//  Copyright © 2023 Adevinta. All rights reserved.
+//  Copyright © 2023 Leboncoin. All rights reserved.
 //
 
 import Foundation

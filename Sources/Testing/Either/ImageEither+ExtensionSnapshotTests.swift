@@ -3,7 +3,7 @@
 //  SparkCoreSnapshotTests
 //
 //  Created by robin.lemaire on 30/11/2023.
-//  Copyright © 2023 Adevinta. All rights reserved.
+//  Copyright © 2023 Leboncoin. All rights reserved.
 //
 
 @_spi(SI_SPI) @testable import SparkCommon
