@@ -3,7 +3,7 @@
 //  SparkCommon
 //
 //  Created by robin.lemaire on 25/10/2023.
-//  Copyright © 2023 Adevinta. All rights reserved.
+//  Copyright © 2023 Leboncoin. All rights reserved.
 //
 
 /// The current status of the control: highlighted or not, disabled or not and selected or not.

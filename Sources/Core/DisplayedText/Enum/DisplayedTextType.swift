@@ -3,7 +3,7 @@
 //  SparkCommon
 //
 //  Created by robin.lemaire on 12/07/2023.
-//  Copyright © 2023 Adevinta. All rights reserved.
+//  Copyright © 2023 Leboncoin. All rights reserved.
 //
 
 /// Enum used for components which have a text/attributed management.

@@ -1,10 +1,9 @@
 name: build-and-test
-on:
-  workflow_call
-    
+on: workflow_call
+
 env:
   spm_name: ${{ vars.SPM_NAME }}-Package
-  swift_version: '5.9'
+  swift_version: "5.9"
   xcode_path: "/Applications/Xcode_15.4.app"
   xcodebuild_sdk: -sdk iphonesimulator
   xcodebuild_derivedData: ".spmComponentDerivedData/"
@@ -15,83 +14,82 @@ jobs:
     name: Build
     runs-on: macos-14
     steps:
-    - name: "Check configuration"
-      if: ${{ vars.SPM_NAME == '' }}
-      run: |
-        echo "::error::SPM_NAME variable is NOT set on the repository settings"
-        exit 1
-    - name: "Package name"
-      run: echo "Build ${{ env.spm_name }} SPM at ${{ github.workspace }}"
-    - name: Set Swift Version
-      uses: swift-actions/setup-swift@v1
-      with:
-        swift-version: ${{ env.swift_version }}
-    - name: Get swift version
-      run: swift --version
-    - name: Select Xcode
-      run: sudo xcode-select -s ${{ env.xcode_path }}
-    - name: Checkout Action
-      uses: actions/checkout@v4
-    - name: Build
-      run: |
-        xcodebuild -list
-        xcodebuild -scheme ${{ vars.SPM_NAME }} ${{ env.xcodebuild_sdk }} ${{ env.xcodebuild_destination }} build
+      - name: "Check configuration"
+        if: ${{ vars.SPM_NAME == '' }}
+        run: |
+          echo "::error::SPM_NAME variable is NOT set on the repository settings"
+          exit 1
+      - name: "Package name"
+        run: echo "Build ${{ env.spm_name }} SPM at ${{ github.workspace }}"
+      - name: Set Swift Version
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: ${{ env.swift_version }}
+      - name: Get swift version
+        run: swift --version
+      - name: Select Xcode
+        run: sudo xcode-select -s ${{ env.xcode_path }}
+      - name: Checkout Action
+        uses: actions/checkout@v4
+      - name: Build
+        run: |
+          xcodebuild -list
+          xcodebuild -scheme ${{ vars.SPM_NAME }} ${{ env.xcodebuild_sdk }} ${{ env.xcodebuild_destination }} build
 
   test:
     name: Unit and Snapshot Test
     runs-on: macos-14
     steps:
-    - name: "Check configuration"
-      if: ${{ vars.SPM_NAME == '' }}
-      run: |
-        echo "::error::SPM_NAME variable is NOT set on the repository settings"
-        exit 1
-    - name: "Package name"
-      run: echo "Build ${{ env.spm_name }} SPM at ${{ github.workspace }}"
-    - name: Set Swift Version
-      uses: swift-actions/setup-swift@v1
-      with:
-        swift-version: ${{ env.swift_version }}
-    - name: Get swift version
-      run: swift --version
-    - name: Select Xcode
-      run: sudo xcode-select -s ${{ env.xcode_path }}
-    - name: Checkout Action
-      uses: actions/checkout@v4
-    - name: Get sourcery
-      run: |
-        brew install sourcery
-    - name: Copy sourcery from common packages repository
-      run: |
-        if [[ ${{ vars.SPM_NAME }} != "SparkCommon" ]]; then
-          git clone https://github.com/adevinta/spark-ios-common
-          sed -i '' 's|../spark-ios-common|spark-ios-common|g' '.sourcery.yml'
-          cd spark-ios-common
-          rm .sourcery.yml
-        else
-          echo "No need to copy sourcery"
-        fi
-    - name: Run sourcery
-      run: |
-        xcodebuild -list
-        xcodebuild -scheme ${{ vars.SPM_NAME }} -derivedDataPath ${{ env.xcodebuild_derivedData }} ${{ env.xcodebuild_destination }}
-        for file in $( find . -type f -name ".sourcery.yml" -exec dirname {} \; )
-        do
-          cd ${{ github.workspace }}
-          cd "$file"
-          if [[ ${{ vars.SPM_NAME }} == "SparkCommon" ]]; then
-            sed -i '' 's|../spark-ios-common|../../../../|g' '.sourcery.yml'
+      - name: "Check configuration"
+        if: ${{ vars.SPM_NAME == '' }}
+        run: |
+          echo "::error::SPM_NAME variable is NOT set on the repository settings"
+          exit 1
+      - name: "Package name"
+        run: echo "Build ${{ env.spm_name }} SPM at ${{ github.workspace }}"
+      - name: Set Swift Version
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: ${{ env.swift_version }}
+      - name: Get swift version
+        run: swift --version
+      - name: Select Xcode
+        run: sudo xcode-select -s ${{ env.xcode_path }}
+      - name: Checkout Action
+        uses: actions/checkout@v4
+      - name: Get sourcery
+        run: |
+          brew install sourcery
+      - name: Copy sourcery from common packages repository
+        run: |
+          if [[ ${{ vars.SPM_NAME }} != "SparkCommon" ]]; then
+            git clone https://github.com/leboncoin/spark-ios-common
+            sed -i '' 's|../spark-ios-common|spark-ios-common|g' '.sourcery.yml'
+            cd spark-ios-common
+            rm .sourcery.yml
+          else
+            echo "No need to copy sourcery"
           fi
-          echo "Dependencies: $file"
-          sourcery
-        done
-    - name: Test
-      run: |
-        xcodebuild -scheme ${{ env.spm_name }} -derivedDataPath ${{ env.xcodebuild_derivedData }} ${{ env.xcodebuild_sdk }} ${{ env.xcodebuild_destination }} -resultBundlePath ${{ vars.SPM_NAME }}.xcresult test
-    - name: Upload xcresult file
-      uses: actions/upload-artifact@v4
-      if: ${{ failure() }}
-      with:
-        name: ${{ vars.SPM_NAME }}-${{ github.run_number }}.xcresult
-        path: ${{ vars.SPM_NAME }}.xcresult
-    
+      - name: Run sourcery
+        run: |
+          xcodebuild -list
+          xcodebuild -scheme ${{ vars.SPM_NAME }} -derivedDataPath ${{ env.xcodebuild_derivedData }} ${{ env.xcodebuild_destination }}
+          for file in $( find . -type f -name ".sourcery.yml" -exec dirname {} \; )
+          do
+            cd ${{ github.workspace }}
+            cd "$file"
+            if [[ ${{ vars.SPM_NAME }} == "SparkCommon" ]]; then
+              sed -i '' 's|../spark-ios-common|../../../../|g' '.sourcery.yml'
+            fi
+            echo "Dependencies: $file"
+            sourcery
+          done
+      - name: Test
+        run: |
+          xcodebuild -scheme ${{ env.spm_name }} -derivedDataPath ${{ env.xcodebuild_derivedData }} ${{ env.xcodebuild_sdk }} ${{ env.xcodebuild_destination }} -resultBundlePath ${{ vars.SPM_NAME }}.xcresult test
+      - name: Upload xcresult file
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: ${{ vars.SPM_NAME }}-${{ github.run_number }}.xcresult
+          path: ${{ vars.SPM_NAME }}.xcresult

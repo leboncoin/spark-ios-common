@@ -2,21 +2,23 @@
 
 ## Introduction
 
-Spark is [Adevinta’s](https://www.adevinta.com/) iOS Design System.
+Spark is [Leboncoin’s](https://www.leboncoin.com/) iOS Design System.
 
 Its mission is to provide an easy to use, customizable UI experience for consumers.
 
 This repository contains a SPM (Swift Package Manager) to manage the common code using by all Spark iOS repositories.
-It also contains the snapshot testing strategy with the external ```swift-snapshot-testing``` dependencies.
+It also contains the snapshot testing strategy with the external `swift-snapshot-testing` dependencies.
 
-**Note**: A customer is not supposed to have access to this code. 
+**Note**: A customer is not supposed to have access to this code.
 
 ## SPM
 
-To open the project on Xcode, you just need to double click on the ```Package.swift```.
+To open the project on Xcode, you just need to double click on the `Package.swift`.
 
-The SPM is composed by 
-- Targets (all are protected by @_spi annotation to be accessible just be the Spark team.) :
+The SPM is composed by
+
+- Targets (all are protected by @\_spi annotation to be accessible just be the Spark team.) :
+
   - **SparkCommon**: Common public code.
   - **SparkCommonSnapshotTesting**: Public snapshot test cases, mock and extensions.
   - **SparkCommonTesting**: Public protocols mocks
@@ -28,16 +30,16 @@ The SPM is composed by
 ## Guidelines
 
 There is two importants rules for this repository:
-- All ```protocols```, ```class```, ```struct```, ```var/let/func```, ..., used by at least one component (or other) in **```public```** or **```open```**.
-- If the code can be used only by the **spark iOS team**, all ```public``` or **```open```** must contains the **```@_spi(SI_SPI)```** annotation. If the code can also be used by consommer too, you don't need to add this annotation. 
 
+- All `protocols`, `class`, `struct`, `var/let/func`, ..., used by at least one component (or other) in **`public`** or **`open`**.
+- If the code can be used only by the **spark iOS team**, all `public` or **`open`** must contains the **`@_spi(SI_SPI)`** annotation. If the code can also be used by consommer too, you don't need to add this annotation.
 
 ## License
 
 ```
 MIT License
 
-Copyright (c) 2024 Adevinta
+Copyright (c) 2024 Leboncoin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

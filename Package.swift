@@ -7,7 +7,7 @@ import PackageDescription
 let package = Package(
     name: "SparkCommon",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v16)
     ],
     products: [
         .library(
@@ -24,9 +24,9 @@ let package = Package(
         )
     ],
     dependencies: [
-        // Adevinta
+        // Leboncoin
         .package(
-            url: "https://github.com/adevinta/spark-ios-theming.git",
+            url: "https://github.com/leboncoin/spark-ios-theming.git",
             // path: "../spark-ios-theming"
             /*version*/ "0.0.1"..."999.999.999"
         ),

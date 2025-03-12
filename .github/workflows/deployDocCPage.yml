@@ -4,7 +4,7 @@ on: workflow_call
 
 env:
   repo_name: ${{ github.event.repository.name }}
-  xcodebuild_derivedData: ".spmComponentDerivedData"
+  xcodebuild_derivedData: ".derivedData"
   doc_path: "docs"
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
