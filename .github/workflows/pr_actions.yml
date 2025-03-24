@@ -1,0 +1,10 @@
+name: lint-build-and-tests
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  linter:
+    uses: leboncoin/spark-ios-common/.github/workflows/linter.yml@main
+  buildAndTest:
+    uses: leboncoin/spark-ios-common/.github/workflows/buildAndTest.yml@main

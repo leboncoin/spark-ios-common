@@ -3,7 +3,7 @@
 //  SparkCommon
 //
 //  Created by Michael Zimmermann on 24.11.23.
-//  Copyright © 2023 Adevinta. All rights reserved.
+//  Copyright © 2023 Leboncoin. All rights reserved.
 //
 
 import Combine
