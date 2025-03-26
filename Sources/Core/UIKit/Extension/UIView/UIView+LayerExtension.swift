@@ -13,6 +13,10 @@ import SparkTheming
 
     /// CGColors need to be refreshed on trait changes
     func setBorderColor(from colorToken: any ColorToken) {
+        if #available(iOS 17.0, *) {
+            self.updateTraitsIfNeeded()
+        }
+
         self.layer.borderColor = colorToken.uiColor.resolvedColor(with: self.traitCollection).cgColor
     }
 
