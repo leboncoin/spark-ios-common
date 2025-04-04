@@ -3,7 +3,7 @@ name: build-demo-app
 on: workflow_call
 
 env:
-  app_name: SparkDemo
+  app_name: SparkDemoApp
   swift_version: "5.9"
   xcode_path: "/Applications/Xcode_15.4.app"
   xcodebuild_sdk: -sdk iphonesimulator
@@ -75,7 +75,7 @@ jobs:
         with:
           name: SparkDemo.app
           path: |
-            spark-ios/${{ env.xcodebuild_derivedData }}Build/Products/Debug-iphonesimulator/SparkDemo.app
+            spark-ios/${{ env.xcodebuild_derivedData }}Build/Products/Debug-iphonesimulator/${{ env.app_name }}.app
           retention-days: 15
 
       - name: Add a comment with the artifact link on the pull request
