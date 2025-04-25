@@ -57,6 +57,7 @@ import UIKit
     // MARK: - Published
 
     @Published public var isText: Bool = false
+    @Published public var textChanged: Void = ()
 
     // MARK: - Override Properties
 
@@ -70,6 +71,7 @@ import UIKit
             // Set the attributedText only if the current come from setText
             if newValue == self.storedText {
                 super.text = newValue
+                self.textChanged = ()
             }
         }
     }
