@@ -4,8 +4,8 @@ on: workflow_call
 
 env:
   app_name: SparkDemoApp
-  swift_version: "5.9"
-  xcode_path: "/Applications/Xcode_15.4.app"
+  swift_version: "6.0"
+  xcode_path: "/Applications/Xcode_16.2.app"
   xcodebuild_sdk: -sdk iphonesimulator
   xcodebuild_derivedData: ".derivedData/"
   xcodebuild_destination: -destination 'platform=iOS Simulator,name=iPhone 15 pro,OS=17.5'
@@ -17,7 +17,7 @@ jobs:
     if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/buildDemo') }}
     steps:
       - name: Set Swift Version
-        uses: swift-actions/setup-swift@v1
+        uses: swift-actions/setup-swift@v2.3.0
         with:
           swift-version: ${{ env.swift_version }}
 
@@ -41,23 +41,24 @@ jobs:
           if [ -z $SPARK_IOS_BRANCH ];then
             SPARK_IOS_BRANCH=main
           fi
-          echo "Branch to clone on spark-ios: $SPARK_IOS_BRANCH"
-          git clone -b $SPARK_IOS_BRANCH https://github.com/leboncoin/spark-ios
+          echo "Branch to clone on spark-ios-demo: $SPARK_IOS_BRANCH"
+          git clone -b $SPARK_IOS_BRANCH https://github.com/leboncoin/spark-ios-demo
+          
       - name: Run xcodegen
         uses: xavierLowmiller/xcodegen-action@1.2.2
         with:
-          spec: spark-ios/project.yml
+          spec: spark-ios-demo/project.yml
           version: "2.41.0"
 
       - name: Inject current component package
         run: |
           PACKAGE=${PWD##*/}
-          cd spark-ios/.gitscript
+          cd spark-ios-demo/.gitscript
           swift inject_repository_package.swift $PACKAGE
 
       - name: Build
         run: |
-          cd spark-ios
+          cd spark-ios-demo
           xcodebuild -scheme ${{ env.app_name }} -derivedDataPath ${{ env.xcodebuild_derivedData }} ${{ env.xcodebuild_sdk }} ${{ env.xcodebuild_destination }} -resultBundlePath ${{ env.app_name }}.xcresult build
 
       - name: Upload xcresult file
@@ -65,7 +66,7 @@ jobs:
         if: ${{ failure() }}
         with:
           name: ${{ env.app_name }}-${{ github.run_number }}.xcresult
-          path: spark-ios/${{ env.app_name }}.xcresult
+          path: spark-ios-demo/${{ env.app_name }}.xcresult
           retention-days: 15
 
       - name: Upload demo app file
@@ -75,7 +76,7 @@ jobs:
         with:
           name: SparkDemo.app
           path: |
-            spark-ios/${{ env.xcodebuild_derivedData }}Build/Products/Debug-iphonesimulator/${{ env.app_name }}.app
+            spark-ios-demo/${{ env.xcodebuild_derivedData }}Build/Products/Debug-iphonesimulator/${{ env.app_name }}.app
           retention-days: 15
 
       - name: Add a comment with the artifact link on the pull request
@@ -88,7 +89,7 @@ jobs:
 
             Process:
              1. Download the app with the link above.
-             2. Download if needed the [Sparkans](https://github.com/leboncoin/spark-ios-configuration/releases/latest) mac os app.
+             2. Download if needed the [Sparkans](https://github.com/leboncoin/spark-ios-sparkans/releases/latest) mac os app.
              3. Launch Sparkans, on the **Simulators** entry on the sidebar, select the simulator you want and add the SparkDemo.app file.
              4. Envoy ;)
         with:
