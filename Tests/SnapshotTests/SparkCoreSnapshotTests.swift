@@ -12,12 +12,8 @@ import XCTest
 import SwiftUI
 
 // MARK: - UIKit snapshot example
+
 final class SparkCoreUISnapshotTests: UIKitComponentSnapshotTestCase {
-    func testExample() throws {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 300))
-        view.backgroundColor = .red
-        sparkAssertSnapshot(matching: view, as: .image)
-    }
 
     func testDynamicContentSize() throws {
         let view = UILabel()

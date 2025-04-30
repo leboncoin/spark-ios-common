@@ -9,8 +9,9 @@
 import UIKit
 
 /// ScaledUIMetric is a property wrapper for UIKit. It scales values according to the current trait collection content size and behaves similar to the @`ScaledMetric`-property wrapper for SwiftUI.
-@_spi(SI_SPI) @propertyWrapper public struct ScaledUIMetric<Value> where Value: BinaryFloatingPoint {
-    // MARK: - Properties
+@propertyWrapper public struct ScaledUIMetric<Value>: ScaledUIMetricable where Value: BinaryFloatingPoint {
+
+    // MARK: - Public Properties
 
     /// Returns the scaled value for the `baseValue` according to the trait collection. When setting this property a new baseValue is set.
     public var wrappedValue: Value {
@@ -21,6 +22,8 @@ import UIKit
             self.baseValue = newValue
         }
     }
+
+    // MARK: - Private Properties
 
     /// The base value for the calculation.
     private var baseValue: Value
@@ -77,6 +80,9 @@ import UIKit
     /// - Parameter traitCollection: the trait collection
     /// - Returns: a scaled value
     public func scaledValue(for traitCollection: UITraitCollection?) -> Value {
-        Value(self.metrics.scaledValue(for: CGFloat(self.baseValue), compatibleWith: traitCollection ?? UITraitCollection.current))
+        Value(self.metrics.scaledValue(
+            for: CGFloat(self.baseValue),
+            compatibleWith: traitCollection ?? .current
+        ))
     }
 }

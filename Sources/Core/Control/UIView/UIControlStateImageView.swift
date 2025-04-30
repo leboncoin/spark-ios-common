@@ -28,6 +28,7 @@ import UIKit
     // MARK: - Published
 
     @Published public var isImage: Bool = false
+    @Published public var imageChanged: Void = ()
 
     // MARK: - Override Properties
 
@@ -40,6 +41,7 @@ import UIKit
         set {
             if newValue == self.storedImage {
                 super.image = newValue
+                self.imageChanged = ()
             }
         }
     }
