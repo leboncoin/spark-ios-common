@@ -1,5 +1,5 @@
 //
-//  View+ProportionalWidth.swift
+//  View+ProportionalWidthExtension.swift
 //  SparkCommon
 //
 //  Created by robin.lemaire on 27/10/2023.

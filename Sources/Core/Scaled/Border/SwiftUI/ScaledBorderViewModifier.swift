@@ -15,18 +15,18 @@ private struct ScaledBorderViewModifier: ViewModifier {
 
     @LimitedScaledMetric private var width: CGFloat
     @LimitedScaledMetric private var radius: CGFloat
-    private let colorToken: (any ColorToken)?
+    private let color: Color?
 
     // MARK: - Initialization
 
     init(
         width: CGFloat?,
         radius: CGFloat?,
-        colorToken: (any ColorToken)?
+        color: Color?
     ) {
         self._width = .init(value: width, type: .width)
         self._radius = .init(value: radius, type: .radius)
-        self.colorToken = colorToken
+        self.color = color
     }
 
     // MARK: - View
@@ -36,7 +36,7 @@ private struct ScaledBorderViewModifier: ViewModifier {
             .cornerRadius(self.radius)
             .overlay(
                 RoundedRectangle(cornerRadius: self.radius)
-                    .stroke(self.colorToken?.color ?? .clear, lineWidth: self.width)
+                    .stroke(self.color ?? .clear, lineWidth: self.width)
             )
     }
 }
@@ -45,21 +45,21 @@ private struct ScaledBorderViewModifier: ViewModifier {
 
 public extension View {
 
-     /// Applies a scaled border to a SwiftUI view.
-     /// The border width and the corner radius will increase and decrease
-     /// depending on the Dynamic Type BUT
-     /// a min and max value is applied to limit the modification.
-     ///
-     /// - Parameters:
-     ///   - width: The thickness of the border. If nil, no border will be displayed.
-     ///   - radius: The corner radius of the border. If nil, no radius will be displayed.
-     ///   - colorToken: The color token to use for the border. If nil, a .clear color will be used.
-     /// - Returns: A modified view with the applied border.
-     ///
-     /// Example usage:
-     /// ```swift
-     /// Text("Hello World")
-     /// .scaledBorder(
+    /// Applies a scaled border to a SwiftUI view.
+    /// The border width and the corner radius will increase and decrease
+    /// depending on the Dynamic Type BUT
+    /// a min and max value is applied to limit the modification.
+    ///
+    /// - Parameters:
+    ///   - width: The thickness of the border. If nil, no border will be displayed.
+    ///   - radius: The corner radius of the border. If nil, no radius will be displayed.
+    ///   - colorToken: The color token to use for the border. If nil, a .clear color will be used.
+    /// - Returns: A modified view with the applied border.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// Text("Hello World")
+    /// .scaledBorder(
     ///     width: 2,
     ///     radius: 8,
     ///     colorToken: YourThemes.shared.colors.main.main
@@ -73,9 +73,41 @@ public extension View {
         self.modifier(ScaledBorderViewModifier(
             width: width,
             radius: radius,
-            colorToken: colorToken
+            color: colorToken?.color
         ))
     }
+
+    /// Applies a scaled border to a SwiftUI view.
+    /// The border width and the corner radius will increase and decrease
+    /// depending on the Dynamic Type BUT
+    /// a min and max value is applied to limit the modification.
+    ///
+    /// - Parameters:
+    ///   - width: The thickness of the border. If nil, no border will be displayed.
+    ///   - radius: The corner radius of the border. If nil, no radius will be displayed.
+    ///   - color: The color to use for the border. If nil, a .clear color will be used.
+    /// - Returns: A modified view with the applied border.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// Text("Hello World")
+    /// .scaledBorder(
+   ///     width: 2,
+   ///     radius: 8,
+   ///     color: .orange
+   ///  )
+   /// ```
+   func scaledBorder(
+       width: CGFloat? = nil,
+       radius: CGFloat? = nil,
+       color: Color? = nil
+   ) -> some View {
+       self.modifier(ScaledBorderViewModifier(
+           width: width,
+           radius: radius,
+           color: color
+       ))
+   }
 }
 
 // MARK: - Private Extension
