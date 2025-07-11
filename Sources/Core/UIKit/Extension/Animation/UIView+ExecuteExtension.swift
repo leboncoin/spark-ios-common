@@ -8,7 +8,7 @@
 
 import UIKit
 
-@_spi(SI_SPI) @frozen public enum UIExecuteAnimationType {
+@_spi(SI_SPI) @frozen public enum UIExecuteAnimationType: Equatable {
     case unanimated
     case animated(duration: TimeInterval)
 }
