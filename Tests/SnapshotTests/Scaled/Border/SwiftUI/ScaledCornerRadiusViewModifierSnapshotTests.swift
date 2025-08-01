@@ -1,5 +1,5 @@
 //
-//  ScaledBorderViewModifierSnapshotTests.swift
+//  ScaledCornerRadiusViewModifierSnapshotTests.swift
 //  SparkCommon
 //
 //  Created by robin.lemaire on 01/08/2025.
@@ -13,7 +13,7 @@ import XCTest
 import SparkTheme
 import SparkTheming
 
-final class ScaledBorderViewModifierSnapshotTests: SwiftUIComponentSnapshotTestCase {
+final class ScaledCornerRadiusViewModifierSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     // MARK: - Tests
 
@@ -37,7 +37,9 @@ private struct SnapshotView: View {
     @ScaledMetric var height: CGFloat = 30
 
     let borderWidth: CGFloat
+    let borderRadius: CGFloat
     @ScaledMetric var scaledBorderWidth: CGFloat = 0
+    @ScaledMetric var scaledBorderRadius: CGFloat = 0
 
     let borderColor: any ColorToken
 
@@ -45,7 +47,9 @@ private struct SnapshotView: View {
 
     init() {
         self.borderWidth = self.theme.border.width.medium
+        self.borderRadius = self.theme.border.radius.medium
         self._scaledBorderWidth = .init(wrappedValue: self.borderWidth)
+        self._scaledBorderRadius = .init(wrappedValue: self.borderRadius)
         self.borderColor = self.theme.colors.main.main
     }
 
@@ -59,13 +63,17 @@ private struct SnapshotView: View {
                     .dynamicTypeSize(.xSmall)
                     .fixedSize()
 
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .scaledBorder(
-                        width: self.borderWidth,
-                        colorToken: self.borderColor
-                    )
+                HStack {
+                    ForEach(RadiusState.allCases, id: \.rawValue) { state in
+                        Rectangle()
+                            .fill(.white)
+                            .frame(width: self.width, height: self.height)
+                            .scaledCorner(
+                                radius: self.borderRadius,
+                                isHighlighted: state.isHighlighted
+                            )
+                    }
+                }
             }
 
             Divider()
@@ -75,13 +83,17 @@ private struct SnapshotView: View {
                     .dynamicTypeSize(.xSmall)
                     .fixedSize()
 
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .border(
-                        width: self.scaledBorderWidth,
-                        colorToken: self.borderColor
-                    )
+                HStack {
+                    ForEach(RadiusState.allCases, id: \.rawValue) { state in
+                        Rectangle()
+                            .fill(.white)
+                            .frame(width: self.width, height: self.height)
+                            .corner(
+                                radius: self.scaledBorderRadius,
+                                isHighlighted: state.isHighlighted
+                            )
+                    }
+                }
             }
 
             Divider()
@@ -91,13 +103,17 @@ private struct SnapshotView: View {
                     .dynamicTypeSize(.xSmall)
                     .fixedSize()
 
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .border(
-                        width: self.borderWidth,
-                        colorToken: self.borderColor
-                    )
+                HStack {
+                    ForEach(RadiusState.allCases, id: \.rawValue) { state in
+                        Rectangle()
+                            .fill(.white)
+                            .frame(width: self.width, height: self.height)
+                            .corner(
+                                radius: self.borderRadius,
+                                isHighlighted: state.isHighlighted
+                            )
+                    }
+                }
             }
         }
         .padding(20)
