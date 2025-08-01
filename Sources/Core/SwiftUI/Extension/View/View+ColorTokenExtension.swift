@@ -9,7 +9,7 @@
 import SwiftUI
 import SparkTheming
 
-public extension View {
+@_spi(SI_SPI) public extension View {
 
     /// Set a **background** color on View from a Spark **ColorToken**.
     /// - Parameters:
