@@ -61,7 +61,7 @@ private struct SnapshotView: View {
                     .sparkBorder(
                         width: self.borderWidth,
                         radius: self.cornerRadius,
-                        colorToken: self.borderColor,
+                        colorToken: self.borderColor
                     )
 
                 Rectangle()
@@ -85,7 +85,7 @@ private struct SnapshotView: View {
                         width: self.borderWidth,
                         radius: self.cornerRadius,
                         isHighlighted: true,
-                        colorToken: self.borderColor,
+                        colorToken: self.borderColor
                     )
 
                 Rectangle()

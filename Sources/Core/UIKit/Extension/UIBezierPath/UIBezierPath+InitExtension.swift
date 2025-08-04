@@ -27,54 +27,109 @@ extension UIBezierPath {
         let path = self
 
         // Move to top left
-        path.move(to: CGPoint(x: originX + cornerRadius, y: originY))
+        path.move(to: .init(
+            x: originX + cornerRadius,
+            y: originY
+        ))
 
         // Top Left to Right
-        path.addLine(to: CGPoint(x: originX + width - cornerRadius, y: originY))
+        path.addLine(to: .init(
+            x: originX + width - cornerRadius,
+            y: originY
+        ))
 
         // Top Right
         if corners.contains(.topRight) {
-            path.addArc(withCenter: CGPoint(x: originX + width - cornerRadius, y: originY + cornerRadius),
-                        radius: cornerRadius, startAngle: 3 * .pi / 2, endAngle: 0,
-                        clockwise: true)
+            path.addArc(
+                withCenter: .init(
+                    x: originX + width - cornerRadius,
+                    y: originY + cornerRadius
+                ),
+                radius: cornerRadius,
+                startAngle: 3 * .pi / 2,
+                endAngle: 0,
+                clockwise: true
+            )
         } else {
-            path.addLine(to: .init(x: originX + width, y: originY))
+            path.addLine(to: .init(
+                x: originX + width,
+                y: originY
+            ))
         }
 
         // Top to Bottom on Right side
-        path.addLine(to: CGPoint(x: originX + width, y: originY + height - cornerRadius))
+        path.addLine(to: .init(
+            x: originX + width,
+            y: originY + height - cornerRadius
+        ))
 
         // Bottom Right
         if corners.contains(.bottomRight) {
-            path.addArc(withCenter: CGPoint(x: originX + width - cornerRadius, y: originY + height - cornerRadius),
-                        radius: cornerRadius, startAngle: 0, endAngle: .pi / 2,
-                        clockwise: true)
+            path.addArc(
+                withCenter: .init(
+                    x: originX + width - cornerRadius,
+                    y: originY + height - cornerRadius
+                ),
+                radius: cornerRadius,
+                startAngle: 0,
+                endAngle: .pi / 2,
+                clockwise: true
+            )
         } else {
-            path.addLine(to: .init(x: originX + width, y: originY + height))
+            path.addLine(to: .init(
+                x: originX + width,
+                y: originY + height
+            ))
         }
 
         // Bottom Right to Left
-        path.addLine(to: CGPoint(x: originX + cornerRadius, y: originY + height))
+        path.addLine(to: .init(
+            x: originX + cornerRadius,
+            y: originY + height
+        ))
 
         // Bottom Left
         if corners.contains(.bottomLeft) {
-            path.addArc(withCenter: CGPoint(x: originX + cornerRadius, y: originY + height - cornerRadius),
-                        radius: cornerRadius, startAngle: .pi / 2, endAngle: .pi,
-                        clockwise: true)
+            path.addArc(
+                withCenter: .init(
+                    x: originX + cornerRadius,
+                    y: originY + height - cornerRadius
+                ),
+                radius: cornerRadius,
+                startAngle: .pi / 2,
+                endAngle: .pi,
+                clockwise: true
+            )
         } else {
-            path.addLine(to: .init(x: originX, y: originY + height))
+            path.addLine(to: .init(
+                x: originX,
+                y: originY + height
+            ))
         }
 
         // Bottom to Top on Left side
-        path.addLine(to: CGPoint(x: originX, y: originY + cornerRadius))
+        path.addLine(to: .init(
+            x: originX,
+            y: originY + cornerRadius
+        ))
 
         // Top Left
         if corners.contains(.topLeft) {
-            path.addArc(withCenter: CGPoint(x: originX + cornerRadius, y: originY + cornerRadius),
-                        radius: cornerRadius, startAngle: .pi, endAngle: 3 * .pi / 2,
-                        clockwise: true)
+            path.addArc(
+                withCenter: .init(
+                    x: originX + cornerRadius,
+                    y: originY + cornerRadius
+                ),
+                radius: cornerRadius,
+                startAngle: .pi,
+                endAngle: 3 * .pi / 2,
+                clockwise: true
+            )
         } else {
-            path.addLine(to: .init(x: originX, y: originY))
+            path.addLine(to: .init(
+                x: originX,
+                y: originY
+            ))
         }
 
         path.close()
