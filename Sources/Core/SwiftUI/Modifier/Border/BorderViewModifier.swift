@@ -2,38 +2,26 @@
 //  BorderViewModifier.swift
 //  SparkCommon
 //
-//  Created by robin.lemaire on 31/03/2023.
-//  Copyright © 2023 Leboncoin. All rights reserved.
+//  Created by robin.lemaire on 01/08/2025.
+//  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
 import SwiftUI
 import SparkTheming
 
-@_spi(SI_SPI) public struct BorderViewModifier: ViewModifier {
+internal struct BorderViewModifier: ViewModifier {
 
     // MARK: - Properties
 
-    private let width: CGFloat
-    private let radius: CGFloat
-    private let colorToken: any ColorToken
-
-    // MARK: - Initialization
-
-    public init(width: CGFloat,
-         radius: CGFloat,
-         colorToken: any ColorToken) {
-        self.width = width
-        self.radius = radius
-        self.colorToken = colorToken
-    }
+    let width: CGFloat
+    let colorToken: any ColorToken
 
     // MARK: - View
 
-    public func body(content: Content) -> some View {
+    func body(content: Content) -> some View {
         content
-            .cornerRadius(self.radius)
             .overlay(
-                RoundedRectangle(cornerRadius: self.radius)
+                Rectangle()
                     .stroke(self.colorToken.color, lineWidth: self.width)
             )
     }
@@ -43,17 +31,52 @@ import SparkTheming
 
 public extension View {
 
-    /// Add a border to the current view.
+    /// Add a **Spark** border to the current view.
     /// - Parameters:
     ///   - width: The border width.
-    ///   - radius: The border radius.
     ///   - colorToken: The color token of the border.
+    ///   - isScaled: Apply a scaled width depending on current the
+    ///   dynamic size. Default is *true*.   
     /// - Returns: Current View.
-    func border(width: CGFloat,
-                radius: CGFloat,
-                colorToken: any ColorToken) -> some View {
-        self.modifier(BorderViewModifier(width: width,
-                                         radius: radius,
-                                         colorToken: colorToken))
+    ///
+    /// Example with a corner in a **Text**.
+    /// ```swift
+    /// Text("Text")
+    ///     .padding(4)
+    ///     .frame(width: 80, height: 30)
+    ///     .background(.white)
+    ///     .sparkBorder(
+    ///         width: 2,
+    ///         colorToken: YourThemes.shared.colors.main.main
+    ///     )
+    /// ```
+    ///
+    /// Example with a corner in a **Shape**.
+    /// ```swift
+    /// Rectangle()
+    ///     .fill(.white)
+    ///     .frame(width: 80, height: 30)
+    ///     .sparkBorder(
+    ///         width: 2,
+    ///         colorToken: YourThemes.shared.colors.main.main
+    ///     )
+    /// ```
+    @ViewBuilder
+    func sparkBorder(
+        width: CGFloat,
+        colorToken: any ColorToken,
+        isScaled: Bool = true
+    ) -> some View {
+        if isScaled {
+            self.scaledBorder(
+                width: width,
+                colorToken: colorToken
+            )
+        } else {
+            self.modifier(BorderViewModifier(
+                width: width,
+                colorToken: colorToken
+            ))
+        }
     }
 }

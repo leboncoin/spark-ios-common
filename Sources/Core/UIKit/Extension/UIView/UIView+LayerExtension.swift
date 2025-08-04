@@ -24,6 +24,7 @@ import SparkTheming
         self.layer.borderWidth = borderWidth
     }
 
+    @available(*, deprecated, message: "Use sparkCornerRadius instead")
     func setCornerRadius(_ cornerRadius: CGFloat) {
         self.layer.cornerRadius = cornerRadius.isInfinite ? self.frame.height / 2 : cornerRadius
     }

@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-// TODO: snapshot testing
-
 private struct ScaledPaddingInsetsViewModifier: ViewModifier {
 
     // MARK: - Properties

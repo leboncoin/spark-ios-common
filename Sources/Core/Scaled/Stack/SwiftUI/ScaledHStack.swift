@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-// TODO: snapshot testing
-
 /// A view that arranges its subviews in a horizontal line with a scaled spacing.
 public struct ScaledHStack<Content>: View where Content: View {
 

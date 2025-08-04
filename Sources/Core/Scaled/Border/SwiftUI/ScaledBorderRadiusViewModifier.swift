@@ -1,5 +1,5 @@
 //
-//  ScaledBorderViewModifier.swift
+//  ScaledBorderRadiusViewModifier.swift
 //  SparkCommon
 //
 //  Created by robin.lemaire on 01/08/2025.
@@ -9,20 +9,26 @@
 import SwiftUI
 import SparkTheming
 
-internal struct ScaledBorderViewModifier: ViewModifier {
+private struct ScaledBorderRadiusViewModifier: ViewModifier {
 
     // MARK: - Properties
 
     @LimitedScaledMetric var width: CGFloat
+    @LimitedScaledMetric var radius: CGFloat
+    let isHighlighted: Bool
     let colorToken: any ColorToken
 
     // MARK: - Initialization
 
     init(
         width: CGFloat,
+        radius: CGFloat,
+        isHighlighted: Bool,
         colorToken: any ColorToken
     ) {
         self._width = .init(value: width, type: .width)
+        self._radius = .init(value: radius, type: .radius)
+        self.isHighlighted = isHighlighted
         self.colorToken = colorToken
     }
 
@@ -30,24 +36,28 @@ internal struct ScaledBorderViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .modifier(BorderViewModifier(
+            .modifier(BorderRadiusViewModifier(
                 width: self.width,
+                radius: self.radius,
+                isHighlighted: self.isHighlighted,
                 colorToken: self.colorToken
             ))
     }
 }
 
-// MARK: - View Extension
+// MARK: - Internal View Extension
 
-public extension View {
+internal extension View {
 
-    /// Applies a **Spark** scaled border to a SwiftUI view.
-    /// The border width will increase and decrease
+    /// Applies a **Spark** scaled border radius to a SwiftUI view.
+    /// The border width and the corner radius will increase and decrease
     /// depending on the Dynamic Type BUT
     /// a min and max value is applied to limit the modification.
     ///
     /// - Parameters:
     ///   - width: The thickness of the border.
+    ///   - radius: The corner radius of the border.
+    ///   - isHighlighted: Apply a custom style (no radius on bottom left). Default is *false*.
     ///   - colorToken: The color token to use for the border.
     /// - Returns: A modified view with the applied border.
     ///
@@ -59,6 +69,8 @@ public extension View {
     ///     .background(.white)
     ///     .scaledBorder(
     ///         width: 2,
+    ///         radius: 12,
+    ///         isHighlighted: true,
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
     /// ```
@@ -70,17 +82,59 @@ public extension View {
     ///     .frame(width: 80, height: 30)
     ///     .scaledBorder(
     ///         width: 2,
+    ///         radius: 12,
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
     /// ```
     func scaledBorder(
         width: CGFloat,
+        radius: CGFloat,
+        isHighlighted: Bool = false,
         colorToken: any ColorToken
     ) -> some View {
-        self.modifier(ScaledBorderViewModifier(
+        self.modifier(ScaledBorderRadiusViewModifier(
             width: width,
+            radius: radius,
+            isHighlighted: isHighlighted,
             colorToken: colorToken
         ))
+    }
+}
+
+// MARK: - Public View Extension
+
+public extension View {
+
+    @available(*, deprecated, message: "Replaced by the func without optional parameters.")
+    @ViewBuilder
+    func scaledBorder(
+        width: CGFloat? = nil,
+        radius: CGFloat? = nil,
+        isHighlighted: Bool = false,
+        colorToken: (any ColorToken)? = nil
+    ) -> some View {
+        if let width, let radius, radius > 0, let colorToken {
+            self.modifier(ScaledBorderRadiusViewModifier(
+                width: width,
+                radius: radius,
+                isHighlighted: isHighlighted,
+                colorToken: colorToken
+            ))
+
+        } else if let width, let colorToken {
+            self.scaledBorder(
+                width: width,
+                colorToken: colorToken
+            )
+
+        } else if let radius {
+            self.scaledCornerRadius(
+                radius,
+                isHighlighted: isHighlighted
+            )
+        } else {
+            self
+        }
     }
 }
 
