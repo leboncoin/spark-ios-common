@@ -1,5 +1,5 @@
 //
-//  ScaledBorderViewModifierSnapshotTests.swift
+//  BorderRadiusViewModifierSnapshotTests.swift
 //  SparkCommon
 //
 //  Created by robin.lemaire on 01/08/2025.
@@ -13,7 +13,7 @@ import XCTest
 import SparkTheme
 import SparkTheming
 
-final class ScaledBorderViewModifierSnapshotTests: SwiftUIComponentSnapshotTestCase {
+final class BorderRadiusViewModifierSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     // MARK: - Tests
 
@@ -21,7 +21,7 @@ final class ScaledBorderViewModifierSnapshotTests: SwiftUIComponentSnapshotTestC
         self.assertSnapshot(
             matching: SnapshotView(),
             modes: ComponentSnapshotTestConstants.Modes.default,
-            sizes: UIContentSizeCategory.snapshotsCases
+            sizes: ComponentSnapshotTestConstants.Sizes.default
         )
     }
 }
@@ -33,19 +33,18 @@ private struct SnapshotView: View {
     // MARK: - Properties
 
     private let theme: Theme = SparkTheme.shared
-    @ScaledMetric var width: CGFloat = 90
+    @ScaledMetric var width: CGFloat = 140
     @ScaledMetric var height: CGFloat = 30
 
     let borderWidth: CGFloat
-    @ScaledMetric var scaledBorderWidth: CGFloat = 0
-
+    let cornerRadius: CGFloat
     let borderColor: any ColorToken
 
     // MARK: - Initialization
 
     init() {
         self.borderWidth = self.theme.border.width.medium
-        self._scaledBorderWidth = .init(wrappedValue: self.borderWidth)
+        self.cornerRadius = self.theme.border.radius.medium
         self.borderColor = self.theme.colors.main.main
     }
 
@@ -55,15 +54,22 @@ private struct SnapshotView: View {
         VStack(alignment: .trailing, spacing: 20) {
 
             HStack(alignment: .center, spacing: 10) {
-                Text(".scaledBorder(...) ✅")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
+                Text("Default")
+                    .padding(4)
+                    .frame(width: self.width, height: self.height)
+                    .background(.white)
+                    .sparkBorder(
+                        width: self.borderWidth,
+                        radius: self.cornerRadius,
+                        colorToken: self.borderColor,
+                    )
 
                 Rectangle()
                     .fill(.white)
                     .frame(width: self.width, height: self.height)
                     .sparkBorder(
                         width: self.borderWidth,
+                        radius: self.cornerRadius,
                         colorToken: self.borderColor
                     )
             }
@@ -71,34 +77,25 @@ private struct SnapshotView: View {
             Divider()
 
             HStack(spacing: 10) {
-                Text("@ScaledMetric 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
-                Rectangle()
-                    .fill(.white)
+                Text("Is highlight")
+                    .padding(4)
                     .frame(width: self.width, height: self.height)
+                    .background(.white)
                     .sparkBorder(
-                        width: self.scaledBorderWidth,
+                        width: self.borderWidth,
+                        radius: self.cornerRadius,
+                        isHighlighted: true,
                         colorToken: self.borderColor,
-                        isScaled: false
                     )
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("Without scaling 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
 
                 Rectangle()
                     .fill(.white)
                     .frame(width: self.width, height: self.height)
                     .sparkBorder(
                         width: self.borderWidth,
-                        colorToken: self.borderColor,
-                        isScaled: false
+                        radius: self.cornerRadius,
+                        isHighlighted: true,
+                        colorToken: self.borderColor
                     )
             }
         }

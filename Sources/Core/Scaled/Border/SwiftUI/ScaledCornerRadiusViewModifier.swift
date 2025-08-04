@@ -1,5 +1,5 @@
 //
-//  ScaledBorderViewModifier.swift
+//  ScaledCornerRadiusViewModifier.swift
 //  SparkCommon
 //
 //  Created by robin.lemaire on 01/08/2025.
@@ -9,30 +9,30 @@
 import SwiftUI
 import SparkTheming
 
-internal struct ScaledBorderViewModifier: ViewModifier {
+internal struct ScaledCornerRadiusViewModifier: ViewModifier {
 
     // MARK: - Properties
 
-    @LimitedScaledMetric var width: CGFloat
-    let colorToken: any ColorToken
+    @LimitedScaledMetric var radius: CGFloat
+    let isHighlighted: Bool
 
     // MARK: - Initialization
 
     init(
-        width: CGFloat,
-        colorToken: any ColorToken
+        radius: CGFloat,
+        isHighlighted: Bool
     ) {
-        self._width = .init(value: width, type: .width)
-        self.colorToken = colorToken
+        self._radius = .init(value: radius, type: .radius)
+        self.isHighlighted = isHighlighted
     }
 
     // MARK: - View
 
     func body(content: Content) -> some View {
         content
-            .modifier(BorderViewModifier(
-                width: self.width,
-                colorToken: self.colorToken
+            .modifier(CornerRadiusViewModifier(
+                radius: self.radius,
+                isHighlighted: self.isHighlighted
             ))
     }
 }
@@ -41,14 +41,14 @@ internal struct ScaledBorderViewModifier: ViewModifier {
 
 public extension View {
 
-    /// Applies a **Spark** scaled border to a SwiftUI view.
-    /// The border width will increase and decrease
+    /// Applies a **Spark** scaled corner radius to a SwiftUI view.
+    /// The corner radius will increase and decrease
     /// depending on the Dynamic Type BUT
     /// a min and max value is applied to limit the modification.
     ///
     /// - Parameters:
-    ///   - width: The thickness of the border.
-    ///   - colorToken: The color token to use for the border.
+    ///   - radius: The corner radius of the border.
+    ///   - isHighlighted: Apply a custom style (no radius on bottom left). Default is *false*.
     /// - Returns: A modified view with the applied border.
     ///
     /// Example with a corner in a **Text**.
@@ -57,10 +57,7 @@ public extension View {
     ///     .padding(4)
     ///     .frame(width: 80, height: 30)
     ///     .background(.white)
-    ///     .scaledBorder(
-    ///         width: 2,
-    ///         colorToken: YourThemes.shared.colors.main.main
-    ///     )
+    ///     .scaledCornerRadius(12, isHighlighted: true)
     /// ```
     ///
     /// Example with a corner in a **Shape**.
@@ -68,18 +65,15 @@ public extension View {
     /// Rectangle()
     ///     .fill(.white)
     ///     .frame(width: 80, height: 30)
-    ///     .scaledBorder(
-    ///         width: 2,
-    ///         colorToken: YourThemes.shared.colors.main.main
-    ///     )
+    ///     .scaledCornerRadius(12)
     /// ```
-    func scaledBorder(
-        width: CGFloat,
-        colorToken: any ColorToken
+    func scaledCornerRadius(
+        _ radius: CGFloat,
+        isHighlighted: Bool = false
     ) -> some View {
-        self.modifier(ScaledBorderViewModifier(
-            width: width,
-            colorToken: colorToken
+        self.modifier(ScaledCornerRadiusViewModifier(
+            radius: radius,
+            isHighlighted: isHighlighted
         ))
     }
 }
