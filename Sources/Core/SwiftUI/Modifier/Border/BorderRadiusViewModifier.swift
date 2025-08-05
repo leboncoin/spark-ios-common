@@ -111,20 +111,28 @@ public extension View {
         colorToken: any ColorToken,
         isScaled: Bool = true
     ) -> some View {
-        if isScaled {
-            self.scaledBorder(
-                width: width,
-                radius: radius,
-                isHighlighted: isHighlighted,
-                colorToken: colorToken
-            )
+        if width > 0 {
+            if isScaled {
+                self.scaledBorder(
+                    width: width,
+                    radius: radius,
+                    isHighlighted: isHighlighted,
+                    colorToken: colorToken
+                )
+            } else {
+                self.modifier(BorderRadiusViewModifier(
+                    width: width,
+                    radius: radius,
+                    isHighlighted: isHighlighted,
+                    colorToken: colorToken
+                ))
+            }
         } else {
-            self.modifier(BorderRadiusViewModifier(
-                width: width,
-                radius: radius,
+            self.sparkCornerRadius(
+                radius,
                 isHighlighted: isHighlighted,
-                colorToken: colorToken
-            ))
+                isScaled: isScaled
+            )
         }
     }
 

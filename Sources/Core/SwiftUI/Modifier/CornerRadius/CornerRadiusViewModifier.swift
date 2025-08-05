@@ -64,16 +64,20 @@ public extension View {
         isHighlighted: Bool = false,
         isScaled: Bool = true
     ) -> some View {
-        if isScaled {
-            self.scaledCornerRadius(
-                radius,
-                isHighlighted: isHighlighted
-            )
+        if radius > 0 {
+            if isScaled {
+                self.scaledCornerRadius(
+                    radius,
+                    isHighlighted: isHighlighted
+                )
+            } else {
+                self.modifier(CornerRadiusViewModifier(
+                    radius: radius,
+                    isHighlighted: isHighlighted
+                ))
+            }
         } else {
-            self.modifier(CornerRadiusViewModifier(
-                radius: radius,
-                isHighlighted: isHighlighted
-            ))
+            self
         }
     }
 }

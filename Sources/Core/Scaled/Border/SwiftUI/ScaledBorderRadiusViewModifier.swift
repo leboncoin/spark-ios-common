@@ -86,18 +86,27 @@ internal extension View {
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
     /// ```
+    @ViewBuilder
     func scaledBorder(
         width: CGFloat,
         radius: CGFloat,
         isHighlighted: Bool = false,
         colorToken: any ColorToken
     ) -> some View {
-        self.modifier(ScaledBorderRadiusViewModifier(
-            width: width,
-            radius: radius,
-            isHighlighted: isHighlighted,
-            colorToken: colorToken
-        ))
+        if width > 0 {
+            self.modifier(ScaledBorderRadiusViewModifier(
+                width: width,
+                radius: radius,
+                isHighlighted: isHighlighted,
+                colorToken: colorToken
+            ))
+        } else {
+            self.sparkCornerRadius(
+                radius,
+                isHighlighted: isHighlighted,
+                isScaled: true
+            )
+        }
     }
 }
 
