@@ -67,14 +67,19 @@ public extension View {
     ///     .frame(width: 80, height: 30)
     ///     .scaledCornerRadius(12)
     /// ```
+    @ViewBuilder
     func scaledCornerRadius(
         _ radius: CGFloat,
         isHighlighted: Bool = false
     ) -> some View {
-        self.modifier(ScaledCornerRadiusViewModifier(
-            radius: radius,
-            isHighlighted: isHighlighted
-        ))
+        if radius > 0 {
+            self.modifier(ScaledCornerRadiusViewModifier(
+                radius: radius,
+                isHighlighted: isHighlighted
+            ))
+        } else {
+            self
+        }
     }
 }
 
