@@ -18,11 +18,15 @@ final class CornerRadiusViewModifierSnapshotTests: SwiftUIComponentSnapshotTestC
     // MARK: - Tests
 
     func test() throws {
-        self.assertSnapshot(
-            matching: SnapshotView(),
-            modes: ComponentSnapshotTestConstants.Modes.default,
-            sizes: ComponentSnapshotTestConstants.Sizes.default
-        )
+        let theme: Theme = SparkTheme.shared
+
+        for radius in SparkBorder.Radius.allCases {
+            self.assertSnapshot(
+                matching: SnapshotView(cornerRadius: radius.value(from: theme)),
+                modes: ComponentSnapshotTestConstants.Modes.default,
+                sizes: ComponentSnapshotTestConstants.Sizes.default
+            )
+        }
     }
 }
 
@@ -32,17 +36,10 @@ private struct SnapshotView: View {
 
     // MARK: - Properties
 
-    private let theme: Theme = SparkTheme.shared
-    @ScaledMetric var width: CGFloat = 140
-    @ScaledMetric var height: CGFloat = 30
+    @ScaledMetric var width: CGFloat = 120
+    @ScaledMetric var height: CGFloat = 20
 
     let cornerRadius: CGFloat
-
-    // MARK: - Initialization
-
-    init() {
-        self.cornerRadius = self.theme.border.radius.medium
-    }
 
     // MARK: - View
 

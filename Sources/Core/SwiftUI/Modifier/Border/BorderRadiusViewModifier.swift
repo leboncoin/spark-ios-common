@@ -27,40 +27,12 @@ internal struct BorderRadiusViewModifier: ViewModifier {
                 isHighlighted: self.isHighlighted
             )
             .overlay(
-                HighlightRectangle(
+                HighlightedRectangle(
                     cornerRadius: self.radius,
                     isHighlighted: self.isHighlighted
                 )
                 .stroke(self.colorToken.color, lineWidth: self.width)
             )
-    }
-}
-
-// MARK: - Shape
-
-private struct HighlightRectangle: Shape {
-
-    // MARK: - Properties
-
-    let cornerRadius: CGFloat
-    let isHighlighted: Bool
-
-    // MARK: - Path
-
-    func path(in rect: CGRect) -> Path {
-        let corners: UIRectCorner = self.isHighlighted ? [
-            .topLeft,
-            .topRight,
-            .bottomRight
-        ] : .allCorners
-
-        let path = UIBezierPath(
-            roundedRect: rect,
-            byRoundingCorners: corners,
-            cornerRadius: self.cornerRadius
-        )
-
-        return Path(path.cgPath)
     }
 }
 
