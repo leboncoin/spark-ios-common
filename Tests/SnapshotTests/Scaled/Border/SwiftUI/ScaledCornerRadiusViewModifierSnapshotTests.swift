@@ -18,11 +18,15 @@ final class ScaledCornerRadiusViewModifierSnapshotTests: SwiftUIComponentSnapsho
     // MARK: - Tests
 
     func test() throws {
-        self.assertSnapshot(
-            matching: SnapshotView(),
-            modes: ComponentSnapshotTestConstants.Modes.default,
-            sizes: UIContentSizeCategory.snapshotsCases
-        )
+        let theme: Theme = SparkTheme.shared
+
+        for radius in SparkBorder.Radius.allCases {
+            self.assertSnapshot(
+                matching: SnapshotView(borderRadius: radius.value(from: theme)),
+                modes: ComponentSnapshotTestConstants.Modes.default,
+                sizes: UIContentSizeCategory.snapshotsCases
+            )
+        }
     }
 }
 
@@ -34,7 +38,7 @@ private struct SnapshotView: View {
 
     private let theme: Theme = SparkTheme.shared
     @ScaledMetric var width: CGFloat = 90
-    @ScaledMetric var height: CGFloat = 30
+    @ScaledMetric var height: CGFloat = 20
 
     let borderWidth: CGFloat
     let borderRadius: CGFloat
@@ -45,9 +49,9 @@ private struct SnapshotView: View {
 
     // MARK: - Initialization
 
-    init() {
+    init(borderRadius: CGFloat) {
         self.borderWidth = self.theme.border.width.medium
-        self.borderRadius = self.theme.border.radius.medium
+        self.borderRadius = borderRadius
         self._scaledBorderWidth = .init(wrappedValue: self.borderWidth)
         self._scaledBorderRadius = .init(wrappedValue: self.borderRadius)
         self.borderColor = self.theme.colors.main.main

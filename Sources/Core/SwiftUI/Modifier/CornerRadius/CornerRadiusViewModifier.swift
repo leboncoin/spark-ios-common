@@ -20,11 +20,9 @@ internal struct CornerRadiusViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .clipShape(.rect(
-                topLeadingRadius: self.radius,
-                bottomLeadingRadius: self.isHighlighted ? 0 : self.radius,
-                bottomTrailingRadius: self.radius,
-                topTrailingRadius: self.radius
+            .clipShape(HighlightedRectangle(
+                cornerRadius: self.radius,
+                isHighlighted: self.isHighlighted
             ))
     }
 }
