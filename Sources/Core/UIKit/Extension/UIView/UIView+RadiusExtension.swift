@@ -36,7 +36,14 @@ public extension UIView {
             return
         }
 
+        if #available(iOS 17.0, *) {
+            self.updateTraitsIfNeeded()
+        }
+
         self.clear(isHighlighted: isHighlighted)
+
+        let radius = self.validatedCornerRadius(radius)
+        let borderColor = colorToken.uiColor.resolvedColor(with: self.traitCollection).cgColor
 
         if isHighlighted {
             // Apply the corner radius
@@ -47,7 +54,7 @@ public extension UIView {
             borderLayer.name = Constants.name
             borderLayer.path = mask.path
             borderLayer.fillColor = UIColor.clear.cgColor
-            borderLayer.strokeColor = colorToken.uiColor.cgColor
+            borderLayer.strokeColor = borderColor
             borderLayer.lineWidth = width * 2
             borderLayer.frame = self.bounds
             self.layer.addSublayer(borderLayer)
@@ -57,10 +64,10 @@ public extension UIView {
         } else {
             self.layer.cornerRadius = radius
             self.layer.borderWidth = width
-            self.layer.borderColor = colorToken.uiColor.cgColor
+            self.layer.borderColor = borderColor
         }
 
-        self.clipsToBounds = true
+        self.layer.masksToBounds = true
     }
 
     /// Add a **Spark** corner radius to the current view.
@@ -76,6 +83,8 @@ public extension UIView {
     ) {
         self.clear(isHighlighted: isHighlighted)
 
+        let cornerRadius = self.validatedCornerRadius(cornerRadius)
+
         if isHighlighted {
             let mask = self.cornerRadiusMask(cornerRadius)
             self.layer.mask = mask
@@ -83,13 +92,17 @@ public extension UIView {
             self.layer.cornerRadius = cornerRadius
         }
 
-        self.clipsToBounds = true
+        self.layer.masksToBounds = true
     }
 }
 
 // MARK: - Private Extension
 
 private extension UIView {
+
+    func validatedCornerRadius(_ cornerRadius: CGFloat) -> CGFloat {
+        return cornerRadius.isInfinite ? self.frame.height / 2 : cornerRadius
+    }
 
     func cornerRadiusMask(
         _ cornerRadius: CGFloat
