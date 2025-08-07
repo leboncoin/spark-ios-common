@@ -17,7 +17,7 @@ final class AdaptiveUIStackViewSnapshotTests: UIKitComponentSnapshotTestCase {
     // MARK: - Tests
 
     func test_with_default_properties() {
-        let view = AdaptiveUIStackView(arrangedSubviews: [
+        let view = SparkAdaptiveUIStackView(arrangedSubviews: [
             UILabel.label1,
             UILabel.label2
         ])
@@ -31,7 +31,7 @@ final class AdaptiveUIStackViewSnapshotTests: UIKitComponentSnapshotTestCase {
     }
 
     func test_with_override_default_properties() {
-        let view = AdaptiveUIStackView(arrangedSubviews: [
+        let view = SparkAdaptiveUIStackView(arrangedSubviews: [
             UILabel.label1,
             UILabel.label2
         ])
@@ -50,7 +50,7 @@ final class AdaptiveUIStackViewSnapshotTests: UIKitComponentSnapshotTestCase {
     }
 
     func test_with_regular_and_accessibilities_properties() {
-        let view = AdaptiveUIStackView(arrangedSubviews: [
+        let view = SparkAdaptiveUIStackView(arrangedSubviews: [
             UILabel.label1,
             UILabel.label2
         ])

@@ -81,6 +81,49 @@ public extension View {
     ///     maxHeight: 20
     /// )
     /// ```
+    func sparkScaledFrame(
+        minWidth: CGFloat? = nil,
+        maxWidth: CGFloat? = nil,
+        minHeight: CGFloat? = nil,
+        maxHeight: CGFloat? = nil,
+        relativeTo: Font.TextStyle? = .largeTitle,
+        alignment: Alignment = .center
+    ) -> some View {
+        self.modifier(ScaledFrameRangeViewModifier(
+            minWidth: minWidth,
+            maxWidth: maxWidth,
+            minHeight: minHeight,
+            maxHeight: maxHeight,
+            relativeTo: relativeTo,
+            alignment: alignment
+        ))
+    }
+
+    /// Applies a scaled resizable frame to a view with minimum and maximum size constraints.
+    /// This modifier allows automatically adapting the size of a view based on the text size
+    /// defined in the system's accessibility settings BUT a min and max range is applied
+    /// to limit the increase and decrease values modification.
+    ///
+    /// - Parameters:
+    ///   - minWidth: Optional minimum width of the frame.
+    ///   - maxWidth: Optional maximum width of the frame.
+    ///   - minHeight: Optional minimum height of the frame.
+    ///   - maxHeight: Optional maximum height of the frame.
+    ///   - relativeTo: Reference text style for sizing (default: .largeTitle).
+    ///   - alignment: Alignment of the content within the frame (default: .center).
+    /// - Returns: A modified view with the resizable frame applied.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// Text("Hello World")
+    /// .scaledFrame(
+    ///     minWidth: 10,
+    ///     maxWidth: 20,
+    ///     minHeight: 10,
+    ///     maxHeight: 20
+    /// )
+    /// ```
+    @available(*, deprecated, message: "Use sparkScaledFrame instead.")
     func scaledFrame(
         minWidth: CGFloat? = nil,
         maxWidth: CGFloat? = nil,

@@ -8,6 +8,9 @@
 
 import SwiftUI
 
+@available(*, deprecated, message: "Use SparkAdaptiveStack instead.")
+public typealias AdaptiveStack = SparkAdaptiveStack
+
 /// A stack view that adapts its layout based on accessibility font size settings
 ///
 /// Implementation example :
@@ -28,7 +31,7 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-public struct AdaptiveStack<Content: View>: View {
+public struct SparkAdaptiveStack<Content: View>: View {
 
     // MARK: - Enums
 

@@ -114,7 +114,7 @@ internal extension View {
 
 public extension View {
 
-    @available(*, deprecated, message: "Replaced by the func without optional parameters.")
+    @available(*, deprecated, message: "Use sparkBorder or sparkCornerRadius instead.")
     @ViewBuilder
     func scaledBorder(
         width: CGFloat? = nil,

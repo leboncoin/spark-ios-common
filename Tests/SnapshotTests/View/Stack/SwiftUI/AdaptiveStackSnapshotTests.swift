@@ -17,7 +17,7 @@ final class AdaptiveStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     func test_with_accessibilitySizeClass_at_nil() throws {
         // GIVEN / WHEN
-        let view = AdaptiveStack(
+        let view = SparkAdaptiveStack(
             axis: .horizontal,
             alignment: .center,
             spacing: 8,
@@ -38,7 +38,7 @@ final class AdaptiveStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     func test_with_showAccessibilityStack_at_true() throws {
         // GIVEN / WHEN
-        let view = AdaptiveStack(
+        let view = SparkAdaptiveStack(
             axis: .horizontal,
             alignment: .center,
             spacing: 8,
@@ -59,7 +59,7 @@ final class AdaptiveStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     func test_with_showAccessibilityStack_at_false() throws {
         // GIVEN / WHEN
-        let view = AdaptiveStack(
+        let view = SparkAdaptiveStack(
             axis: .horizontal,
             alignment: .center,
             spacing: 8,

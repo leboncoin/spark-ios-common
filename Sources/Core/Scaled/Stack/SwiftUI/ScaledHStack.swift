@@ -8,8 +8,11 @@
 
 import SwiftUI
 
+@available(*, deprecated, message: "Use SparkHStack instead.")
+public typealias ScaledHStack = SparkHStack
+
 /// A view that arranges its subviews in a horizontal line with a scaled spacing.
-public struct ScaledHStack<Content>: View where Content: View {
+public struct SparkHStack<Content>: View where Content: View {
 
     // MARK: - Properties
 

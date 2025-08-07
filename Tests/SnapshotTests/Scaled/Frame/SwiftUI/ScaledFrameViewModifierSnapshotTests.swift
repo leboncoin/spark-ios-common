@@ -51,13 +51,13 @@ private struct SnapshotView: View {
         VStack(alignment: .trailing, spacing: 20) {
 
             HStack(alignment: .center, spacing: 10) {
-                Text(".scaledFrame(...) ✅")
+                Text(".sparkScaledFrame(...) ✅")
                     .dynamicTypeSize(.xSmall)
                     .fixedSize()
 
                 Rectangle()
                     .fill(.white)
-                    .scaledFrame(
+                    .sparkScaledFrame(
                         width: self.width,
                         height: self.height
                     )

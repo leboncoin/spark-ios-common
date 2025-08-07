@@ -50,6 +50,24 @@ public extension View {
     /// Text("Hello World")
     /// .scaledPadding(10)
     /// ```
+    func sparkScaledPadding(_ length: CGFloat) -> some View {
+        self.modifier(ScaledPaddingViewModifier(length: length))
+    }
+
+    /// Applies a scalable padding with equal length on all edges of a view.
+    /// This modifier creates padding that scales proportionally with the system's text size settings
+    /// BUT a min and max range is applied to limit the increase and decrease length modification.
+    ///
+    /// - Parameter length: The base padding length that will be scaled according to the system's
+    ///   accessibility settings.
+    /// - Returns: A modified view with scalable padding applied to all edges.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// Text("Hello World")
+    /// .scaledPadding(10)
+    /// ```
+    @available(*, deprecated, message: "Use sparkScaledPadding instead.")
     func scaledPadding(_ length: CGFloat) -> some View {
         self.modifier(ScaledPaddingViewModifier(length: length))
     }
@@ -70,6 +88,27 @@ public extension View {
     /// Text("Hello World")
     /// .scaledPadding(.leading, 10)
     /// ```
+    func sparkScaledPadding(_ edges: Edge.Set = .all, _ length: CGFloat) -> some View {
+        self.modifier(ScaledPaddingViewModifier(edges: edges, length: length))
+    }
+
+    /// Applies a scalable padding to specified edges of a view.
+    /// This modifier creates padding that scales proportionally with the system's text size settings
+    /// BUT a min and max range is applied to limit the increase and decrease length modification.
+    ///
+    /// - Parameters:
+    ///   - edges: The edges to which the padding should be applied (default: .all).
+    ///     Can be a combination of .top, .bottom, .leading, .trailing, or .all.
+    ///   - length: The base padding length that will be scaled according to the system's
+    ///     accessibility settings.
+    /// - Returns: A modified view with scalable padding applied to the specified edges.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// Text("Hello World")
+    /// .scaledPadding(.leading, 10)
+    /// ```
+    @available(*, deprecated, message: "Use sparkScaledPadding instead.")
     func scaledPadding(_ edges: Edge.Set = .all, _ length: CGFloat) -> some View {
         self.modifier(ScaledPaddingViewModifier(edges: edges, length: length))
     }

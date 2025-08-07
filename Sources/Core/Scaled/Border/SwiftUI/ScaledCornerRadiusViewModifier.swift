@@ -39,7 +39,7 @@ internal struct ScaledCornerRadiusViewModifier: ViewModifier {
 
 // MARK: - View Extension
 
-public extension View {
+internal extension View {
 
     /// Applies a **Spark** scaled corner radius to a SwiftUI view.
     /// The corner radius will increase and decrease
