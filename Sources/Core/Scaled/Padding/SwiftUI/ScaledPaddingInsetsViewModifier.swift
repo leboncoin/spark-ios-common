@@ -59,6 +59,30 @@ public extension View {
     ///     trailing: 4
     /// ))
     /// ```
+    func sparkScaledPadding(_ insets: EdgeInsets) -> some View {
+        self.modifier(ScaledPaddingInsetsViewModifier(insets))
+    }
+
+    /// Applies a scalable padding to specified edges of a view.
+    /// This modifier creates padding that scales proportionally with the system's text size settings
+    /// BUT a min and max range is applied to limit the increase and decrease length modification.
+    ///
+    /// - Parameters:
+    ///   - insets: The edges insets to which the padding should be applied.
+    /// - Returns: A modified view with scalable padding applied to the specified edges.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// Text("Hello World")
+    /// .scaledPadding(.init(
+    ///     top: 4,
+    ///     leading: 4,
+    ///     bottom: 4,
+    ///     trailing: 4
+    /// ))
+    /// ```
+
+    @available(*, deprecated, message: "Use sparkScaledPadding instead.")
     func scaledPadding(_ insets: EdgeInsets) -> some View {
         self.modifier(ScaledPaddingInsetsViewModifier(insets))
     }

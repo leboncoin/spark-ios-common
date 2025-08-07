@@ -8,6 +8,9 @@
 
 import SwiftUI
 
+@available(*, deprecated, message: "Use SparkOptionalVStack instead.")
+public typealias OptionalVStack = SparkOptionalVStack
+
 /// An optional HStack view. If the `onStack` parameter is false, the content will be displayed without a HStack.
 ///
 /// Implementation example :
@@ -25,7 +28,7 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-public struct OptionalVStack<Content: View>: View {
+public struct SparkOptionalVStack<Content: View>: View {
 
     // MARK: - Properties
 

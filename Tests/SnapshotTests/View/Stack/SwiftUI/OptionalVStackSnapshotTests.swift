@@ -17,7 +17,7 @@ final class OptionalVStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     func test_with_onStack_at_true() throws {
         // GIVEN / WHEN
-        let view = OptionalVStack(
+        let view = SparkOptionalVStack(
             alignment: .center,
             spacing: 8,
             onStack: true
@@ -35,7 +35,7 @@ final class OptionalVStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     func test_with_onStack_at_false() throws {
         // GIVEN / WHEN
-        let view = OptionalVStack(
+        let view = SparkOptionalVStack(
             alignment: .center,
             spacing: 8,
             onStack: false

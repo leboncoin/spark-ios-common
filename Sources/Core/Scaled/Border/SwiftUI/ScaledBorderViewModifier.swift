@@ -39,7 +39,7 @@ internal struct ScaledBorderViewModifier: ViewModifier {
 
 // MARK: - View Extension
 
-public extension View {
+internal extension View {
 
     /// Applies a **Spark** scaled border to a SwiftUI view.
     /// The border width will increase and decrease

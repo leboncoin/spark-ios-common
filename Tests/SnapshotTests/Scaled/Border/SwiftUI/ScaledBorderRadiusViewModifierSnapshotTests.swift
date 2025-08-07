@@ -63,7 +63,7 @@ private struct SnapshotView: View {
         VStack(alignment: .trailing, spacing: 20) {
 
             HStack(alignment: .center, spacing: 10) {
-                Text(".scaledBorder(...) ✅")
+                Text(".sparkBorder(...) ✅")
                     .dynamicTypeSize(.xSmall)
                     .fixedSize()
 

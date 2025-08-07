@@ -8,6 +8,9 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Use SparkAdaptiveUIStackView instead.")
+public typealias AdaptiveUIStackView = SparkAdaptiveUIStackView
+
 /// StackView that changes its layout if the preferred font size in the accessibility category
 ///
 /// Implementation example :
@@ -35,7 +38,7 @@ import UIKit
 ///
 /// stackView.accessibilityInterfaceSizeClass = .compact
 /// ```
-public class AdaptiveUIStackView: UIStackView {
+public class SparkAdaptiveUIStackView: UIStackView {
 
     // MARK: - Override Properties
 

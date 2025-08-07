@@ -50,11 +50,11 @@ private struct SnapshotView: View {
         VStack(alignment: .trailing, spacing: 20) {
 
             HStack(alignment: .center, spacing: 10) {
-                Text("ScaledVStack ✅")
+                Text("SparkVStack ✅")
                     .dynamicTypeSize(.xSmall)
                     .fixedSize()
 
-                ScaledVStack(spacing: self.spacing) {
+                SparkVStack(spacing: self.spacing) {
                     self.content()
                 }
             }

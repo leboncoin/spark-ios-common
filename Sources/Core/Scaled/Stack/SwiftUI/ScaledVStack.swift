@@ -8,8 +8,11 @@
 
 import SwiftUI
 
+@available(*, deprecated, message: "Use SparkVStack instead.")
+public typealias ScaledVStack = SparkVStack
+
 /// A view that arranges its subviews in a vertical line with a scaled spacing.
-public struct ScaledVStack<Content>: View where Content: View {
+public struct SparkVStack<Content>: View where Content: View {
 
     // MARK: - Properties
 
