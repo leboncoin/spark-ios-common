@@ -81,7 +81,7 @@ public extension View {
     ///     maxHeight: 20
     /// )
     /// ```
-    func sparkScaledFrame(
+    func sparkFrame(
         minWidth: CGFloat? = nil,
         maxWidth: CGFloat? = nil,
         minHeight: CGFloat? = nil,
@@ -123,7 +123,7 @@ public extension View {
     ///     maxHeight: 20
     /// )
     /// ```
-    @available(*, deprecated, message: "Use sparkScaledFrame instead.")
+    @available(*, deprecated, message: "Use sparkFrame instead.")
     func scaledFrame(
         minWidth: CGFloat? = nil,
         maxWidth: CGFloat? = nil,
