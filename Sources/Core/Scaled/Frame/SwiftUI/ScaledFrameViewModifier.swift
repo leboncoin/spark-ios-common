@@ -69,7 +69,7 @@ public extension View {
     ///     height: 20
     /// )
     /// ```
-    func sparkScaledFrame(
+    func sparkFrame(
         width: CGFloat? = nil,
         height: CGFloat? = nil,
         relativeTo: Font.TextStyle? = .largeTitle,
@@ -105,7 +105,7 @@ public extension View {
     ///     height: 20
     /// )
     /// ```
-    @available(*, deprecated, message: "Use sparkScaledFrame instead.")
+    @available(*, deprecated, message: "Use sparkFrame instead.")
     func scaledFrame(
         width: CGFloat? = nil,
         height: CGFloat? = nil,

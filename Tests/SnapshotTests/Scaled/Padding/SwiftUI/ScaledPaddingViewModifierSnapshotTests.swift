@@ -50,14 +50,14 @@ private struct SnapshotView: View {
         VStack(alignment: .trailing, spacing: 20) {
 
             HStack(alignment: .center, spacing: 10) {
-                Text(".sparkScaledPadding(...) ✅")
+                Text(".sparkPadding(...) ✅")
                     .dynamicTypeSize(.xSmall)
                     .fixedSize()
 
                 Rectangle()
                     .fill(.white)
                     .frame(width: self.width, height: self.height)
-                    .sparkScaledPadding(self.padding)
+                    .sparkPadding(self.padding)
                     .background(.orange)
 
             }

@@ -59,7 +59,7 @@ public extension View {
     ///     trailing: 4
     /// ))
     /// ```
-    func sparkScaledPadding(_ insets: EdgeInsets) -> some View {
+    func sparkPadding(_ insets: EdgeInsets) -> some View {
         self.modifier(ScaledPaddingInsetsViewModifier(insets))
     }
 
@@ -82,7 +82,7 @@ public extension View {
     /// ))
     /// ```
 
-    @available(*, deprecated, message: "Use sparkScaledPadding instead.")
+    @available(*, deprecated, message: "Use sparkPadding instead.")
     func scaledPadding(_ insets: EdgeInsets) -> some View {
         self.modifier(ScaledPaddingInsetsViewModifier(insets))
     }

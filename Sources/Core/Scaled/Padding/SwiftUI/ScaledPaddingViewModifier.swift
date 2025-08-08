@@ -50,7 +50,7 @@ public extension View {
     /// Text("Hello World")
     /// .scaledPadding(10)
     /// ```
-    func sparkScaledPadding(_ length: CGFloat) -> some View {
+    func sparkPadding(_ length: CGFloat) -> some View {
         self.modifier(ScaledPaddingViewModifier(length: length))
     }
 
@@ -67,7 +67,7 @@ public extension View {
     /// Text("Hello World")
     /// .scaledPadding(10)
     /// ```
-    @available(*, deprecated, message: "Use sparkScaledPadding instead.")
+    @available(*, deprecated, message: "Use sparkPadding instead.")
     func scaledPadding(_ length: CGFloat) -> some View {
         self.modifier(ScaledPaddingViewModifier(length: length))
     }
@@ -88,7 +88,7 @@ public extension View {
     /// Text("Hello World")
     /// .scaledPadding(.leading, 10)
     /// ```
-    func sparkScaledPadding(_ edges: Edge.Set = .all, _ length: CGFloat) -> some View {
+    func sparkPadding(_ edges: Edge.Set = .all, _ length: CGFloat) -> some View {
         self.modifier(ScaledPaddingViewModifier(edges: edges, length: length))
     }
 
@@ -108,7 +108,7 @@ public extension View {
     /// Text("Hello World")
     /// .scaledPadding(.leading, 10)
     /// ```
-    @available(*, deprecated, message: "Use sparkScaledPadding instead.")
+    @available(*, deprecated, message: "Use sparkPadding instead.")
     func scaledPadding(_ edges: Edge.Set = .all, _ length: CGFloat) -> some View {
         self.modifier(ScaledPaddingViewModifier(edges: edges, length: length))
     }
