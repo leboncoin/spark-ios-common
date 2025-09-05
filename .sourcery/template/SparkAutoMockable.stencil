@@ -102,7 +102,7 @@
     }
     {% endif %}
     {% if method.parameters.count == 1 %}
-    public var {% call swiftifyMethodNameV2 method %}Received{% for param in method.parameters %}{{ param.name|upperFirstLetter }}: {{ '(' if param.isClosure }}{{ param.typeName.unwrappedTypeName }}{{ ')' if param.isClosure }}?{% endfor %}
+    public var {% call swiftifyMethodNameV2 method %}Received{% for param in method.parameters %}{{ param.name|upperFirstLetter }}: {{ '(' if param.isClosure or param.typeName|contains:"any"  }}{{ param.typeName.unwrappedTypeName }}{{ ')' if param.isClosure or param.typeName|contains:"any" }}?{% endfor %}
     public var {% call swiftifyMethodNameV2 method %}ReceivedInvocations{% for param in method.parameters %}: [{{ '(' if param.isClosure }}{{ param.typeName.unwrappedTypeName }}{{ ')' if param.isClosure }}{%if param.typeName.isOptional%}?{%endif%}]{% endfor %} = []
     {% elif not method.parameters.count == 0 %}
     public var {% call swiftifyMethodNameV2 method %}ReceivedArguments: ({% for param in method.parameters %}{{ param.name }}: {{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}{{ ', ' if not forloop.last }}{% endfor %})?
