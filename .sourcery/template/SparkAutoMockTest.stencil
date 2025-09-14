@@ -38,7 +38,7 @@
         _ mock: {% call mockName protocol %},
         expectedNumberOfCalls: Int,
     {% for param in method.parameters %}
-        {% call givenParameter param %}: {% if method.annotations[param.name] == "Identical" %}{% call dynamicTypeName param.name %}{% elif protocol.associatedTypes[param.typeName] != nil %}{% call mockName protocol %}.{{ protocol.associatedTypes[param.typeName].name }}Mock{% else %}{{ param.typeName | replace:"?","" }}{% endif %}? = nil{% if not forloop.last or not method.returnTypeName.isVoid %}, {% endif %}
+        {% call givenParameter param %}: {% if method.annotations[param.name] == "Identical" %}{% call dynamicTypeName param.name %}{% elif protocol.associatedTypes[param.typeName] != nil %}{% call mockName protocol %}.{{ protocol.associatedTypes[param.typeName].name }}Mock{% else %}{{ '(' if param.isClosure or param.typeName|contains:"any"  }}{{ param.typeName | replace:"?","" }}{{ ')' if param.isClosure or param.typeName|contains:"any"  }}{% endif %}? = nil{% if not forloop.last or not method.returnTypeName.isVoid %}, {% endif %}
     {% endfor %}
         {% if not method.returnTypeName.isVoid %}expectedReturnValue: {% if method.annotations["return"] == "Identical" %}{% call dynamicTypeName "return" %}{% elif protocol.associatedTypes["Return"] != nil %}{% call mockName protocol %}.ReturnMock{% if method.isOptionalReturnType %}?{% endif %}{% else %}{{ method.returnTypeName }}{% endif %}{% endif %}
     ) {
