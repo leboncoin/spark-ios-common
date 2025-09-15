@@ -60,14 +60,13 @@ public extension UIView {
             self.layer.addSublayer(borderLayer)
 
             self.layer.mask = mask
+            self.layer.masksToBounds = true
 
         } else {
             self.layer.cornerRadius = radius
             self.layer.borderWidth = width
             self.layer.borderColor = borderColor
         }
-
-        self.layer.masksToBounds = true
     }
 
     /// Add a **Spark** corner radius to the current view.
@@ -88,11 +87,10 @@ public extension UIView {
         if isHighlighted {
             let mask = self.cornerRadiusMask(cornerRadius)
             self.layer.mask = mask
+            self.layer.masksToBounds = true
         } else {
             self.layer.cornerRadius = cornerRadius
         }
-
-        self.layer.masksToBounds = true
     }
 }
 
