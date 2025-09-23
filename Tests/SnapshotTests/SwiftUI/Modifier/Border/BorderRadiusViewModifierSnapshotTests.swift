@@ -18,7 +18,7 @@ final class BorderRadiusViewModifierSnapshotTests: SwiftUIComponentSnapshotTestC
     // MARK: - Tests
 
     func test() throws {
-        let theme: Theme = SparkTheme.shared
+        let theme: any Theme = SparkTheme.shared
 
         for radius in SparkBorder.Radius.allCases {
             self.assertSnapshot(
@@ -36,7 +36,7 @@ private struct SnapshotView: View {
 
     // MARK: - Properties
 
-    private let theme: Theme = SparkTheme.shared
+    private let theme: any Theme = SparkTheme.shared
     @ScaledMetric var width: CGFloat = 140
     @ScaledMetric var height: CGFloat = 20
 

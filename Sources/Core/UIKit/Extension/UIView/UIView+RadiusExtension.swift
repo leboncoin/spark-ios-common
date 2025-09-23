@@ -17,18 +17,22 @@ public extension UIView {
 
     /// Add a **Spark** border with corner radius to the current view.
     ///
-    /// Note: Recommanded to set on *layoutSubviews* to avoid any issue on cornerRadius.
+    /// Note: Recommanded to set on *layoutSubviews*  or **viewDidLayoutSubviews** to avoid any issue on cornerRadius.
+    /// If the bounds is equals to 0, the isHighlighted parameter will be ignored.
     ///
     /// - Parameters:
     ///   - width: The border width.
     ///   - radius: The border radius.
     ///   - isHighlighted: Apply a custom style (no radius on bottom left). Default is *false*.
     ///   - colorToken: The color token of the border.
+    ///   - masksToBounds: A Boolean indicating whether sublayers are clipped to the layer’s bounds. Default is **true**.
+    ///   Be carefull if you set the value at **false**, the UI can be impacted.
     func sparkBorderRadius(
         width: CGFloat,
         radius: CGFloat,
         isHighlighted: Bool = false,
-        colorToken: any ColorToken
+        colorToken: any ColorToken,
+        masksToBounds: Bool = true
     ) {
         // No Width ? Add a corner radius instead !
         guard width > 0 else {
@@ -45,7 +49,9 @@ public extension UIView {
         let radius = self.validatedCornerRadius(radius)
         let borderColor = colorToken.uiColor.resolvedColor(with: self.traitCollection).cgColor
 
-        if isHighlighted {
+        // Apply isHighlighted only if bounds is not empty
+        if isHighlighted && !self.bounds.isEmpty {
+
             // Apply the corner radius
             let mask = self.cornerRadiusMask(radius)
 
@@ -60,13 +66,14 @@ public extension UIView {
             self.layer.addSublayer(borderLayer)
 
             self.layer.mask = mask
-            self.layer.masksToBounds = true
 
         } else {
             self.layer.cornerRadius = radius
             self.layer.borderWidth = width
             self.layer.borderColor = borderColor
         }
+
+        self.layer.masksToBounds = masksToBounds
     }
 
     /// Add a **Spark** corner radius to the current view.

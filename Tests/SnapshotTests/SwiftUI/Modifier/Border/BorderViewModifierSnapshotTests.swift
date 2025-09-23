@@ -32,7 +32,7 @@ private struct SnapshotView: View {
 
     // MARK: - Properties
 
-    private let theme: Theme = SparkTheme.shared
+    private let theme: any Theme = SparkTheme.shared
     @ScaledMetric var width: CGFloat = 140
     @ScaledMetric var height: CGFloat = 20
 

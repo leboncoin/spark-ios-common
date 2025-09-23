@@ -18,7 +18,7 @@ final class CornerRadiusViewModifierSnapshotTests: SwiftUIComponentSnapshotTestC
     // MARK: - Tests
 
     func test() throws {
-        let theme: Theme = SparkTheme.shared
+        let theme: any Theme = SparkTheme.shared
 
         for radius in SparkBorder.Radius.allCases {
             self.assertSnapshot(
