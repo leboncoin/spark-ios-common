@@ -26,6 +26,17 @@
             "Wrong {{ method.name }} number of called on {{ protocol.name }}"
         )
     }
+        
+    public static func XCTCalled(
+        _ mock: {% call mockName protocol %},
+        {% call swiftifyMethodNameV2 method %}Called isCalled: Bool
+    ) {
+        XCTAssertEqual(
+            mock.{% call swiftifyMethodNameV2 method %}Called,
+            isCalled,
+            "Wrong {{ method.name }} isCalled on {{ protocol.name }}"
+        )
+    }
 
     public static func XCTAssert{% for key, value in method.annotations where value == "Identical" %}{% if forloop.first %}<
     {% for param in method.parameters where method.annotations[param.name] == "Identical" %}
