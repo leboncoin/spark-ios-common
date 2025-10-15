@@ -11,8 +11,11 @@ import UIKit
 @_spi(SI_SPI) public extension UIView {
 
     /// Insert or remove the trait on the current accessibilityTraits
-    func accessibilityTraits(manage trait: UIAccessibilityTraits, insert: Bool) {
-        if insert {
+    func accessibilityTraits(
+        _ trait: UIAccessibilityTraits,
+        condition: Bool
+    ) {
+        if condition {
             self.accessibilityTraits.insert(trait)
         } else {
             self.accessibilityTraits.remove(trait)

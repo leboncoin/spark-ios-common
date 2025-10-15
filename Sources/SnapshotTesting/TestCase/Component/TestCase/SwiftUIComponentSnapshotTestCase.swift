@@ -23,8 +23,12 @@ import UIKit
         timeout: TimeInterval = ComponentSnapshotTestConstants.timeout,
         file: StaticString = #file,
         testName: String = #function,
-        line: UInt = #line
+        line: UInt = #line,
+        forDocumentation: Bool = false
     ) {
+        let modes = forDocumentation ? ComponentSnapshotTestConstants.Modes.all : modes
+        let sizes = forDocumentation ? [.large] : sizes
+
         for mode in modes {
             for size in sizes {
                 sparkAssertSnapshot(
@@ -48,7 +52,8 @@ import UIKit
                     testName: ComponentSnapshotTestHelpers.testName(
                         testName,
                         mode: mode,
-                        size: size
+                        size: size,
+                        forDocumentation: forDocumentation
                     ),
                     line: line
                 )

@@ -15,10 +15,16 @@ import UIKit
     public static func testName(
         _ testName: String,
         mode: ComponentSnapshotTestMode,
-        size: UIContentSizeCategory
+        size: UIContentSizeCategory,
+        forDocumentation: Bool = false
     ) -> String {
-        return [testName, mode.suffix, size.identifier]
-            .joined(separator: "-")
+        if forDocumentation {
+            return [testName, mode.documentationName]
+                .joined(separator: "~")
+        } else {
+            return [testName, mode.suffix, size.identifier]
+                .joined(separator: "-")
+        }
     }
 
     public static func traitCollection(

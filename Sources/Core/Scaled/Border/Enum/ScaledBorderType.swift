@@ -10,6 +10,7 @@ import SwiftUI
 import UIKit
 
 internal enum ScaledBorderType {
+    case dash
     case radius
     case width
 
@@ -18,28 +19,28 @@ internal enum ScaledBorderType {
     var uiKitRelativeTo: UIFont.TextStyle {
         switch self {
         case .radius: .body
-        case .width: .caption2
+        case .dash, .width: .caption2
         }
     }
 
     var swiftUIRelativeTo: Font.TextStyle? {
         switch self {
         case .radius: nil
-        case .width: .caption2
+        case .dash, .width: .caption2
         }
     }
 
     var minValueFactor: CGFloat {
         switch self {
+        case .dash, .width: 1
         case .radius: 1
-        case .width: 1
         }
     }
 
     var maxValueFactor: CGFloat {
         switch self {
+        case .dash, .width: 1.75
         case .radius: 1.2
-        case .width: 1.75
         }
     }
 }

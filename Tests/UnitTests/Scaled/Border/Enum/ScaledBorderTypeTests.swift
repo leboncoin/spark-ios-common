@@ -13,6 +13,17 @@ final class ScaledBorderTypeTests: XCTestCase {
 
     // MARK: - Tests
 
+    func test_dash_properties() {
+        // GIVEN / WHEN
+        let borderType = ScaledBorderType.dash
+
+        // THEN
+        XCTAssertEqual(borderType.uiKitRelativeTo, .caption2, "Wrong uiKitRelativeTo when value is .dash")
+        XCTAssertEqual(borderType.swiftUIRelativeTo, .caption2, "Wrong swiftUIRelativeTo when value is .dash")
+        XCTAssertEqual(borderType.minValueFactor, 1, "Wrong minValueFactor when value is .dash")
+        XCTAssertEqual(borderType.maxValueFactor, 1.75, "Wrong maxValueFactor when value is .dash")
+    }
+
     func test_radius_properties() {
         // GIVEN / WHEN
         let borderType = ScaledBorderType.radius

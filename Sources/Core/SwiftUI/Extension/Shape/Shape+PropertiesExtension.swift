@@ -1,5 +1,5 @@
 //
-//  Shape+Extension.swift
+//  Shape+PropertiesExtension.swift
 //  SparkCommon
 //
 //  Created by robin.lemaire on 29/09/2023.

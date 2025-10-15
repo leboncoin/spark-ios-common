@@ -44,7 +44,7 @@ public extension UIView {
             self.updateTraitsIfNeeded()
         }
 
-        self.clear(isHighlighted: isHighlighted)
+        self.clear()
 
         let radius = self.validatedCornerRadius(radius)
         let borderColor = colorToken.uiColor.resolvedColor(with: self.traitCollection).cgColor
@@ -53,16 +53,15 @@ public extension UIView {
         if isHighlighted && !self.bounds.isEmpty {
 
             // Apply the corner radius
-            let mask = self.cornerRadiusMask(radius)
+            let mask = self.highlightedCornerRadiusMask(radius)
 
             // Add border
-            let borderLayer = CAShapeLayer()
-            borderLayer.name = Constants.name
-            borderLayer.path = mask.path
-            borderLayer.fillColor = UIColor.clear.cgColor
-            borderLayer.strokeColor = borderColor
+            let borderLayer = self.borderLayer(
+                width: width,
+                strokeColor: borderColor
+            )
             borderLayer.lineWidth = width * 2
-            borderLayer.frame = self.bounds
+            borderLayer.path = mask.path
             self.layer.addSublayer(borderLayer)
 
             self.layer.mask = mask
@@ -72,6 +71,68 @@ public extension UIView {
             self.layer.borderWidth = width
             self.layer.borderColor = borderColor
         }
+
+        self.layer.masksToBounds = masksToBounds
+    }
+
+    /// Add a **Spark** dash border with corner radius to the current view.
+    ///
+    /// Note: Recommanded to set on *layoutSubviews*  or **viewDidLayoutSubviews** to avoid any issue on cornerRadius.
+    /// If the dash is equals to 0, the dash parameter will be ignored.
+    ///
+    /// - Parameters:
+    ///   - width: The border width.
+    ///   - radius: The border radius.
+    ///   - dash: The length of painted segments used to make a dashed line.
+    ///   - colorToken: The color token of the border.
+    ///   - masksToBounds: A Boolean indicating whether sublayers are clipped to the layer’s bounds. Default is **true**.
+    ///   Be carefull if you set the value at **false**, the UI can be impacted.
+    func sparkBorderRadius(
+        width: CGFloat,
+        radius: CGFloat,
+        dash: CGFloat,
+        colorToken: any ColorToken,
+        masksToBounds: Bool = true
+    ) {
+        // No Width ? Add a corner radius instead !
+        guard width > 0 else {
+            self.sparkCornerRadius(radius)
+            return
+        }
+
+        if #available(iOS 17.0, *) {
+            self.updateTraitsIfNeeded()
+        }
+
+        self.clear()
+
+        let radius = self.validatedCornerRadius(radius)
+        let borderColor = colorToken.uiColor.resolvedColor(with: self.traitCollection).cgColor
+
+        // Apply dash only if bounds is not empty
+        if dash > 0 && !self.bounds.isEmpty {
+
+            let bezierPath = self.cornerRadiusBezierPath(
+                radius,
+                isHighlighted: false
+            )
+
+            let borderLayer = self.borderLayer(
+                width: width,
+                strokeColor: borderColor
+            )
+            borderLayer.lineWidth = width
+            borderLayer.lineDashPattern = dash.toDashArray.map { NSNumber(value: $0) }
+            borderLayer.path = bezierPath.cgPath
+            self.layer.addSublayer(borderLayer)
+
+        } else {
+            self.layer.borderWidth = width
+            self.layer.borderColor = borderColor
+        }
+
+        // Apply a corner radius in both cases
+        self.layer.cornerRadius = radius
 
         self.layer.masksToBounds = masksToBounds
     }
@@ -87,12 +148,12 @@ public extension UIView {
         _ cornerRadius: CGFloat,
         isHighlighted: Bool = false
     ) {
-        self.clear(isHighlighted: isHighlighted)
+        self.clear()
 
         let cornerRadius = self.validatedCornerRadius(cornerRadius)
 
         if isHighlighted {
-            let mask = self.cornerRadiusMask(cornerRadius)
+            let mask = self.highlightedCornerRadiusMask(cornerRadius)
             self.layer.mask = mask
             self.layer.masksToBounds = true
         } else {
@@ -109,17 +170,12 @@ private extension UIView {
         return cornerRadius.isInfinite ? self.frame.height / 2 : cornerRadius
     }
 
-    func cornerRadiusMask(
+    func highlightedCornerRadiusMask(
         _ cornerRadius: CGFloat
     ) -> CAShapeLayer {
-        let path = UIBezierPath(
-            roundedRect: self.bounds,
-            byRoundingCorners: [
-                .topLeft,
-                .topRight,
-                .bottomRight
-            ],
-            cornerRadius: cornerRadius
+        let path = self.cornerRadiusBezierPath(
+            cornerRadius,
+            isHighlighted: true
         )
 
         let mask = CAShapeLayer()
@@ -128,17 +184,55 @@ private extension UIView {
         return mask
     }
 
-    func clear(isHighlighted: Bool) {
-        // Remove previous spark sublayers
-        self.layer.sublayers?.removeAll(where: { $0.name == Constants.name })
-
-        if isHighlighted {
-            self.layer.cornerRadius = 0
-            self.layer.borderWidth = 0
-            self.layer.borderColor = UIColor.clear.cgColor
-
+    func cornerRadiusBezierPath(
+        _ cornerRadius: CGFloat,
+        isHighlighted: Bool
+    ) -> UIBezierPath {
+        return if isHighlighted {
+            .init(
+                roundedRect: self.bounds,
+                byRoundingCorners: [
+                    .topLeft,
+                    .topRight,
+                    .bottomRight
+                ],
+                cornerRadius: cornerRadius
+            )
         } else {
-            self.layer.mask = nil
+            .init(
+                roundedRect: self.bounds,
+                cornerRadius: cornerRadius
+            )
         }
+    }
+
+    func borderLayer(
+        width: CGFloat,
+        strokeColor: CGColor
+    ) -> CAShapeLayer {
+        let borderLayer = CAShapeLayer()
+        borderLayer.name = Constants.name
+        borderLayer.fillColor = UIColor.clear.cgColor
+        borderLayer.strokeColor = strokeColor
+        borderLayer.frame = self.bounds
+        return borderLayer
+    }
+
+    func clear() {
+        // Remove previous spark sublayers
+        if var sublayers = self.layer.sublayers {
+            for layer in sublayers.filter({ $0.name == Constants.name}) {
+                layer.removeFromSuperlayer()
+            }
+
+            sublayers.removeAll(where: { $0.name == Constants.name })
+        }
+
+        self.layer.cornerRadius = 0
+        self.layer.borderWidth = 0
+        self.layer.borderColor = UIColor.clear.cgColor
+
+        // Used for isHighlighted
+        self.layer.mask = nil
     }
 }

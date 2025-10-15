@@ -20,7 +20,7 @@ final class BorderRadiusViewModifierSnapshotTests: SwiftUIComponentSnapshotTestC
     func test() throws {
         let theme: any Theme = SparkTheme.shared
 
-        for radius in SparkBorder.Radius.allCases {
+        for radius in BorderRadius.allCases {
             self.assertSnapshot(
                 matching: SnapshotView(cornerRadius: radius.value(from: theme)),
                 modes: ComponentSnapshotTestConstants.Modes.default,
@@ -74,6 +74,31 @@ private struct SnapshotView: View {
                     .sparkBorder(
                         width: self.borderWidth,
                         radius: self.cornerRadius,
+                        colorToken: self.borderColor
+                    )
+            }
+
+            Divider()
+
+            HStack(spacing: 10) {
+                Text("Is dashed")
+                    .padding(4)
+                    .frame(width: self.width, height: self.height)
+                    .background(.white)
+                    .sparkBorder(
+                        width: self.borderWidth,
+                        radius: self.cornerRadius,
+                        dash: DashState.dashed.dash,
+                        colorToken: self.borderColor
+                    )
+
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: self.width, height: self.height)
+                    .sparkBorder(
+                        width: self.borderWidth,
+                        radius: self.cornerRadius,
+                        dash: DashState.dashed.dash,
                         colorToken: self.borderColor
                     )
             }
