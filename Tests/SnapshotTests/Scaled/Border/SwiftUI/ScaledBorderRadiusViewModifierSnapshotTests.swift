@@ -20,7 +20,7 @@ final class ScaledBorderRadiusViewModifierSnapshotTests: SwiftUIComponentSnapsho
     func test() throws {
         let theme: any Theme = SparkTheme.shared
 
-        for radius in SparkBorder.Radius.allCases {
+        for radius in BorderRadius.allCases {
             self.assertSnapshot(
                 matching: SnapshotView(borderRadius: radius.value(from: theme)),
                 modes: ComponentSnapshotTestConstants.Modes.default,
@@ -68,16 +68,19 @@ private struct SnapshotView: View {
                     .fixedSize()
 
                 HStack {
-                    ForEach(RadiusState.allCases, id: \.rawValue) { state in
-                        Rectangle()
-                            .fill(.white)
-                            .frame(width: self.width, height: self.height)
-                            .sparkBorder(
-                                width: self.borderWidth,
-                                radius: self.borderRadius,
-                                isHighlighted: state.isHighlighted,
-                                colorToken: self.borderColor
-                            )
+                    ForEach(DashState.allCases, id: \.rawValue) { dash in
+                        ForEach(RadiusState.allCases, id: \.rawValue) { radius in
+                            Rectangle()
+                                .fill(.white)
+                                .frame(width: self.width, height: self.height)
+                                .sparkBorder(
+                                    width: self.borderWidth,
+                                    radius: self.borderRadius,
+                                    dash: dash.dash,
+                                    isHighlighted: radius.isHighlighted,
+                                    colorToken: self.borderColor
+                                )
+                        }
                     }
                 }
             }
@@ -90,17 +93,20 @@ private struct SnapshotView: View {
                     .fixedSize()
 
                 HStack {
-                    ForEach(RadiusState.allCases, id: \.rawValue) { state in
-                        Rectangle()
-                            .fill(.white)
-                            .frame(width: self.width, height: self.height)
-                            .sparkBorder(
-                                width: self.scaledBorderWidth,
-                                radius: self.scaledBorderRadius,
-                                isHighlighted: state.isHighlighted,
-                                colorToken: self.borderColor,
-                                isScaled: false
-                            )
+                    ForEach(DashState.allCases, id: \.rawValue) { dash in
+                        ForEach(RadiusState.allCases, id: \.rawValue) { radius in
+                            Rectangle()
+                                .fill(.white)
+                                .frame(width: self.width, height: self.height)
+                                .sparkBorder(
+                                    width: self.scaledBorderWidth,
+                                    radius: self.scaledBorderRadius,
+                                    dash: dash.dash,
+                                    isHighlighted: radius.isHighlighted,
+                                    colorToken: self.borderColor,
+                                    isScaled: false
+                                )
+                        }
                     }
                 }
             }
@@ -113,17 +119,20 @@ private struct SnapshotView: View {
                     .fixedSize()
 
                 HStack {
-                    ForEach(RadiusState.allCases, id: \.rawValue) { state in
-                        Rectangle()
-                            .fill(.white)
-                            .frame(width: self.width, height: self.height)
-                            .sparkBorder(
-                                width: self.borderWidth,
-                                radius: self.borderRadius,
-                                isHighlighted: state.isHighlighted,
-                                colorToken: self.borderColor,
-                                isScaled: false
-                            )
+                    ForEach(DashState.allCases, id: \.rawValue) { dash in
+                        ForEach(RadiusState.allCases, id: \.rawValue) { radius in
+                            Rectangle()
+                                .fill(.white)
+                                .frame(width: self.width, height: self.height)
+                                .sparkBorder(
+                                    width: self.borderWidth,
+                                    radius: self.borderRadius,
+                                    dash: dash.dash,
+                                    isHighlighted: radius.isHighlighted,
+                                    colorToken: self.borderColor,
+                                    isScaled: false
+                                )
+                        }
                     }
                 }
             }

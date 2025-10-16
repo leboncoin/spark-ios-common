@@ -15,6 +15,7 @@ internal struct BorderRadiusViewModifier: ViewModifier {
 
     let width: CGFloat
     let radius: CGFloat
+    let dash: CGFloat?
     let isHighlighted: Bool
     let colorToken: any ColorToken
 
@@ -26,13 +27,28 @@ internal struct BorderRadiusViewModifier: ViewModifier {
                 self.radius,
                 isHighlighted: self.isHighlighted
             )
-            .overlay(
-                HighlightedRectangle(
-                    cornerRadius: self.radius,
-                    isHighlighted: self.isHighlighted
-                )
-                .stroke(self.colorToken.color, lineWidth: self.width)
-            )
+            .overlay {
+                if self.isHighlighted {
+                    HighlightedRectangle(
+                        cornerRadius: self.radius,
+                        isHighlighted: self.isHighlighted
+                    )
+                    .stroke(
+                        colorToken: self.colorToken,
+                        width: self.width,
+                        dash: self.dash
+                    )
+                } else {
+                    RoundedRectangle(
+                        cornerRadius: self.radius
+                    )
+                    .stroke(
+                        colorToken: self.colorToken,
+                        width: self.width,
+                        dash: self.dash
+                    )
+                }
+            }
     }
 }
 
@@ -44,6 +60,8 @@ public extension View {
     /// - Parameters:
     ///   - width: The border width.
     ///   - radius: The border radius.
+    ///   - dash: The length of painted segments used to make a
+    ///     dashed line. *Optional*. Default is *nil*.
     ///   - isHighlighted: Apply a custom style (no radius on bottom left). Default is *false*.
     ///   - colorToken: The color token of the border.
     ///   - isScaled: Apply a different width and radius depending on current the
@@ -59,6 +77,7 @@ public extension View {
     ///     .sparkBorder(
     ///         width: 2,
     ///         radius: 12,
+    ///         dash: 4,
     ///         isHighlighted: true,
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
@@ -79,6 +98,7 @@ public extension View {
     func sparkBorder(
         width: CGFloat,
         radius: CGFloat,
+        dash: CGFloat? = nil,
         isHighlighted: Bool = false,
         colorToken: any ColorToken,
         isScaled: Bool = true
@@ -88,6 +108,7 @@ public extension View {
                 self.scaledBorder(
                     width: width,
                     radius: radius,
+                    dash: dash,
                     isHighlighted: isHighlighted,
                     colorToken: colorToken
                 )
@@ -95,6 +116,7 @@ public extension View {
                 self.modifier(BorderRadiusViewModifier(
                     width: width,
                     radius: radius,
+                    dash: dash,
                     isHighlighted: isHighlighted,
                     colorToken: colorToken
                 ))

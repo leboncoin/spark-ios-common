@@ -25,8 +25,8 @@ final class AdaptiveUIStackViewSnapshotTests: UIKitComponentSnapshotTestCase {
 
         self.assertSnapshot(
             matching: view,
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 
@@ -44,8 +44,8 @@ final class AdaptiveUIStackViewSnapshotTests: UIKitComponentSnapshotTestCase {
 
         self.assertSnapshot(
             matching: view,
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 
@@ -70,8 +70,8 @@ final class AdaptiveUIStackViewSnapshotTests: UIKitComponentSnapshotTestCase {
 
         self.assertSnapshot(
             matching: view,
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 }

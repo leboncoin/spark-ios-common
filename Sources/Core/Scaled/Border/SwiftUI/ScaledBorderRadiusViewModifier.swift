@@ -15,6 +15,7 @@ private struct ScaledBorderRadiusViewModifier: ViewModifier {
 
     @LimitedScaledMetric var width: CGFloat
     @LimitedScaledMetric var radius: CGFloat
+    @LimitedScaledMetric var dash: CGFloat
     let isHighlighted: Bool
     let colorToken: any ColorToken
 
@@ -23,11 +24,13 @@ private struct ScaledBorderRadiusViewModifier: ViewModifier {
     init(
         width: CGFloat,
         radius: CGFloat,
+        dash: CGFloat? = nil,
         isHighlighted: Bool,
         colorToken: any ColorToken
     ) {
         self._width = .init(value: width, type: .width)
         self._radius = .init(value: radius, type: .radius)
+        self._dash = .init(value: dash, type: .dash)
         self.isHighlighted = isHighlighted
         self.colorToken = colorToken
     }
@@ -39,6 +42,7 @@ private struct ScaledBorderRadiusViewModifier: ViewModifier {
             .modifier(BorderRadiusViewModifier(
                 width: self.width,
                 radius: self.radius,
+                dash: self.dash,
                 isHighlighted: self.isHighlighted,
                 colorToken: self.colorToken
             ))
@@ -57,6 +61,8 @@ internal extension View {
     /// - Parameters:
     ///   - width: The thickness of the border.
     ///   - radius: The corner radius of the border.
+    ///   - dash: The length of painted segments used to make a
+    ///     dashed line. *Optional*. Default is *nil*.   
     ///   - isHighlighted: Apply a custom style (no radius on bottom left). Default is *false*.
     ///   - colorToken: The color token to use for the border.
     /// - Returns: A modified view with the applied border.
@@ -70,6 +76,7 @@ internal extension View {
     ///     .scaledBorder(
     ///         width: 2,
     ///         radius: 12,
+    ///         dash: 4,
     ///         isHighlighted: true,
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
@@ -90,6 +97,7 @@ internal extension View {
     func scaledBorder(
         width: CGFloat,
         radius: CGFloat,
+        dash: CGFloat? = nil,
         isHighlighted: Bool = false,
         colorToken: any ColorToken
     ) -> some View {
@@ -97,6 +105,7 @@ internal extension View {
             self.modifier(ScaledBorderRadiusViewModifier(
                 width: width,
                 radius: radius,
+                dash: dash,
                 isHighlighted: isHighlighted,
                 colorToken: colorToken
             ))

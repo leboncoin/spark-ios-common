@@ -14,6 +14,7 @@ internal struct BorderViewModifier: ViewModifier {
     // MARK: - Properties
 
     let width: CGFloat
+    let dash: CGFloat?
     let colorToken: any ColorToken
 
     // MARK: - View
@@ -22,7 +23,11 @@ internal struct BorderViewModifier: ViewModifier {
         content
             .overlay(
                 Rectangle()
-                    .stroke(self.colorToken.color, lineWidth: self.width)
+                    .stroke(
+                        colorToken: self.colorToken,
+                        width: self.width,
+                        dash: self.dash
+                    )
             )
     }
 }
@@ -34,6 +39,8 @@ public extension View {
     /// Add a **Spark** border to the current view.
     /// - Parameters:
     ///   - width: The border width.
+    ///   - dash: The length of painted segments used to make a
+    ///     dashed line. *Optional*. Default is *nil*.
     ///   - colorToken: The color token of the border.
     ///   - isScaled: Apply a scaled width depending on current the
     ///   dynamic size. Default is *true*.   
@@ -47,6 +54,7 @@ public extension View {
     ///     .background(.white)
     ///     .sparkBorder(
     ///         width: 2,
+    ///         dash: 4,
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
     /// ```
@@ -64,17 +72,20 @@ public extension View {
     @ViewBuilder
     func sparkBorder(
         width: CGFloat,
+        dash: CGFloat? = nil,
         colorToken: any ColorToken,
         isScaled: Bool = true
     ) -> some View {
         if isScaled {
             self.scaledBorder(
                 width: width,
+                dash: dash,
                 colorToken: colorToken
             )
         } else {
             self.modifier(BorderViewModifier(
                 width: width,
+                dash: dash,
                 colorToken: colorToken
             ))
         }

@@ -20,7 +20,7 @@ final class ScaledCornerRadiusViewModifierSnapshotTests: SwiftUIComponentSnapsho
     func test() throws {
         let theme: any Theme = SparkTheme.shared
 
-        for radius in SparkBorder.Radius.allCases {
+        for radius in BorderRadius.allCases {
             self.assertSnapshot(
                 matching: SnapshotView(borderRadius: radius.value(from: theme)),
                 modes: ComponentSnapshotTestConstants.Modes.default,

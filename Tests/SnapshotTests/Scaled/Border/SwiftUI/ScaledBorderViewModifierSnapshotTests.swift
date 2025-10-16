@@ -59,13 +59,18 @@ private struct SnapshotView: View {
                     .dynamicTypeSize(.xSmall)
                     .fixedSize()
 
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        colorToken: self.borderColor
-                    )
+                HStack {
+                    ForEach(DashState.allCases, id: \.rawValue) { dash in
+                        Rectangle()
+                            .fill(.white)
+                            .frame(width: self.width, height: self.height)
+                            .sparkBorder(
+                                width: self.borderWidth,
+                                dash: dash.dash,
+                                colorToken: self.borderColor
+                            )
+                    }
+                }
             }
 
             Divider()
@@ -75,14 +80,19 @@ private struct SnapshotView: View {
                     .dynamicTypeSize(.xSmall)
                     .fixedSize()
 
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .sparkBorder(
-                        width: self.scaledBorderWidth,
-                        colorToken: self.borderColor,
-                        isScaled: false
-                    )
+                HStack {
+                    ForEach(DashState.allCases, id: \.rawValue) { dash in
+                        Rectangle()
+                            .fill(.white)
+                            .frame(width: self.width, height: self.height)
+                            .sparkBorder(
+                                width: self.scaledBorderWidth,
+                                dash: dash.dash,
+                                colorToken: self.borderColor,
+                                isScaled: false
+                            )
+                    }
+                }
             }
 
             Divider()
@@ -92,14 +102,19 @@ private struct SnapshotView: View {
                     .dynamicTypeSize(.xSmall)
                     .fixedSize()
 
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        colorToken: self.borderColor,
-                        isScaled: false
-                    )
+                HStack {
+                    ForEach(DashState.allCases, id: \.rawValue) { dash in
+                        Rectangle()
+                            .fill(.white)
+                            .frame(width: self.width, height: self.height)
+                            .sparkBorder(
+                                width: self.borderWidth,
+                                dash: dash.dash,
+                                colorToken: self.borderColor,
+                                isScaled: false
+                            )
+                    }
+                }
             }
         }
         .padding(20)

@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-// TODO: voir pour faire du cas par cas coté Component (ne laisser ouvert que le label coté Formfield + Hint sur le title par exemple)... Et utiliser ensuite ce modèle en interne afin de set rapidement toutes les valeurs (sur le FormField: le label + hint pour le title)
-
 /// Struct using to manage the accessibility properties on SwiftUI.
 @_spi(SI_SPI) public struct Accessibility {
 

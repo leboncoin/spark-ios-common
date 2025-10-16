@@ -49,23 +49,49 @@ private struct SnapshotView: View {
     // MARK: - View
 
     var body: some View {
-        HStack(alignment: .center, spacing: 10) {
-            Text("Text")
-                .padding(4)
-                .frame(width: self.width, height: self.height)
-                .background(.white)
-                .sparkBorder(
-                    width: self.borderWidth,
-                    colorToken: self.borderColor
-                )
+        VStack(alignment: .trailing, spacing: 20) {
 
-            Rectangle()
-                .fill(.white)
-                .frame(width: self.width, height: self.height)
-                .sparkBorder(
-                    width: self.borderWidth,
-                    colorToken: self.borderColor
-                )
+            HStack(alignment: .center, spacing: 10) {
+                Text("Default")
+                    .padding(4)
+                    .frame(width: self.width, height: self.height)
+                    .background(.white)
+                    .sparkBorder(
+                        width: self.borderWidth,
+                        colorToken: self.borderColor
+                    )
+
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: self.width, height: self.height)
+                    .sparkBorder(
+                        width: self.borderWidth,
+                        colorToken: self.borderColor
+                    )
+            }
+
+            Divider()
+
+            HStack(spacing: 10) {
+                Text("Is dashed")
+                    .padding(4)
+                    .frame(width: self.width, height: self.height)
+                    .background(.white)
+                    .sparkBorder(
+                        width: self.borderWidth,
+                        dash: DashState.dashed.dash,
+                        colorToken: self.borderColor
+                    )
+
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: self.width, height: self.height)
+                    .sparkBorder(
+                        width: self.borderWidth,
+                        dash: DashState.dashed.dash,
+                        colorToken: self.borderColor
+                    )
+            }
         }
         .padding(20)
         .background(.gray)
