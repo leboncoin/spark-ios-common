@@ -20,8 +20,8 @@ final class ScaledFrameViewModifierSnapshotTests: SwiftUIComponentSnapshotTestCa
     func test() throws {
         self.assertSnapshot(
             matching: SnapshotView(),
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 }
@@ -48,43 +48,24 @@ private struct SnapshotView: View {
     // MARK: - View
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 20) {
-
-            HStack(alignment: .center, spacing: 10) {
-                Text(".sparkFrame(...) ✅")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
+        ScaledSnapshotView(
+            scaledContent: {
                 Rectangle()
                     .fill(.white)
                     .sparkFrame(
                         width: self.width,
                         height: self.height
                     )
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("@ScaledMetric 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
+            },
+            scaledMetricContent: {
                 Rectangle()
                     .fill(.white)
                     .frame(
                         width: self.scaledWidth,
                         height: self.scaledHeight
                     )
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("Without scaling 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
+            },
+            withoutScalingContent: {
                 Rectangle()
                     .fill(.white)
                     .frame(
@@ -92,8 +73,6 @@ private struct SnapshotView: View {
                         height: self.height
                     )
             }
-        }
-        .padding(20)
-        .background(.gray)
+        )
     }
 }

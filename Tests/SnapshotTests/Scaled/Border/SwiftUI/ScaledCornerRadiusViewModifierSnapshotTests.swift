@@ -17,14 +17,33 @@ final class ScaledCornerRadiusViewModifierSnapshotTests: SwiftUIComponentSnapsho
 
     // MARK: - Tests
 
-    func test() throws {
+    func test_default() throws {
         let theme: any Theme = SparkTheme.shared
 
         for radius in BorderRadius.allCases {
             self.assertSnapshot(
-                matching: SnapshotView(borderRadius: radius.value(from: theme)),
+                matching: SnapshotView(
+                    state: .default,
+                    cornerRadius: radius.value(from: theme)
+                ),
                 modes: ComponentSnapshotTestConstants.Modes.default,
-                sizes: UIContentSizeCategory.snapshotsCases
+                sizes: ComponentSnapshotTestConstants.Sizes.all,
+                testName: #function + "\(radius)Radius"
+            )
+        }
+    }
+
+    func test_highlighted() throws {
+        let theme: any Theme = SparkTheme.shared
+
+        for radius in BorderRadius.allCases {
+            self.assertSnapshot(
+                matching: SnapshotView(
+                    state: .highlighted,
+                    cornerRadius: radius.value(from: theme)),
+                modes: ComponentSnapshotTestConstants.Modes.default,
+                sizes: ComponentSnapshotTestConstants.Sizes.all,
+                testName: #function + "\(radius)Radius"
             )
         }
     }
@@ -40,89 +59,86 @@ private struct SnapshotView: View {
     @ScaledMetric var width: CGFloat = 90
     @ScaledMetric var height: CGFloat = 20
 
-    let borderWidth: CGFloat
-    let borderRadius: CGFloat
-    @ScaledMetric var scaledBorderWidth: CGFloat = 0
-    @ScaledMetric var scaledBorderRadius: CGFloat = 0
+    let state: BorderRadiusState
+
+    let cornerRadius: CGFloat
+    @ScaledMetric var scaledCornerRadius: CGFloat = 0
 
     let borderColor: any ColorToken
 
     // MARK: - Initialization
 
-    init(borderRadius: CGFloat) {
-        self.borderWidth = self.theme.border.width.medium
-        self.borderRadius = borderRadius
-        self._scaledBorderWidth = .init(wrappedValue: self.borderWidth)
-        self._scaledBorderRadius = .init(wrappedValue: self.borderRadius)
+    init(
+        state: BorderRadiusState,
+        cornerRadius: CGFloat
+    ) {
+        self.state = state
+
+        self.cornerRadius = cornerRadius
+        self._scaledCornerRadius = .init(wrappedValue: self.cornerRadius)
         self.borderColor = self.theme.colors.main.main
     }
 
     // MARK: - View
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 20) {
-
-            HStack(alignment: .center, spacing: 10) {
-                Text(".sparkCornerRadius(...) ✅")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
-                HStack {
-                    ForEach(RadiusState.allCases, id: \.rawValue) { state in
-                        Rectangle()
-                            .fill(.white)
-                            .frame(width: self.width, height: self.height)
-                            .sparkCornerRadius(
-                                self.borderRadius,
-                                isHighlighted: state.isHighlighted
-                            )
-                    }
-                }
+        ScaledSnapshotView(
+            scaledContent: {
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: self.width, height: self.height)
+                    .cornerRadius(
+                        state: self.state,
+                        cornerRadius: self.cornerRadius,
+                        isScaled: true
+                    )
+            },
+            scaledMetricContent: {
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: self.width, height: self.height)
+                    .cornerRadius(
+                        state: self.state,
+                        cornerRadius: self.scaledCornerRadius,
+                        isScaled: false
+                    )
+            },
+            withoutScalingContent: {
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: self.width, height: self.height)
+                    .cornerRadius(
+                        state: self.state,
+                        cornerRadius: self.cornerRadius,
+                        isScaled: false
+                    )
             }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("@ScaledMetric 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
-                HStack {
-                    ForEach(RadiusState.allCases, id: \.rawValue) { state in
-                        Rectangle()
-                            .fill(.white)
-                            .frame(width: self.width, height: self.height)
-                            .sparkCornerRadius(
-                                self.scaledBorderRadius,
-                                isHighlighted: state.isHighlighted,
-                                isScaled: false
-                            )
-                    }
-                }
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("Without scaling 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
-                HStack {
-                    ForEach(RadiusState.allCases, id: \.rawValue) { state in
-                        Rectangle()
-                            .fill(.white)
-                            .frame(width: self.width, height: self.height)
-                            .sparkCornerRadius(
-                                self.borderRadius,
-                                isHighlighted: state.isHighlighted,
-                                isScaled: false
-                            )
-                    }
-                }
-            }
-        }
-        .padding(20)
-        .background(.gray)
+        )
     }
 }
+
+private extension View {
+
+    @ViewBuilder
+    func cornerRadius(
+        state: BorderRadiusState,
+        cornerRadius: CGFloat,
+        isScaled: Bool
+    ) -> some View {
+        switch state {
+        case .highlighted:
+            self.sparkCornerRadius(
+                cornerRadius,
+                isHighlighted: true,
+                isScaled: isScaled
+            )
+
+        default:
+            self.sparkCornerRadius(
+                cornerRadius,
+                isScaled: isScaled
+            )
+        }
+    }
+}
+

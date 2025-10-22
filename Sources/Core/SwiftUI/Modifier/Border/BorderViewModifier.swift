@@ -16,6 +16,7 @@ internal struct BorderViewModifier: ViewModifier {
     let width: CGFloat
     let dash: CGFloat?
     let colorToken: any ColorToken
+    let position: BorderPosition
 
     // MARK: - View
 
@@ -23,10 +24,12 @@ internal struct BorderViewModifier: ViewModifier {
         content
             .overlay(
                 Rectangle()
+                    .inset(by: self.position.inset(width: self.width))
                     .stroke(
                         colorToken: self.colorToken,
                         width: self.width,
-                        dash: self.dash
+                        dash: self.dash,
+                        position: self.position
                     )
             )
     }
@@ -42,6 +45,8 @@ public extension View {
     ///   - dash: The length of painted segments used to make a
     ///     dashed line. *Optional*. Default is *nil*.
     ///   - colorToken: The color token of the border.
+    ///   - position: The position of the border in the view.
+    ///     Default is *overlay*.
     ///   - isScaled: Apply a scaled width depending on current the
     ///   dynamic size. Default is *true*.   
     /// - Returns: Current View.
@@ -74,19 +79,22 @@ public extension View {
         width: CGFloat,
         dash: CGFloat? = nil,
         colorToken: any ColorToken,
+        position: BorderPosition = .default,
         isScaled: Bool = true
     ) -> some View {
         if isScaled {
             self.scaledBorder(
                 width: width,
                 dash: dash,
-                colorToken: colorToken
+                colorToken: colorToken,
+                position: position
             )
         } else {
             self.modifier(BorderViewModifier(
                 width: width,
                 dash: dash,
-                colorToken: colorToken
+                colorToken: colorToken,
+                position: position
             ))
         }
     }

@@ -17,9 +17,17 @@ final class BorderViewModifierSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     // MARK: - Tests
 
-    func test() throws {
+    func test_default() throws {
         self.assertSnapshot(
-            matching: SnapshotView(),
+            matching: SnapshotView(state: .default),
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.default
+        )
+    }
+
+    func test_dashed() throws {
+        self.assertSnapshot(
+            matching: SnapshotView(state: .dashed),
             modes: ComponentSnapshotTestConstants.Modes.default,
             sizes: ComponentSnapshotTestConstants.Sizes.default
         )
@@ -36,12 +44,18 @@ private struct SnapshotView: View {
     @ScaledMetric var width: CGFloat = 140
     @ScaledMetric var height: CGFloat = 20
 
+    let state: BorderRadiusState
+
     let borderWidth: CGFloat
     let borderColor: any ColorToken
 
     // MARK: - Initialization
 
-    init() {
+    init(
+        state: BorderRadiusState
+    ) {
+        self.state = state
+
         self.borderWidth = self.theme.border.width.medium
         self.borderColor = self.theme.colors.main.main
     }
@@ -49,51 +63,54 @@ private struct SnapshotView: View {
     // MARK: - View
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 20) {
+        HStack(alignment: .center, spacing: 10) {
+            Text(self.state.name)
+                .padding(4)
+                .frame(width: self.width, height: self.height)
+                .background(.white)
+                .border(
+                    state: self.state,
+                    width: self.borderWidth,
+                    color: self.borderColor
+                )
 
-            HStack(alignment: .center, spacing: 10) {
-                Text("Default")
-                    .padding(4)
-                    .frame(width: self.width, height: self.height)
-                    .background(.white)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        colorToken: self.borderColor
-                    )
-
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        colorToken: self.borderColor
-                    )
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("Is dashed")
-                    .padding(4)
-                    .frame(width: self.width, height: self.height)
-                    .background(.white)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        dash: DashState.dashed.dash,
-                        colorToken: self.borderColor
-                    )
-
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        dash: DashState.dashed.dash,
-                        colorToken: self.borderColor
-                    )
-            }
+            Rectangle()
+                .fill(.white)
+                .frame(width: self.width, height: self.height)
+                .border(
+                    state: self.state,
+                    width: self.borderWidth,
+                    color: self.borderColor
+                )
         }
         .padding(20)
         .background(.gray)
+    }
+}
+
+private extension View {
+
+    @ViewBuilder
+    func border(
+        state: BorderRadiusState,
+        width: CGFloat,
+        color: any ColorToken
+    ) -> some View {
+        switch state {
+        case .dashed:
+            self.sparkBorder(
+                width: width,
+                dash: DashState.dashed.dash,
+                colorToken: color,
+                isScaled: false
+            )
+
+        default:
+            self.sparkBorder(
+                width: width,
+                colorToken: color,
+                isScaled: false
+            )
+        }
     }
 }

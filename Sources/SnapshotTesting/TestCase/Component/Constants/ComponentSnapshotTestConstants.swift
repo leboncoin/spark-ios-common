@@ -21,7 +21,7 @@ import UIKit
     }
 
     public enum Sizes {
-        public static let all: [UIContentSizeCategory] = [.extraSmall, .medium, .accessibilityExtraExtraExtraLarge]
-        public static let `default`: [UIContentSizeCategory] = [.medium]
+        public static let all: [UIContentSizeCategory] = [.extraSmall, .large, .accessibilityExtraExtraExtraLarge]
+        public static let `default`: [UIContentSizeCategory] = [.large]
     }
 }

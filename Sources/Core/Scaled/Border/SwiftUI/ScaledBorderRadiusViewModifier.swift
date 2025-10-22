@@ -18,6 +18,7 @@ private struct ScaledBorderRadiusViewModifier: ViewModifier {
     @LimitedScaledMetric var dash: CGFloat
     let isHighlighted: Bool
     let colorToken: any ColorToken
+    let position: BorderPosition
 
     // MARK: - Initialization
 
@@ -25,14 +26,16 @@ private struct ScaledBorderRadiusViewModifier: ViewModifier {
         width: CGFloat,
         radius: CGFloat,
         dash: CGFloat? = nil,
-        isHighlighted: Bool,
-        colorToken: any ColorToken
+        isHighlighted: Bool = false,
+        colorToken: any ColorToken,
+        position: BorderPosition = .default
     ) {
         self._width = .init(value: width, type: .width)
         self._radius = .init(value: radius, type: .radius)
         self._dash = .init(value: dash, type: .dash)
         self.isHighlighted = isHighlighted
         self.colorToken = colorToken
+        self.position = position
     }
 
     // MARK: - View
@@ -44,7 +47,8 @@ private struct ScaledBorderRadiusViewModifier: ViewModifier {
                 radius: self.radius,
                 dash: self.dash,
                 isHighlighted: self.isHighlighted,
-                colorToken: self.colorToken
+                colorToken: self.colorToken,
+                position: self.position
             ))
     }
 }
@@ -65,6 +69,8 @@ internal extension View {
     ///     dashed line. *Optional*. Default is *nil*.   
     ///   - isHighlighted: Apply a custom style (no radius on bottom left). Default is *false*.
     ///   - colorToken: The color token to use for the border.
+    ///   - position: The position of the border in the view.
+    ///     Default is *overlay*.
     /// - Returns: A modified view with the applied border.
     ///
     /// Example with a corner in a **Text**.
@@ -99,7 +105,8 @@ internal extension View {
         radius: CGFloat,
         dash: CGFloat? = nil,
         isHighlighted: Bool = false,
-        colorToken: any ColorToken
+        colorToken: any ColorToken,
+        position: BorderPosition = .default
     ) -> some View {
         if width > 0 {
             self.modifier(ScaledBorderRadiusViewModifier(
@@ -107,7 +114,8 @@ internal extension View {
                 radius: radius,
                 dash: dash,
                 isHighlighted: isHighlighted,
-                colorToken: colorToken
+                colorToken: colorToken,
+                position: position
             ))
         } else {
             self.sparkCornerRadius(

@@ -9,12 +9,13 @@
 import SwiftUI
 import SparkTheming
 
-internal struct HighlightedRectangle: Shape {
+internal struct HighlightedRectangle: InsettableShape {
 
     // MARK: - Properties
 
     let cornerRadius: CGFloat
     let isHighlighted: Bool
+    var inset = 0.0
 
     // MARK: - Path
 
@@ -25,12 +26,27 @@ internal struct HighlightedRectangle: Shape {
             .bottomRight
         ] : .allCorners
 
+        let rect = CGRect(
+            x: rect.origin.x + self.inset,
+            y: rect.origin.y + self.inset,
+            width: rect.width - self.inset * 2,
+            height: rect.height - self.inset * 2
+        )
+
         let path = UIBezierPath(
             roundedRect: rect,
             byRoundingCorners: corners,
-            cornerRadius: self.cornerRadius
+            cornerRadius: self.cornerRadius > 0 ? (self.cornerRadius - self.inset) : 0
         )
 
         return Path(path.cgPath)
+    }
+
+    // MARK: - Insets
+
+    func inset(by amount: CGFloat) -> some InsettableShape {
+        var copy = self
+        copy.inset += amount
+        return copy
     }
 }

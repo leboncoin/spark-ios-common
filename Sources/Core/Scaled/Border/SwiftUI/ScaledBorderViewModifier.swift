@@ -16,17 +16,20 @@ internal struct ScaledBorderViewModifier: ViewModifier {
     @LimitedScaledMetric var width: CGFloat
     @LimitedScaledMetric var dash: CGFloat
     let colorToken: any ColorToken
+    let position: BorderPosition
 
     // MARK: - Initialization
 
     init(
         width: CGFloat,
         dash: CGFloat? = nil,
-        colorToken: any ColorToken
+        colorToken: any ColorToken,
+        position: BorderPosition = .default
     ) {
         self._width = .init(value: width, type: .width)
         self._dash = .init(value: dash, type: .dash)
         self.colorToken = colorToken
+        self.position = position
     }
 
     // MARK: - View
@@ -36,7 +39,8 @@ internal struct ScaledBorderViewModifier: ViewModifier {
             .modifier(BorderViewModifier(
                 width: self.width,
                 dash: self.dash,
-                colorToken: self.colorToken
+                colorToken: self.colorToken,
+                position: self.position
             ))
     }
 }
@@ -54,6 +58,8 @@ internal extension View {
     ///   - width: The thickness of the border.
     ///   - dash: The length of painted segments used to make a
     ///     dashed line. *Optional*. Default is *nil*.
+    ///   - position: The position of the border in the view.
+    ///     Default is *overlay*.
     ///   - colorToken: The color token to use for the border.
     /// - Returns: A modified view with the applied border.
     ///
@@ -83,12 +89,14 @@ internal extension View {
     func scaledBorder(
         width: CGFloat,
         dash: CGFloat? = nil,
-        colorToken: any ColorToken
+        colorToken: any ColorToken,
+        position: BorderPosition = .default
     ) -> some View {
         self.modifier(ScaledBorderViewModifier(
             width: width,
             dash: dash,
-            colorToken: colorToken
+            colorToken: colorToken,
+            position: position
         ))
     }
 }
