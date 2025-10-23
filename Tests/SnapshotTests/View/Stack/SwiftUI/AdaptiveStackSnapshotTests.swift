@@ -31,8 +31,8 @@ final class AdaptiveStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
         self.assertSnapshot(
             matching: view.style(),
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 
@@ -52,8 +52,8 @@ final class AdaptiveStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
         self.assertSnapshot(
             matching: view.style(),
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 
@@ -74,8 +74,8 @@ final class AdaptiveStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
         // THEN
         self.assertSnapshot(
             matching: view.style(),
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 }

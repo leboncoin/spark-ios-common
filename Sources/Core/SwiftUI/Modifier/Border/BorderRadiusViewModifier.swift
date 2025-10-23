@@ -18,6 +18,7 @@ internal struct BorderRadiusViewModifier: ViewModifier {
     let dash: CGFloat?
     let isHighlighted: Bool
     let colorToken: any ColorToken
+    let position: BorderPosition
 
     // MARK: - View
 
@@ -25,29 +26,21 @@ internal struct BorderRadiusViewModifier: ViewModifier {
         content
             .sparkCornerRadius(
                 self.radius,
-                isHighlighted: self.isHighlighted
+                isHighlighted: self.isHighlighted,
+                isScaled: false
             )
             .overlay {
-                if self.isHighlighted {
-                    HighlightedRectangle(
-                        cornerRadius: self.radius,
-                        isHighlighted: self.isHighlighted
-                    )
-                    .stroke(
-                        colorToken: self.colorToken,
-                        width: self.width,
-                        dash: self.dash
-                    )
-                } else {
-                    RoundedRectangle(
-                        cornerRadius: self.radius
-                    )
-                    .stroke(
-                        colorToken: self.colorToken,
-                        width: self.width,
-                        dash: self.dash
-                    )
-                }
+                HighlightedRectangle(
+                    cornerRadius: self.radius,
+                    isHighlighted: self.isHighlighted
+                )
+                .inset(by: self.position.inset(width: self.width))
+                .stroke(
+                    colorToken: self.colorToken,
+                    width: self.width,
+                    dash: self.dash,
+                    position: self.position
+                )
             }
     }
 }
@@ -64,6 +57,8 @@ public extension View {
     ///     dashed line. *Optional*. Default is *nil*.
     ///   - isHighlighted: Apply a custom style (no radius on bottom left). Default is *false*.
     ///   - colorToken: The color token of the border.
+    ///   - position: The position of the border in the view.
+    ///     Default is *overlay*.
     ///   - isScaled: Apply a different width and radius depending on current the
     ///   dynamic size. Default is *true*.
     /// - Returns: Current View.
@@ -101,6 +96,7 @@ public extension View {
         dash: CGFloat? = nil,
         isHighlighted: Bool = false,
         colorToken: any ColorToken,
+        position: BorderPosition = .default,
         isScaled: Bool = true
     ) -> some View {
         if width > 0 {
@@ -110,7 +106,8 @@ public extension View {
                     radius: radius,
                     dash: dash,
                     isHighlighted: isHighlighted,
-                    colorToken: colorToken
+                    colorToken: colorToken,
+                    position: position
                 )
             } else {
                 self.modifier(BorderRadiusViewModifier(
@@ -118,7 +115,8 @@ public extension View {
                     radius: radius,
                     dash: dash,
                     isHighlighted: isHighlighted,
-                    colorToken: colorToken
+                    colorToken: colorToken,
+                    position: position
                 ))
             }
         } else {

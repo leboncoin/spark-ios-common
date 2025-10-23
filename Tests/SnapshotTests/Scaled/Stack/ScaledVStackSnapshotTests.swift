@@ -20,8 +20,8 @@ final class ScaledVStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
     func test() throws {
         self.assertSnapshot(
             matching: SnapshotView(),
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 }
@@ -47,44 +47,24 @@ private struct SnapshotView: View {
     // MARK: - View
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 20) {
-
-            HStack(alignment: .center, spacing: 10) {
-                Text("SparkVStack ✅")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
+        ScaledSnapshotView(
+            backgroundOnContent: true,
+            scaledContent: {
                 SparkVStack(spacing: self.spacing) {
                     self.content()
                 }
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("VStack with @ScaledMetric 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
+            },
+            scaledMetricContent: {
                 VStack(spacing: self.scaledSpacing) {
                     self.content()
                 }
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("VStack without scaling 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
+            },
+            withoutScalingContent: {
                 VStack(spacing: self.spacing) {
                     self.content()
                 }
             }
-        }
-        .padding(20)
-        .background(.gray)
+        )
     }
 
     @ViewBuilder private func content() -> some View {

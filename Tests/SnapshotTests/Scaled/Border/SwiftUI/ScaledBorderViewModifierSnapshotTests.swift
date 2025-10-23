@@ -17,11 +17,19 @@ final class ScaledBorderViewModifierSnapshotTests: SwiftUIComponentSnapshotTestC
 
     // MARK: - Tests
 
-    func test() throws {
+    func test_default() throws {
         self.assertSnapshot(
-            matching: SnapshotView(),
+            matching: SnapshotView(state: .default),
             modes: ComponentSnapshotTestConstants.Modes.default,
-            sizes: UIContentSizeCategory.snapshotsCases
+            sizes: ComponentSnapshotTestConstants.Sizes.all
+        )
+    }
+
+    func test_dashed() throws {
+        self.assertSnapshot(
+            matching: SnapshotView(state: .dashed),
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 }
@@ -36,6 +44,8 @@ private struct SnapshotView: View {
     @ScaledMetric var width: CGFloat = 90
     @ScaledMetric var height: CGFloat = 20
 
+    let state: BorderRadiusState
+
     let borderWidth: CGFloat
     @ScaledMetric var scaledBorderWidth: CGFloat = 0
 
@@ -43,7 +53,11 @@ private struct SnapshotView: View {
 
     // MARK: - Initialization
 
-    init() {
+    init(
+        state: BorderRadiusState
+    ) {
+        self.state = state
+
         self.borderWidth = self.theme.border.width.medium
         self._scaledBorderWidth = .init(wrappedValue: self.borderWidth)
         self.borderColor = self.theme.colors.main.main
@@ -52,72 +66,69 @@ private struct SnapshotView: View {
     // MARK: - View
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 20) {
-
-            HStack(alignment: .center, spacing: 10) {
-                Text(".sparkBorder(...) ✅")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
-                HStack {
-                    ForEach(DashState.allCases, id: \.rawValue) { dash in
-                        Rectangle()
-                            .fill(.white)
-                            .frame(width: self.width, height: self.height)
-                            .sparkBorder(
-                                width: self.borderWidth,
-                                dash: dash.dash,
-                                colorToken: self.borderColor
-                            )
-                    }
-                }
+        ScaledSnapshotView(
+            scaledContent: {
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: self.width, height: self.height)
+                    .border(
+                        state: self.state,
+                        width: self.borderWidth,
+                        color: self.borderColor,
+                        isScaled: true
+                    )
+            },
+            scaledMetricContent: {
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: self.width, height: self.height)
+                    .border(
+                        state: self.state,
+                        width: self.scaledBorderWidth,
+                        color: self.borderColor,
+                        isScaled: false
+                    )
+            },
+            withoutScalingContent: {
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: self.width, height: self.height)
+                    .border(
+                        state: self.state,
+                        width: self.borderWidth,
+                        color: self.borderColor,
+                        isScaled: false
+                    )
             }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("@ScaledMetric 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
-                HStack {
-                    ForEach(DashState.allCases, id: \.rawValue) { dash in
-                        Rectangle()
-                            .fill(.white)
-                            .frame(width: self.width, height: self.height)
-                            .sparkBorder(
-                                width: self.scaledBorderWidth,
-                                dash: dash.dash,
-                                colorToken: self.borderColor,
-                                isScaled: false
-                            )
-                    }
-                }
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("Without scaling 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
-                HStack {
-                    ForEach(DashState.allCases, id: \.rawValue) { dash in
-                        Rectangle()
-                            .fill(.white)
-                            .frame(width: self.width, height: self.height)
-                            .sparkBorder(
-                                width: self.borderWidth,
-                                dash: dash.dash,
-                                colorToken: self.borderColor,
-                                isScaled: false
-                            )
-                    }
-                }
-            }
-        }
-        .padding(20)
-        .background(.gray)
+        )
     }
 }
+
+private extension View {
+
+    @ViewBuilder
+    func border(
+        state: BorderRadiusState,
+        width: CGFloat,
+        color: any ColorToken,
+        isScaled: Bool
+    ) -> some View {
+        switch state {
+        case .dashed:
+            self.sparkBorder(
+                width: width,
+                dash: DashState.dashed.dash,
+                colorToken: color,
+                isScaled: isScaled
+            )
+
+        default:
+            self.sparkBorder(
+                width: width,
+                colorToken: color,
+                isScaled: isScaled
+            )
+        }
+    }
+}
+

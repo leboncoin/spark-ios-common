@@ -17,14 +17,33 @@ final class CornerRadiusViewModifierSnapshotTests: SwiftUIComponentSnapshotTestC
 
     // MARK: - Tests
 
-    func test() throws {
+    func test_default() throws {
         let theme: any Theme = SparkTheme.shared
 
         for radius in BorderRadius.allCases {
             self.assertSnapshot(
-                matching: SnapshotView(cornerRadius: radius.value(from: theme)),
+                matching: SnapshotView(
+                    state: .default,
+                    cornerRadius: radius.value(from: theme)
+                ),
                 modes: ComponentSnapshotTestConstants.Modes.default,
-                sizes: ComponentSnapshotTestConstants.Sizes.default
+                sizes: ComponentSnapshotTestConstants.Sizes.default,
+                testName: #function + "\(radius)Radius"
+            )
+        }
+    }
+
+    func test_highlighted() throws {
+        let theme: any Theme = SparkTheme.shared
+
+        for radius in BorderRadius.allCases {
+            self.assertSnapshot(
+                matching: SnapshotView(
+                    state: .highlighted,
+                    cornerRadius: radius.value(from: theme)),
+                modes: ComponentSnapshotTestConstants.Modes.default,
+                sizes: ComponentSnapshotTestConstants.Sizes.default,
+                testName: #function + "\(radius)Radius"
             )
         }
     }
@@ -36,51 +55,70 @@ private struct SnapshotView: View {
 
     // MARK: - Properties
 
-    @ScaledMetric var width: CGFloat = 120
+    private let theme: any Theme = SparkTheme.shared
+    @ScaledMetric var width: CGFloat = 140
     @ScaledMetric var height: CGFloat = 20
 
+    let state: BorderRadiusState
+
     let cornerRadius: CGFloat
+
+    // MARK: - Initialization
+
+    init(
+        state: BorderRadiusState,
+        cornerRadius: CGFloat
+    ) {
+        self.state = state
+        self.cornerRadius = cornerRadius
+    }
 
     // MARK: - View
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 20) {
+        HStack(alignment: .center, spacing: 10) {
+            Text(self.state.name)
+                .padding(4)
+                .frame(width: self.width, height: self.height)
+                .background(.white)
+                .cornerRadius(
+                    state: self.state,
+                    cornerRadius: self.cornerRadius
+                )
 
-            HStack(alignment: .center, spacing: 10) {
-                Text("Default")
-                    .padding(4)
-                    .frame(width: self.width, height: self.height)
-                    .background(.white)
-                    .sparkCornerRadius(self.cornerRadius)
-
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .sparkCornerRadius(self.cornerRadius)
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("Is highlight")
-                    .padding(4)
-                    .frame(width: self.width, height: self.height)
-                    .background(.white)
-                    .sparkCornerRadius(
-                        self.cornerRadius,
-                        isHighlighted: true
-                    )
-
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .sparkCornerRadius(
-                        self.cornerRadius,
-                        isHighlighted: true
-                    )
-            }
+            Rectangle()
+                .fill(.white)
+                .frame(width: self.width, height: self.height)
+                .cornerRadius(
+                    state: self.state,
+                    cornerRadius: self.cornerRadius
+                )
         }
         .padding(20)
         .background(.gray)
+    }
+}
+
+private extension View {
+
+    @ViewBuilder
+    func cornerRadius(
+        state: BorderRadiusState,
+        cornerRadius: CGFloat
+    ) -> some View {
+        switch state {
+        case .highlighted:
+            self.sparkCornerRadius(
+                cornerRadius,
+                isHighlighted: true,
+                isScaled: false
+            )
+
+        default:
+            self.sparkCornerRadius(
+                cornerRadius,
+                isScaled: false
+            )
+        }
     }
 }

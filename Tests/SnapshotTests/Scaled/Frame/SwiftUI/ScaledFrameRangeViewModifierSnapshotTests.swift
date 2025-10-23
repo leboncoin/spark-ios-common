@@ -20,8 +20,8 @@ final class ScaledFrameRangeViewModifierSnapshotTests: SwiftUIComponentSnapshotT
     func test() throws {
         self.assertSnapshot(
             matching: SnapshotView(),
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 }
@@ -35,7 +35,7 @@ private struct SnapshotView: View {
     let width: CGFloat = 90
     let minWidth: CGFloat = 80
     let maxWidth: CGFloat = 100
-    @ScaledMetric var scaledWidth: CGFloat = 90
+    @ScaledMetric var scaledWidth: CGFloat = 0
     @ScaledMetric var scaledMinWidth: CGFloat = 0
     @ScaledMetric var scaledMaxWidth: CGFloat = 0
 
@@ -60,15 +60,8 @@ private struct SnapshotView: View {
     // MARK: - View
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 20) {
-
-            HStack(alignment: .center, spacing: 10) {
-                Text(".sparkFrame(...) ✅")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
-                Spacer()
-
+        ScaledSnapshotView(
+            scaledContent: {
                 Rectangle()
                     .fill(.white)
                     .sparkFrame(width: self.width, height: self.height)
@@ -78,17 +71,8 @@ private struct SnapshotView: View {
                         minHeight: self.minHeight,
                         maxHeight: self.maxHeight
                     )
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("@ScaledMetric 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
-                Spacer()
-
+            },
+            scaledMetricContent: {
                 Rectangle()
                     .fill(.white)
                     .frame(width: self.scaledWidth, height: self.scaledHeight)
@@ -98,17 +82,8 @@ private struct SnapshotView: View {
                         minHeight: self.scaledMinHeight,
                         maxHeight: self.scaledMaxHeight
                     )
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("Without scaling 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
-                Spacer()
-
+            },
+            withoutScalingContent: {
                 Rectangle()
                     .fill(.white)
                     .frame(width: self.width, height: self.height)
@@ -119,8 +94,6 @@ private struct SnapshotView: View {
                         maxHeight: self.maxHeight
                     )
             }
-        }
-        .padding(20)
-        .background(.gray)
+        )
     }
 }

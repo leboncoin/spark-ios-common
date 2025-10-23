@@ -141,4 +141,40 @@ public extension View {
             alignment: alignment
         ))
     }
+
+    /// Applies a scaled resizable frame to a view with minimum and maximum size constraints.
+    /// This modifier allows automatically adapting the size of a view based on the text size
+    /// defined in the system's accessibility settings BUT a min and max range is applied
+    /// to limit the increase and decrease values modification.
+    ///
+    /// - Parameters:
+    ///   - minSize: Optional minimum width and height of the frame.
+    ///   - maxSize: Optional maximum width and height of the frame.
+    ///   - relativeTo: Reference text style for sizing (default: .largeTitle).
+    ///   - alignment: Alignment of the content within the frame (default: .center).
+    /// - Returns: A modified view with the resizable frame applied.
+    ///
+    /// Example usage:
+    /// ```swift
+    /// Text("Hello World")
+    /// .scaledFrame(
+    ///     minSize: 10,
+    ///     maxSize: 20
+    /// )
+    /// ```
+    func sparkFrame(
+        minSize: CGFloat? = nil,
+        maxSize: CGFloat? = nil,
+        relativeTo: Font.TextStyle? = .largeTitle,
+        alignment: Alignment = .center
+    ) -> some View {
+        self.modifier(ScaledFrameRangeViewModifier(
+            minWidth: minSize,
+            maxWidth: maxSize,
+            minHeight: minSize,
+            maxHeight: maxSize,
+            relativeTo: relativeTo,
+            alignment: alignment
+        ))
+    }
 }

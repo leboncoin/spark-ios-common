@@ -30,8 +30,8 @@ final class ReversibleHStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
         self.assertSnapshot(
             matching: view.style(),
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 
@@ -51,8 +51,8 @@ final class ReversibleHStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
         self.assertSnapshot(
             matching: view.style(),
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 
@@ -72,8 +72,8 @@ final class ReversibleHStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
         self.assertSnapshot(
             matching: view.style(),
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 }

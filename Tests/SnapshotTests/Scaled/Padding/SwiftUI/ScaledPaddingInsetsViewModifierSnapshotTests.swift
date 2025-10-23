@@ -20,8 +20,8 @@ final class ScaledPaddingInsetsViewModifierSnapshotTests: SwiftUIComponentSnapsh
     func test() throws {
         self.assertSnapshot(
             matching: SnapshotView(),
-            modes: [ComponentSnapshotTestMode.light],
-            sizes: UIContentSizeCategory.snapshotsCases
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.all
         )
     }
 }
@@ -34,40 +34,31 @@ private struct SnapshotView: View {
 
     let width: CGFloat = 50
     let height: CGFloat = 50
+
     let insets: EdgeInsets = .init(top: 20, leading: 20, bottom: 20, trailing: 20)
 
     // MARK: - View
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 20) {
-
-            HStack(alignment: .center, spacing: 10) {
-                Text(".sparkPadding(...) ✅")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
+        ScaledSnapshotView(
+            backgroundOnContent: true,
+            scaledContent: {
                 Rectangle()
                     .fill(.white)
                     .frame(width: self.width, height: self.height)
                     .sparkPadding(self.insets)
                     .background(.orange)
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("Without scaling 🚫")
-                    .dynamicTypeSize(.xSmall)
-                    .fixedSize()
-
+            },
+            scaledMetricContent: {
+                EmptyView()
+            },
+            withoutScalingContent: {
                 Rectangle()
                     .fill(.white)
                     .frame(width: self.width, height: self.height)
                     .padding(self.insets)
                     .background(.orange)
             }
-        }
-        .padding(20)
-        .background(.gray)
+        )
     }
 }

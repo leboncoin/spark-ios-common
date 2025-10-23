@@ -17,14 +17,46 @@ final class BorderRadiusViewModifierSnapshotTests: SwiftUIComponentSnapshotTestC
 
     // MARK: - Tests
 
-    func test() throws {
+    func test_default() throws {
         let theme: any Theme = SparkTheme.shared
 
         for radius in BorderRadius.allCases {
             self.assertSnapshot(
-                matching: SnapshotView(cornerRadius: radius.value(from: theme)),
+                matching: SnapshotView(
+                    state: .default,
+                    cornerRadius: radius.value(from: theme)
+                ),
                 modes: ComponentSnapshotTestConstants.Modes.default,
-                sizes: ComponentSnapshotTestConstants.Sizes.default
+                sizes: ComponentSnapshotTestConstants.Sizes.default,
+                testName: #function + "\(radius)Radius"
+            )
+        }
+    }
+
+    func test_dashed() throws {
+        let theme: any Theme = SparkTheme.shared
+
+        self.assertSnapshot(
+            matching: SnapshotView(
+                state: .dashed,
+                cornerRadius: BorderRadius.medium.value(from: theme)
+            ),
+            modes: ComponentSnapshotTestConstants.Modes.default,
+            sizes: ComponentSnapshotTestConstants.Sizes.default
+        )
+    }
+
+    func test_highlighted() throws {
+        let theme: any Theme = SparkTheme.shared
+
+        for radius in BorderRadius.allCases {
+            self.assertSnapshot(
+                matching: SnapshotView(
+                    state: .highlighted,
+                    cornerRadius: radius.value(from: theme)),
+                modes: ComponentSnapshotTestConstants.Modes.default,
+                sizes: ComponentSnapshotTestConstants.Sizes.default,
+                testName: #function + "\(radius)Radius"
             )
         }
     }
@@ -40,13 +72,20 @@ private struct SnapshotView: View {
     @ScaledMetric var width: CGFloat = 140
     @ScaledMetric var height: CGFloat = 20
 
+    let state: BorderRadiusState
+
     let borderWidth: CGFloat
     let cornerRadius: CGFloat
     let borderColor: any ColorToken
 
     // MARK: - Initialization
 
-    init(cornerRadius: CGFloat) {
+    init(
+        state: BorderRadiusState,
+        cornerRadius: CGFloat
+    ) {
+        self.state = state
+
         self.borderWidth = self.theme.border.width.medium
         self.cornerRadius = cornerRadius
         self.borderColor = self.theme.colors.main.main
@@ -55,80 +94,68 @@ private struct SnapshotView: View {
     // MARK: - View
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 20) {
+        HStack(alignment: .center, spacing: 10) {
+            Text(self.state.name)
+                .padding(4)
+                .frame(width: self.width, height: self.height)
+                .background(.white)
+                .border(
+                    state: self.state,
+                    width: self.borderWidth,
+                    cornerRadius: self.cornerRadius,
+                    color: self.borderColor
+                )
 
-            HStack(alignment: .center, spacing: 10) {
-                Text("Default")
-                    .padding(4)
-                    .frame(width: self.width, height: self.height)
-                    .background(.white)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        radius: self.cornerRadius,
-                        colorToken: self.borderColor
-                    )
-
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        radius: self.cornerRadius,
-                        colorToken: self.borderColor
-                    )
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("Is dashed")
-                    .padding(4)
-                    .frame(width: self.width, height: self.height)
-                    .background(.white)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        radius: self.cornerRadius,
-                        dash: DashState.dashed.dash,
-                        colorToken: self.borderColor
-                    )
-
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        radius: self.cornerRadius,
-                        dash: DashState.dashed.dash,
-                        colorToken: self.borderColor
-                    )
-            }
-
-            Divider()
-
-            HStack(spacing: 10) {
-                Text("Is highlight")
-                    .padding(4)
-                    .frame(width: self.width, height: self.height)
-                    .background(.white)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        radius: self.cornerRadius,
-                        isHighlighted: true,
-                        colorToken: self.borderColor
-                    )
-
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: self.width, height: self.height)
-                    .sparkBorder(
-                        width: self.borderWidth,
-                        radius: self.cornerRadius,
-                        isHighlighted: true,
-                        colorToken: self.borderColor
-                    )
-            }
+            Rectangle()
+                .fill(.white)
+                .frame(width: self.width, height: self.height)
+                .border(
+                    state: self.state,
+                    width: self.borderWidth,
+                    cornerRadius: self.cornerRadius,
+                    color: self.borderColor
+                )
         }
         .padding(20)
         .background(.gray)
+    }
+}
+
+private extension View {
+
+    @ViewBuilder
+    func border(
+        state: BorderRadiusState,
+        width: CGFloat,
+        cornerRadius: CGFloat,
+        color: any ColorToken
+    ) -> some View {
+        switch state {
+        case .default:
+            self.sparkBorder(
+                width: width,
+                radius: cornerRadius,
+                colorToken: color,
+                isScaled: false
+            )
+
+        case .dashed:
+            self.sparkBorder(
+                width: width,
+                radius: cornerRadius,
+                dash: DashState.dashed.dash,
+                colorToken: color,
+                isScaled: false
+            )
+
+        case .highlighted:
+            self.sparkBorder(
+                width: width,
+                radius: cornerRadius,
+                isHighlighted: true,
+                colorToken: color,
+                isScaled: false
+            )
+        }
     }
 }
