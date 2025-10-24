@@ -63,14 +63,19 @@ import UIKit
     /// Initializes a new `ScaledUIFrame` with the specified base value.
     /// The base value will be scaled according to the device's screen metrics.
     ///
-    /// - Parameter baseValue: The base frame value to be scaled
+    /// - Parameters:
+    ///   - baseValue: The base value to scale
+    ///   - textStyle: The text style to create font metrics from (defaults to .body)
+    ///   - traitCollection: Optional trait collection to use for scaling (defaults to current if nil)
     public init(
         wrappedValue baseValue: CGFloat,
-        relativeTo metrics: UIFont.TextStyle = .largeTitle
+        relativeTo textStyle: UIFont.TextStyle = .largeTitle,
+        traitCollection: UITraitCollection? = nil
     ) {
         self._frame = .init(
             wrappedValue: baseValue,
-            relativeTo: metrics
+            relativeTo: textStyle,
+            traitCollection: traitCollection
         )
     }
 

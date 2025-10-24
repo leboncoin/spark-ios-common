@@ -44,13 +44,15 @@ public extension UIView {
             self.updateTraitsIfNeeded()
         }
 
-        self.clear()
-
         let radius = self.validatedCornerRadius(radius)
         let borderColor = colorToken.uiColor.resolvedColor(with: self.traitCollection).cgColor
 
+        let isCustomLayer = isHighlighted && !self.bounds.isEmpty
+
+        self.clear(simpleLayer: isCustomLayer)
+
         // Apply isHighlighted only if bounds is not empty
-        if isHighlighted && !self.bounds.isEmpty {
+        if isCustomLayer {
 
             // Apply the corner radius
             let mask = self.highlightedCornerRadiusMask(radius)
@@ -77,8 +79,10 @@ public extension UIView {
 
     /// Add a **Spark** dash border with corner radius to the current view.
     ///
-    /// Note: Recommanded to set on *layoutSubviews*  or **viewDidLayoutSubviews** to avoid any issue on cornerRadius.
+    /// > Note: Recommanded to set on *layoutSubviews*  or **viewDidLayoutSubviews** to avoid any issue on cornerRadius.
     /// If the dash is equals to 0, the dash parameter will be ignored.
+    ///
+    /// > Note: This func reset the **cornerRadius** if width is greater than 0.
     ///
     /// - Parameters:
     ///   - width: The border width.
@@ -104,13 +108,15 @@ public extension UIView {
             self.updateTraitsIfNeeded()
         }
 
-        self.clear()
-
         let radius = self.validatedCornerRadius(radius)
         let borderColor = colorToken.uiColor.resolvedColor(with: self.traitCollection).cgColor
 
+        let isCustomLayer = dash > 0 && !self.bounds.isEmpty
+
+        self.clear(simpleLayer: isCustomLayer)
+
         // Apply dash only if bounds is not empty
-        if dash > 0 && !self.bounds.isEmpty {
+        if isCustomLayer {
 
             let bezierPath = self.cornerRadiusBezierPath(
                 radius,
@@ -139,7 +145,9 @@ public extension UIView {
 
     /// Add a **Spark** corner radius to the current view.
     ///
-    /// Note: Recommanded to set on *layoutSubviews* to avoid any issue on cornerRadius.
+    /// > Note: Recommanded to set on *layoutSubviews* to avoid any issue on cornerRadius.
+    ///
+    /// > Note: This func reset the **borderWidth** and **borderColor**.
     ///
     /// - Parameters:
     ///   - cornerRadius: The border radius.
@@ -148,9 +156,9 @@ public extension UIView {
         _ cornerRadius: CGFloat,
         isHighlighted: Bool = false
     ) {
-        self.clear()
-
         let cornerRadius = self.validatedCornerRadius(cornerRadius)
+
+        self.clear(simpleLayer: isHighlighted)
 
         if isHighlighted {
             let mask = self.highlightedCornerRadiusMask(cornerRadius)
@@ -158,6 +166,8 @@ public extension UIView {
             self.layer.masksToBounds = true
         } else {
             self.layer.cornerRadius = cornerRadius
+            self.layer.borderWidth = 0
+            self.layer.borderColor = UIColor.clear.cgColor
         }
     }
 }
@@ -218,7 +228,7 @@ private extension UIView {
         return borderLayer
     }
 
-    func clear() {
+    func clear(simpleLayer: Bool) {
         // Remove previous spark sublayers
         if var sublayers = self.layer.sublayers {
             for layer in sublayers.filter({ $0.name == Constants.name}) {
@@ -228,9 +238,11 @@ private extension UIView {
             sublayers.removeAll(where: { $0.name == Constants.name })
         }
 
-        self.layer.cornerRadius = 0
-        self.layer.borderWidth = 0
-        self.layer.borderColor = UIColor.clear.cgColor
+        if simpleLayer {
+            self.layer.cornerRadius = 0
+            self.layer.borderWidth = 0
+            self.layer.borderColor = UIColor.clear.cgColor
+        }
 
         // Used for isHighlighted
         self.layer.mask = nil
