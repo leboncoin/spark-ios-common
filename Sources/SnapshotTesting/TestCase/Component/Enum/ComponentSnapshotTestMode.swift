@@ -34,11 +34,4 @@ import UIKit
     public var suffix: String {
         return self.rawValue
     }
-
-    var documentationName: String {
-        return switch self {
-        case .dark: "~dark"
-        case .light: ""
-        }
-    }
 }

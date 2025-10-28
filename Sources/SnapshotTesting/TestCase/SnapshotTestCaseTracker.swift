@@ -48,6 +48,13 @@ import XCTest
         return filePaths.joined(separator: Constants.separator)
     }
 
+    /// Create the documentation snapshot directory for a file.
+    /// The final link should be like: *"your-module-name/Sources/Core/Documentation.docc/Resources/"*
+    public func snapshotDocumentationDirectory(for file: StaticString) -> String {
+        let snapshotsPath = SnapshotTestCaseTracker.shared.snapshotDirectory(for: file)
+        return snapshotsPath + String(repeating: "/..", count: 4) + "/Sources/Core/Documentation.docc/Resources/"
+    }
+
     public func testName(_ identifier: String? = nil) -> String {
         [self.currentTestCase.testMethodName, identifier]
             .compactMap { $0 }
