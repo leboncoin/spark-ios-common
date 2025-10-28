@@ -12,17 +12,19 @@ import UIKit
 
     // MARK: - Helpers
 
-    public static func testName(
-        _ testName: String,
+    public static func name(
+        _ name: String?,
         mode: ComponentSnapshotTestMode,
         size: UIContentSizeCategory,
         forDocumentation: Bool = false
     ) -> String {
         if forDocumentation {
-            return [testName, mode.documentationName]
-                .joined(separator: "~")
+            return [name, mode.rawValue, "2x"]
+                .compactMap { $0 }
+                .joined(separator: "-")
         } else {
-            return [testName, mode.suffix, size.identifier]
+            return [name, mode.suffix, size.identifier]
+                .compactMap { $0 }
                 .joined(separator: "-")
         }
     }

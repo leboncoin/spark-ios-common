@@ -41,15 +41,15 @@ import UIKit
                             )
                         )
                     ),
-                    named: name,
-                    record: recording,
-                    timeout: timeout,
-                    file: file,
-                    testName: ComponentSnapshotTestHelpers.testName(
-                        testName,
+                    named: ComponentSnapshotTestHelpers.name(
+                        name,
                         mode: mode,
                         size: size
                     ),
+                    record: recording,
+                    timeout: timeout,
+                    file: file,
+                    testName: testName,
                     line: line
                 )
             }
