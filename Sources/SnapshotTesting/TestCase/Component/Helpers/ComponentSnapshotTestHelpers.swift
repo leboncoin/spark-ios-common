@@ -19,7 +19,7 @@ import UIKit
         forDocumentation: Bool = false
     ) -> String {
         if forDocumentation {
-            return [name, mode.rawValue, "2x"]
+            return [name, mode.rawValue, "retina"]
                 .compactMap { $0 }
                 .joined(separator: "-")
         } else {
