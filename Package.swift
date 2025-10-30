@@ -44,10 +44,6 @@ let package = Package(
                 .product(
                     name: "SparkTheming",
                     package: "spark-ios-theming"
-                ),
-                .product(
-                    name: "SparkFakeTheme",
-                    package: "spark-ios-theming"
                 )
             ],
             path: "Sources/Core"
