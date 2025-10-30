@@ -6,8 +6,7 @@
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
-import SparkTheming
-@_spi(SI_SPI) import SparkFakeTheme
+@_spi(SI_SPI) import SparkTheming
 import SwiftUI
 
 public extension EnvironmentValues {
