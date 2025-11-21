@@ -23,7 +23,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: macos-latest
+    runs-on: macos-26
     steps:
       - name: Check configuration
         if: ${{ vars.SPM_NAME == '' }}
@@ -36,7 +36,7 @@ jobs:
       - name: Package name
         run: echo "Generate DocC for ${{ vars.SPM_NAME }} SPM at ${{ env.repo_name }}"
       - name: Checkout Action
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Build DocC
         run: |
           xcodebuild docbuild -scheme ${{ vars.SPM_NAME }} -derivedDataPath ${{ env.xcodebuild_derivedData }} -destination 'generic/platform=iOS';
