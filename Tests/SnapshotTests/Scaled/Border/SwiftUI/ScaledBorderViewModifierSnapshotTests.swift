@@ -113,22 +113,12 @@ private extension View {
         color: any ColorToken,
         isScaled: Bool
     ) -> some View {
-        switch state {
-        case .dashed:
-            self.sparkBorder(
-                width: width,
-                dash: DashState.dashed.dash,
-                colorToken: color,
-                isScaled: isScaled
-            )
-
-        default:
-            self.sparkBorder(
-                width: width,
-                colorToken: color,
-                isScaled: isScaled
-            )
-        }
+        self.sparkBorder(
+            width: width,
+            dash: state == .dashed ? DashState.dashed.dash : nil,
+            colorToken: color,
+            isScaled: isScaled
+        )
     }
 }
 

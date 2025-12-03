@@ -9,29 +9,35 @@
 import SwiftUI
 import SparkTheming
 
-internal struct ScaledCornerRadiusViewModifier: ViewModifier {
+private struct ScaledCornerRadiusViewModifier: ViewModifier {
 
     // MARK: - Properties
 
     @LimitedScaledMetric var radius: CGFloat
+
     let isHighlighted: Bool
+    let isScaled: Bool
 
     // MARK: - Initialization
 
     init(
         radius: CGFloat,
-        isHighlighted: Bool
+        isHighlighted: Bool,
+        isScaled: Bool
     ) {
         self._radius = .init(value: radius, type: .radius)
+        
         self.isHighlighted = isHighlighted
+        self.isScaled = isScaled
     }
 
     // MARK: - View
 
     func body(content: Content) -> some View {
         content
-            .modifier(CornerRadiusViewModifier(
-                radius: self.radius,
+            // .clipShape(UnevenRoundedRectangle(topLeadingRadius: <#T##CGFloat#>, bottomLeadingRadius: <#T##CGFloat#>, bottomTrailingRadius: <#T##CGFloat#>, topTrailingRadius: <#T##CGFloat#>, style: <#T##RoundedCornerStyle#>))
+            .clipShape(HighlightedRectangle(
+                cornerRadius: self._radius.value(scaled: self.isScaled),
                 isHighlighted: self.isHighlighted
             ))
     }
@@ -39,17 +45,16 @@ internal struct ScaledCornerRadiusViewModifier: ViewModifier {
 
 // MARK: - View Extension
 
-internal extension View {
+public extension View {
 
-    /// Applies a **Spark** scaled corner radius to a SwiftUI view.
-    /// The corner radius will increase and decrease
-    /// depending on the Dynamic Type BUT
-    /// a min and max value is applied to limit the modification.
-    ///
+    /// Add a **Spark** corner radius to the current view.
     /// - Parameters:
-    ///   - radius: The corner radius of the border.
-    ///   - isHighlighted: Apply a custom style (no radius on bottom left). Default is *false*.
-    /// - Returns: A modified view with the applied border.
+    ///   - radius: The border radius.
+    ///   - isHighlighted: Apply a custom style (no radius on bottom left).
+    ///   Default is *false*.
+    ///   - isScaled: Apply a scaled radius depending on current the
+    ///   dynamic size. Default is *true*.
+    /// - Returns: Current View.
     ///
     /// Example with a corner in a **Text**.
     /// ```swift
@@ -57,7 +62,7 @@ internal extension View {
     ///     .padding(4)
     ///     .frame(width: 80, height: 30)
     ///     .background(.white)
-    ///     .scaledCornerRadius(12, isHighlighted: true)
+    ///     .sparkCornerRadius(12, isHighlighted: true)
     /// ```
     ///
     /// Example with a corner in a **Shape**.
@@ -65,17 +70,19 @@ internal extension View {
     /// Rectangle()
     ///     .fill(.white)
     ///     .frame(width: 80, height: 30)
-    ///     .scaledCornerRadius(12)
+    ///     .sparkCornerRadius(12, isScaled: false)
     /// ```
     @ViewBuilder
-    func scaledCornerRadius(
+    func sparkCornerRadius(
         _ radius: CGFloat,
-        isHighlighted: Bool = false
+        isHighlighted: Bool = false,
+        isScaled: Bool = true
     ) -> some View {
         if radius > 0 {
             self.modifier(ScaledCornerRadiusViewModifier(
                 radius: radius,
-                isHighlighted: isHighlighted
+                isHighlighted: isHighlighted,
+                isScaled: isScaled
             ))
         } else {
             self

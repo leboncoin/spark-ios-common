@@ -1,5 +1,6 @@
 excluded:
   - "**/*.generated.swift"
+  - ".build/"
 
 # Enabled rules for CI linting
 # List of all the rules: https://realm.github.io/SwiftLint/rule-directory.html
