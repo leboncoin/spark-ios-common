@@ -132,6 +132,6 @@ import SwiftUI
     // MARK: - Methods
 
     public func value(scaled: Bool) -> CGFloat {
-        scaled ? self.wrappedValue : self.unscaledValue
+        return scaled ? self.wrappedValue : self.unscaledValue
     }
 }

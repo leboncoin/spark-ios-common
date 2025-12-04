@@ -40,7 +40,8 @@ final class ScaledCornerRadiusViewModifierSnapshotTests: SwiftUIComponentSnapsho
             self.assertSnapshot(
                 matching: SnapshotView(
                     state: .highlighted,
-                    cornerRadius: radius.value(from: theme)),
+                    cornerRadius: radius.value(from: theme)
+                ),
                 modes: ComponentSnapshotTestConstants.Modes.default,
                 sizes: ComponentSnapshotTestConstants.Sizes.all,
                 testName: #function + "\(radius)Radius"

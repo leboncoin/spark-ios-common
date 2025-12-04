@@ -110,21 +110,3 @@ public extension View {
         ))
     }
 }
-
-// MARK: - Private Extension
-
-private extension LimitedScaledMetric {
-
-    // MARK: - Initialization
-
-    init(value: CGFloat?, type: ScaledBorderType) {
-        let value = value ?? .zero
-
-        self.init(
-            value: value,
-            minFactor: type.minValueFactor,
-            maxFactor: type.maxValueFactor,
-            relativeTo: type.swiftUIRelativeTo
-        )
-    }
-}
