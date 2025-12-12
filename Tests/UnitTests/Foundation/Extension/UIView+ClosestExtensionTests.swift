@@ -1,5 +1,5 @@
 //
-//  UIViewClosestTests.swift
+//  UIView+ClosestExtensionTests.swift
 //  SparkCoreUnitTests
 //
 //  Created by Michael Zimmermann on 30.11.23.

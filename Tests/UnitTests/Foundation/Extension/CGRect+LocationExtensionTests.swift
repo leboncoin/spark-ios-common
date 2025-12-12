@@ -1,5 +1,5 @@
 //
-//  CGRectLocationTests.swift
+//  CGRect+LocationExtensionTests.swift
 //  SparkCoreUnitTests
 //
 //  Created by Michael Zimmermann on 08.12.23.

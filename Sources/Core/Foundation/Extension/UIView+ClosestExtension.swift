@@ -1,5 +1,5 @@
 //
-//  UIView-Closest.swift
+//  UIView+ClosestExtension.swift
 //  SparkCommon
 //
 //  Created by Michael Zimmermann on 30.11.23.

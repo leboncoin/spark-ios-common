@@ -1,5 +1,5 @@
 //
-//  CGRectCenterTests.swift
+//  CGRect+CenterExtensionTests.swift
 //  SparkCoreUnitTests
 //
 //  Created by Michael Zimmermann on 30.11.23.
