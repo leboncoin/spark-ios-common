@@ -1,5 +1,5 @@
 //
-//  CGPointDistanceTests.swift
+//  CGPoint+DistanceExtensionTests.swift
 //  SparkCoreUnitTests
 //
 //  Created by Michael Zimmermann on 30.11.23.

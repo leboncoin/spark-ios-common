@@ -1,5 +1,5 @@
 //
-//  CGPoint-Distance.swift
+//  CGPoint+DistanceExtension.swift
 //  SparkCommon
 //
 //  Created by Michael Zimmermann on 30.11.23.

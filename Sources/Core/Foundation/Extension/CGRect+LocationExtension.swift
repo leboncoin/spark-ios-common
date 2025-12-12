@@ -1,5 +1,5 @@
 //
-//  CGRect-location.swift
+//  CGRect+LocationExtension.swift
 //  SparkCommon
 //
 //  Created by Michael Zimmermann on 07.12.23.
