@@ -59,6 +59,7 @@ import SwiftUI
     // MARK: - Private Properties
 
     @ScaledMetric private var value: CGFloat
+    private let unscaledValue: CGFloat
     private let minValue: CGFloat
     private let maxValue: CGFloat
 
@@ -83,6 +84,7 @@ import SwiftUI
             self._value = .init(wrappedValue: value)
         }
 
+        self.unscaledValue = value
         self.minValue = minValue
         self.maxValue = maxValue
     }
@@ -125,5 +127,11 @@ import SwiftUI
             maxValue: value * LimitedScaledMetricConstants.maxValueFactor,
             relativeTo: relativeTo
         )
+    }
+
+    // MARK: - Methods
+
+    public func value(scaled: Bool) -> CGFloat {
+        return scaled ? self.wrappedValue : self.unscaledValue
     }
 }

@@ -9,14 +9,16 @@
 import SwiftUI
 import SparkTheming
 
-internal struct ScaledBorderViewModifier: ViewModifier {
+private struct ScaledBorderViewModifier: ViewModifier {
 
     // MARK: - Properties
 
     @LimitedScaledMetric var width: CGFloat
     @LimitedScaledMetric var dash: CGFloat
+
     let colorToken: any ColorToken
     let position: BorderPosition
+    let isScaled: Bool
 
     // MARK: - Initialization
 
@@ -24,44 +26,49 @@ internal struct ScaledBorderViewModifier: ViewModifier {
         width: CGFloat,
         dash: CGFloat? = nil,
         colorToken: any ColorToken,
-        position: BorderPosition = .default
+        position: BorderPosition = .default,
+        isScaled: Bool
     ) {
         self._width = .init(value: width, type: .width)
         self._dash = .init(value: dash, type: .dash)
+
         self.colorToken = colorToken
         self.position = position
+        self.isScaled = isScaled
     }
 
     // MARK: - View
 
     func body(content: Content) -> some View {
         content
-            .modifier(BorderViewModifier(
-                width: self.width,
-                dash: self.dash,
-                colorToken: self.colorToken,
-                position: self.position
-            ))
+            .overlay(
+                Rectangle()
+                    .inset(by: self.position.inset(width: self._width.value(scaled: self.isScaled)))
+                    .stroke(
+                        colorToken: self.colorToken,
+                        width: self._width.value(scaled: self.isScaled),
+                        dash: self._dash.value(scaled: self.isScaled),
+                        position: self.position
+                    )
+            )
     }
 }
 
 // MARK: - View Extension
 
-internal extension View {
+public extension View {
 
-    /// Applies a **Spark** scaled border to a SwiftUI view.
-    /// The border width will increase and decrease
-    /// depending on the Dynamic Type BUT
-    /// a min and max value is applied to limit the modification.
-    ///
+    /// Add a **Spark** border to the current view.
     /// - Parameters:
-    ///   - width: The thickness of the border.
+    ///   - width: The border width.
     ///   - dash: The length of painted segments used to make a
     ///     dashed line. *Optional*. Default is *nil*.
+    ///   - colorToken: The color token of the border.
     ///   - position: The position of the border in the view.
     ///     Default is *overlay*.
-    ///   - colorToken: The color token to use for the border.
-    /// - Returns: A modified view with the applied border.
+    ///   - isScaled: Apply a scaled width depending on current the
+    ///   dynamic size. Default is *true*.
+    /// - Returns: Current View.
     ///
     /// Example with a corner in a **Text**.
     /// ```swift
@@ -69,7 +76,7 @@ internal extension View {
     ///     .padding(4)
     ///     .frame(width: 80, height: 30)
     ///     .background(.white)
-    ///     .scaledBorder(
+    ///     .sparkBorder(
     ///         width: 2,
     ///         dash: 4,
     ///         colorToken: YourThemes.shared.colors.main.main
@@ -81,40 +88,25 @@ internal extension View {
     /// Rectangle()
     ///     .fill(.white)
     ///     .frame(width: 80, height: 30)
-    ///     .scaledBorder(
-    ///         width: 2,      
+    ///     .sparkBorder(
+    ///         width: 2,
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
     /// ```
-    func scaledBorder(
+    @ViewBuilder
+    func sparkBorder(
         width: CGFloat,
         dash: CGFloat? = nil,
         colorToken: any ColorToken,
-        position: BorderPosition = .default
+        position: BorderPosition = .default,
+        isScaled: Bool = true
     ) -> some View {
         self.modifier(ScaledBorderViewModifier(
             width: width,
             dash: dash,
             colorToken: colorToken,
-            position: position
+            position: position,
+            isScaled: isScaled
         ))
-    }
-}
-
-// MARK: - Private Extension
-
-private extension LimitedScaledMetric {
-
-    // MARK: - Initialization
-
-    init(value: CGFloat?, type: ScaledBorderType) {
-        let value = value ?? .zero
-
-        self.init(
-            value: value,
-            minFactor: type.minValueFactor,
-            maxFactor: type.maxValueFactor,
-            relativeTo: type.swiftUIRelativeTo
-        )
     }
 }

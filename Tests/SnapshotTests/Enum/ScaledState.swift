@@ -15,9 +15,9 @@ enum ScaledState: String, Hashable, CaseIterable {
 
     var name: String {
         switch self {
-        case .scaled: "Scaled properly ✅"
+        case .scaled: "Scaled properly"
         case .scaledMetric: "@ScaledMetric 🚫"
-        case .withoutScaling: "Without scaling 🚫"
+        case .withoutScaling: "Without scaling"
         }
     }
 

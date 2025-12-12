@@ -40,7 +40,8 @@ final class ScaledCornerRadiusViewModifierSnapshotTests: SwiftUIComponentSnapsho
             self.assertSnapshot(
                 matching: SnapshotView(
                     state: .highlighted,
-                    cornerRadius: radius.value(from: theme)),
+                    cornerRadius: radius.value(from: theme)
+                ),
                 modes: ComponentSnapshotTestConstants.Modes.default,
                 sizes: ComponentSnapshotTestConstants.Sizes.all,
                 testName: #function + "\(radius)Radius"
@@ -125,20 +126,11 @@ private extension View {
         cornerRadius: CGFloat,
         isScaled: Bool
     ) -> some View {
-        switch state {
-        case .highlighted:
-            self.sparkCornerRadius(
-                cornerRadius,
-                isHighlighted: true,
-                isScaled: isScaled
-            )
-
-        default:
-            self.sparkCornerRadius(
-                cornerRadius,
-                isScaled: isScaled
-            )
-        }
+        self.sparkCornerRadius(
+            cornerRadius,
+            isHighlighted: state == .highlighted,
+            isScaled: isScaled
+        )
     }
 }
 
