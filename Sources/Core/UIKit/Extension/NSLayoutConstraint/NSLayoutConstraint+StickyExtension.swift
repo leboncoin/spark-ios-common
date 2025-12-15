@@ -1,5 +1,5 @@
 //
-//  NSLayoutConstraint+Extension.swift
+//  NSLayoutConstraint+StickyExtension.swift
 //  Spark
 //
 //  Created by robin.lemaire on 17/04/2023.
