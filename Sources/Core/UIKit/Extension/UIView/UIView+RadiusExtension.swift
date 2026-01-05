@@ -25,6 +25,7 @@ public extension UIView {
     ///   - radius: The border radius.
     ///   - isHighlighted: Apply a custom style (no radius on bottom left). Default is *false*.
     ///   - colorToken: The color token of the border.
+    ///   - cornerCurve: The corner curve to apply to a view. Default is **continuous**.
     ///   - masksToBounds: A Boolean indicating whether sublayers are clipped to the layer’s bounds. Default is **true**.
     ///   Be carefull if you set the value at **false**, the UI can be impacted.
     func sparkBorderRadius(
@@ -32,6 +33,7 @@ public extension UIView {
         radius: CGFloat,
         isHighlighted: Bool = false,
         colorToken: any ColorToken,
+        cornerCurve: CALayerCornerCurve = .continuous,
         masksToBounds: Bool = true
     ) {
         // No Width ? Add a corner radius instead !
@@ -74,6 +76,7 @@ public extension UIView {
             self.layer.borderColor = borderColor
         }
 
+        self.layer.cornerCurve = cornerCurve
         self.layer.masksToBounds = masksToBounds
     }
 
@@ -89,6 +92,7 @@ public extension UIView {
     ///   - radius: The border radius.
     ///   - dash: The length of painted segments used to make a dashed line.
     ///   - colorToken: The color token of the border.
+    ///   - cornerCurve: The corner curve to apply to a view. Default is **continuous**.
     ///   - masksToBounds: A Boolean indicating whether sublayers are clipped to the layer’s bounds. Default is **true**.
     ///   Be carefull if you set the value at **false**, the UI can be impacted.
     func sparkBorderRadius(
@@ -96,6 +100,7 @@ public extension UIView {
         radius: CGFloat,
         dash: CGFloat,
         colorToken: any ColorToken,
+        cornerCurve: CALayerCornerCurve = .continuous,
         masksToBounds: Bool = true
     ) {
         // No Width ? Add a corner radius instead !
@@ -139,6 +144,7 @@ public extension UIView {
 
         // Apply a corner radius in both cases
         self.layer.cornerRadius = radius
+        self.layer.cornerCurve = cornerCurve
 
         self.layer.masksToBounds = masksToBounds
     }
@@ -152,9 +158,11 @@ public extension UIView {
     /// - Parameters:
     ///   - cornerRadius: The border radius.
     ///   - isHighlighted: Apply a custom style (no radius on bottom left). Default is *false*.
+    ///   - cornerCurve: The corner curve to apply to a view. Default is **continuous**.
     func sparkCornerRadius(
         _ cornerRadius: CGFloat,
-        isHighlighted: Bool = false
+        isHighlighted: Bool = false,
+        cornerCurve: CALayerCornerCurve = .continuous
     ) {
         let cornerRadius = self.validatedCornerRadius(cornerRadius)
 
@@ -169,6 +177,8 @@ public extension UIView {
             self.layer.borderWidth = 0
             self.layer.borderColor = UIColor.clear.cgColor
         }
+
+        self.layer.cornerCurve = cornerCurve
     }
 }
 
