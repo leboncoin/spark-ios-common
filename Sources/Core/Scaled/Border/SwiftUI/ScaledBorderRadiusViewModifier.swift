@@ -356,7 +356,7 @@ public extension View {
     /// Add a **Spark** border with corner radius to the current view.
     /// - Parameters:
     ///   - width: The border width.
-    ///   - leaderRadius:The radius to apply for the leader corners.
+    ///   - leadingRadius:The radius to apply for the leader corners.
     ///   - trailingRadius: The radius to apply for the trailing corners.
     ///   - dash: The length of painted segments used to make a
     ///     dashed line. *Optional*. Default is *nil*.

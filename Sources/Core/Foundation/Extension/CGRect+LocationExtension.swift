@@ -9,6 +9,7 @@
 import Foundation
 
 @_spi(SI_SPI) public extension CGRect {
+    @available(*, deprecated, message: "Only used by the deprecated Rating component.")
     func pointIndex(of point: CGPoint, horizontalSlices items: Int) -> Int? {
         guard items > 0, self.contains(point) else {
             return nil

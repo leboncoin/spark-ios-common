@@ -13,7 +13,7 @@ public extension UIImageView {
 
     /// Set a **tintColor** color on UIImageView from a Spark **ColorToken**.
     /// - Parameters:
-    ///   - color: the color token.
+    ///   - token: the color token.
     func tintColor(_ token: any ColorToken) {
         self.tintColor = token.uiColor
     }

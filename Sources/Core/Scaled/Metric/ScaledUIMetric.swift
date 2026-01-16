@@ -54,7 +54,7 @@ import UIKit
     /// Initialize a new property wrapper.
     /// - Parameters:
     ///   - baseValue: The base value used in the calculation.
-    ///   - metrics: The text style the scaling is based on. The default value is `.body`-text-style.
+    ///   - textStyle: The text style the scaling is based on. The default value is `.body`-text-style.
     ///   - traitCollection: The trait collection used for the scaling operation. The default value is nil, which means the current trait collection will be used (`UITraitCollection.current`).
     public init(
         wrappedValue baseValue: Value,
