@@ -42,6 +42,8 @@ public extension UIView {
         completion: ((Bool) -> Void)? = nil
     ) {
         guard !UIAccessibility.isReduceMotionEnabled else {
+            animations()
+            completion?(true)
             return
         }
 
@@ -78,6 +80,8 @@ public extension UIView {
         completion: ((Bool) -> Void)? = nil
     ) {
         guard !UIAccessibility.isReduceMotionEnabled else {
+            animations()
+            completion?(true)
             return
         }
 
@@ -105,6 +109,7 @@ public extension UIView {
         animations: @escaping () -> Void
     ) {
         guard !UIAccessibility.isReduceMotionEnabled else {
+            animations()
             return
         }
 
@@ -156,6 +161,8 @@ public extension UIView {
         completion: ((Bool) -> Void)? = nil
     ) {
         guard !UIAccessibility.isReduceMotionEnabled else {
+            animations()
+            completion?(true)
             return
         }
 
