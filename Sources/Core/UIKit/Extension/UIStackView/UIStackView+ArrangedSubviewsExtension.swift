@@ -1,5 +1,5 @@
 //
-//  UIStackView-RemoveAll.swift
+//  UIStackView+ArrangedSubviewsExtension.swift
 //  SparkCommon
 //
 //  Created by michael.zimmermann on 09.08.23.

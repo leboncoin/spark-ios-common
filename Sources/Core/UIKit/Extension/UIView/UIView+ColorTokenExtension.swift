@@ -13,7 +13,7 @@ public extension UIView {
 
     /// Set a **backgroundColor** color on UIView from a Spark **ColorToken**.
     /// - Parameters:
-    ///   - color: the color token.
+    ///   - token: the color token.
     func backgroundColor(_ token: (any ColorToken)?) {
         self.backgroundColor = token?.uiColor
     }

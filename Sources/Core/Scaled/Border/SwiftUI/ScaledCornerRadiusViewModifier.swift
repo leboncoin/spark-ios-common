@@ -241,7 +241,7 @@ public extension View {
 
     /// Add a **Spark** uneven corner radius to the current view.
     /// - Parameters:
-    ///   - leader:The radius to apply for the leader corners.
+    ///   - leading:The radius to apply for the leader corners.
     ///   - trailing: The radius to apply for the trailing corners.
     ///   - isHighlighted: Apply a custom style (no radius on bottom left).
     ///   Default is *false*.

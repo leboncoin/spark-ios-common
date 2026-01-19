@@ -1,5 +1,5 @@
 //
-//  UIView-Attributes.swift
+//  UIView+HiddenExtension.swift
 //  SparkCommon
 //
 //  Created by michael.zimmermann on 16.08.23.

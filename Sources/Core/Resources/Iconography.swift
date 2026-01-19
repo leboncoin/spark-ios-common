@@ -14,6 +14,8 @@ import UIKit
     static var sparkCross: Self = .init(.cross)
     static var sparkMinus: Self = .init(.minus)
     static var sparkPlus: Self = .init(.plus)
+    static var sparkStarFill: Self = .init(.starFill)
+    static var sparkStarOutline: Self = .init(.starOutline)
 }
 
 @_spi(SI_SPI) public extension UIImage {
@@ -21,4 +23,6 @@ import UIKit
     static var sparkCross: UIImage = .init(resource: .cross)
     static var sparkMinus: UIImage = .init(resource: .minus)
     static var sparkPlus: UIImage = .init(resource: .plus)
+    static var sparkStarFill: UIImage = .init(resource: .starFill)
+    static var sparkStarOutline: UIImage = .init(resource: .starOutline)
 }
