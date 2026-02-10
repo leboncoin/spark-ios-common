@@ -88,6 +88,7 @@ jobs:
             sourcery
           done
       - name: Test
+        timeout-minutes: 15
         run: |
           xcodebuild -scheme ${{ env.spm_name }} -derivedDataPath ${{ env.xcodebuild_derivedData }} ${{ env.xcodebuild_sdk }} ${{ env.xcodebuild_destination }} -resultBundlePath ${{ vars.SPM_NAME }}.xcresult test
       - name: Upload xcresult file

@@ -14,6 +14,10 @@ private struct SizePreferenceKey: PreferenceKey {
 
     static var defaultValue: CGSize = .zero
     static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        guard nextValue() != .zero else {
+            return
+        }
+
         value = nextValue()
     }
 }
