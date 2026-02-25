@@ -9,6 +9,8 @@
 import SwiftUI
 
 /// Struct using to manage the accessibility properties on SwiftUI.
+
+@available(*, deprecated, message: "Remove ASAP. Should not be used anymore.")
 @_spi(SI_SPI) public struct Accessibility {
 
     // MARK: - Properties
