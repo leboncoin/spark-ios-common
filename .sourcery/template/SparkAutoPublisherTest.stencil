@@ -15,10 +15,10 @@
     private init(){
     }
 
-    // MARK: - Tests
+    // MARK: - XCTest
 
     {% for variable in class.allVariables|!definedInExtension where variable.readAccess != "private" and variable.definedInTypeName|contains: class.name and variable.attributes["Published"] != nil %}
-        
+
     public static func XCTSinksCount(
         {{ variable.name }} mock: PublisherMock<Published<{% call existentialVariableTypeName variable.typeName %}>.Publisher>,
         expectedNumberOfSinks: Int
@@ -60,6 +60,71 @@
             } else {
                 XCTAssertPublisherSinkValueNil(
                     on: mock
+                )
+            }
+            {% endif %}
+        }
+    }
+
+    {% endfor %}
+
+    // MARK: - Swift Testing
+
+    {% for variable in class.allVariables|!definedInExtension where variable.readAccess != "private" and variable.definedInTypeName|contains: class.name and variable.attributes["Published"] != nil %}
+
+    public static func expectSinksCount(
+        {{ variable.name }} mock: PublisherMock<Published<{% call existentialVariableTypeName variable.typeName %}>.Publisher>,
+        expectedNumberOfSinks: Int,
+        sourceLocation: Testing.SourceLocation = #_sourceLocation
+    ) {
+        #expect(
+            mock.sinkCount == expectedNumberOfSinks,
+            "Expected \(expectedNumberOfSinks) sinks, but got \(mock.sinkCount)",
+            sourceLocation: sourceLocation
+        )
+    }
+
+    public static func expect{% if class.annotations[variable.name] == "Identical" %}<
+        Value: AnyObject
+    >{% endif %}(
+        {{ variable.name }} mock: PublisherMock<Published<{% call existentialVariableTypeName variable.typeName %}>.Publisher>,
+        expectedNumberOfSinks: Int,
+        expectedValue: {% if class.annotations[variable.name] == "Identical" %}Value{% if variable.isOptional %}?{% endif %}{% else %}{{ variable.typeName }}{% endif %}{% if variable.isOptional %} = nil{% endif %},
+        sourceLocation: Testing.SourceLocation = #_sourceLocation
+    ) {
+        // Count
+        #expect(
+            mock.sinkCount == expectedNumberOfSinks,
+            "Expected \(expectedNumberOfSinks) sinks, but got \(mock.sinkCount)",
+            sourceLocation: sourceLocation
+        )
+
+        // Value
+        if expectedNumberOfSinks > 0 {
+            {% if variable.isOptional %}if let expectedValue { {% endif %}
+                {% if class.annotations[variable.name] == "Identical" %}
+                guard let value = mock.sinkValue as? Value else {
+                    Issue.record("Expected value to be of type \(Value.self)", sourceLocation: sourceLocation)
+                    return
+                }
+                #expect(
+                    value === expectedValue,
+                    "Publisher values are not identical",
+                    sourceLocation: sourceLocation
+                )
+                {% else %}
+                #expect(
+                    mock.sinkValue == expectedValue,
+                    "Expected value \(String(describing: expectedValue)), but got \(String(describing: mock.sinkValue))",
+                    sourceLocation: sourceLocation
+                )
+                {% endif %}
+            {% if variable.isOptional %}
+            } else {
+                #expect(
+                    mock.sinkValue == nil,
+                    "Expected nil value, but got \(String(describing: mock.sinkValue))",
+                    sourceLocation: sourceLocation
                 )
             }
             {% endif %}
