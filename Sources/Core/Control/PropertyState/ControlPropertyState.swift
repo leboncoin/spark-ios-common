@@ -7,6 +7,7 @@
 //
 
 /// Contains the dynamic property for a ControlState.
+@available(*, deprecated, message: "Only used on deprecated button. Remove ASAP (13/03/2026")
 @_spi(SI_SPI) public final class ControlPropertyState<T: Equatable> {
 
     // MARK: - Properties

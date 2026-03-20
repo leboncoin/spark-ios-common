@@ -9,6 +9,7 @@
 import Foundation
 
 /// Constants describing the state of a Spark control.
+@available(*, deprecated, message: "Only used on deprecated button. Remove ASAP (13/03/2026")
 @frozen public enum ControlState: CaseIterable, Equatable {
     /// The normal, or default, state of a control where the control is enabled but neither selected nor highlighted.
     case normal

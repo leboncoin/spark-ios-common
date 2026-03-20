@@ -10,6 +10,7 @@ import UIKit
 
 /// The custom UILabel which set the correct text or attributedText from the state of the UIControl.
 /// Must be used only on UIControl.
+@available(*, deprecated, message: "Only used on deprecated button. Remove ASAP (13/03/2026")
 @_spi(SI_SPI) public final class UIControlStateLabel: UILabel {
 
     // MARK: - Properties

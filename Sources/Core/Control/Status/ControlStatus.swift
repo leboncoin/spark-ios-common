@@ -7,6 +7,7 @@
 //
 
 /// The current status of the control: highlighted or not, disabled or not and selected or not.
+@available(*, deprecated, message: "Only used on deprecated button. Remove ASAP (13/03/2026")
 @_spi(SI_SPI) public final class ControlStatus: Equatable {
 
     // MARK: - Properties

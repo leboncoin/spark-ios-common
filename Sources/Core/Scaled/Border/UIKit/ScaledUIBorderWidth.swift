@@ -68,13 +68,19 @@ import UIKit
     /// Initializes a new `ScaledUIBorderWidth` with the specified base value.
     /// The base value will be scaled according to the device's screen metrics.
     ///
-    /// - Parameter baseValue: The base border width value to be scaled
-    public init(wrappedValue baseValue: CGFloat) {
+    /// - Parameters:
+    ///   - baseValue: The base border width value to be scaled
+    ///   - traitCollection: Optional trait collection to use for scaling (defaults to current if nil)
+    public init(
+        wrappedValue baseValue: CGFloat,
+        traitCollection: UITraitCollection? = nil
+    ) {
         self._width = .init(
             wrappedValue: baseValue,
             minFactor: self.type.minValueFactor,
             maxFactor: self.type.maxValueFactor,
-            relativeTo: self.type.uiKitRelativeTo
+            relativeTo: self.type.uiKitRelativeTo,
+            traitCollection: traitCollection
         )
     }
 

@@ -9,6 +9,7 @@
 import Foundation
 
 /// Manage all the states for a dynamic property.
+@available(*, deprecated, message: "Only used on deprecated button. Remove ASAP (13/03/2026")
 @_spi(SI_SPI) public final class ControlPropertyStates<PropertyType: Equatable> {
 
     // MARK: - Type Alias

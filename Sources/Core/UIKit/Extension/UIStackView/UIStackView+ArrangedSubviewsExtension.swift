@@ -15,6 +15,12 @@ import UIKit
         return self.arrangedSubviews.reduce([UIView]()) { $0 + [self.detachArrangedSubview($1)] }
     }
 
+    func removeArrangedSubviews(_ subviews: [UIView]) {
+        for arrangedSubview in subviews {
+            self.detachArrangedSubview(arrangedSubview)
+        }
+    }
+
     @discardableResult
     func detachArrangedSubview(_ view: UIView) -> UIView {
         self.removeArrangedSubview(view)
