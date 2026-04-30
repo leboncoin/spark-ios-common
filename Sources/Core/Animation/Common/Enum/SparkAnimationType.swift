@@ -9,7 +9,7 @@
 import Foundation
 
 /// The Spark animations type.
-public enum SparkAnimationType {
+public enum SparkAnimationType: CaseIterable {
     /// The bell animation. Left to right. Infinit animation.
     case bell
 }

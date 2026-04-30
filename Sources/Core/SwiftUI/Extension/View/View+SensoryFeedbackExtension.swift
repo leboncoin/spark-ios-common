@@ -12,11 +12,47 @@ public struct SparkSensoryFeedback: Equatable, Sendable {
 
     // MARK: - Static
 
+    /// Provides a physical metaphor you can use to complement a visual
+    /// experience.
+    ///
+    /// Use this to provide feedback for UI elements colliding. It should
+    /// supplement the user experience, since only some platforms will play
+    /// feedback in response to it.
+    ///
+    /// Only plays feedback on iOS and watchOS.
     public static let impact = SparkSensoryFeedback()
+
+    /// Provides a physical metaphor you can use to complement a visual
+    /// experience.
+    ///
+    /// Use this to provide feedback for UI elements colliding. It should
+    /// supplement the user experience, since only some platforms will play
+    /// feedback in response to it.
+    ///
+    /// Not all platforms will play different feedback for different weights and
+    /// intensities of impact.
     public static func impact(style: UIImpactFeedbackGenerator.FeedbackStyle = .medium, intensity: Double? = 1.0) -> SparkSensoryFeedback {
         return .init(style: style, intensity: intensity)
     }
+
+    /// Indicates that a UI element’s values are changing.
+    ///
+    /// Equivalent to ``selection(_:)`` with ``SelectionFeedback/default``.
     public static let selection = SparkSensoryFeedback()
+
+    public static let success = SparkSensoryFeedback()
+
+    /// Indicates that a task or action has produced a warning of some kind.
+    public static let warning = SparkSensoryFeedback()
+
+    /// Indicates that an error has occurred.
+    public static let error = SparkSensoryFeedback()
+
+    /// Indicates the alignment of a dragged item.
+    ///
+    /// For example, use this pattern in a drawing app when the user drags a
+    /// shape into alignment with another shape.
+    public static let alignment = SparkSensoryFeedback()
 
     // MARK: - Properties
 
@@ -39,8 +75,12 @@ public struct SparkSensoryFeedback: Equatable, Sendable {
     @available(iOS 17.0, *)
     fileprivate func feedback() -> SensoryFeedback? {
         switch self {
-        case .selection: .selection
         case .impact: .impact
+        case .selection: .selection
+        case .success: .success
+        case .warning: .warning
+        case .error: .error
+        case .alignment: .alignment
         default: nil
         }
     }
