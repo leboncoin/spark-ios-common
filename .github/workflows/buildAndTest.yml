@@ -10,7 +10,7 @@ env:
   xcode_path: "/Applications/Xcode_26.1.app"
   xcodebuild_sdk: -sdk iphonesimulator
   xcodebuild_derivedData: ".spmComponentDerivedData/"
-  xcodebuild_destination: -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.0.1'
+  xcodebuild_destination: -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.2'
 
 jobs:
   build:
