@@ -18,8 +18,6 @@ public struct SparkSensoryFeedback: Equatable, Sendable {
     /// Use this to provide feedback for UI elements colliding. It should
     /// supplement the user experience, since only some platforms will play
     /// feedback in response to it.
-    ///
-    /// Only plays feedback on iOS and watchOS.
     public static let impact = SparkSensoryFeedback()
 
     /// Provides a physical metaphor you can use to complement a visual
