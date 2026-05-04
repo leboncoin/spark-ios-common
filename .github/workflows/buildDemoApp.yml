@@ -65,7 +65,7 @@ jobs:
           xcodebuild -scheme ${{ env.app_name }} -derivedDataPath ${{ env.xcodebuild_derivedData }} ${{ env.xcodebuild_sdk }} ${{ env.xcodebuild_destination }} -resultBundlePath ${{ env.app_name }}.xcresult build
 
       - name: Upload xcresult file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: ${{ failure() }}
         with:
           name: ${{ env.app_name }}-${{ github.run_number }}.xcresult
@@ -73,7 +73,7 @@ jobs:
           retention-days: 15
 
       - name: Upload demo app file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         id: artifact-upload-step
         if: ${{ success() }}
         with:

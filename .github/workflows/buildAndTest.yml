@@ -92,7 +92,7 @@ jobs:
         run: |
           xcodebuild -scheme ${{ env.spm_name }} -derivedDataPath ${{ env.xcodebuild_derivedData }} ${{ env.xcodebuild_sdk }} ${{ env.xcodebuild_destination }} -resultBundlePath ${{ vars.SPM_NAME }}.xcresult test
       - name: Upload xcresult file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: ${{ failure() }}
         with:
           name: ${{ vars.SPM_NAME }}-${{ github.run_number }}.xcresult
