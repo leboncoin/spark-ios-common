@@ -11,6 +11,7 @@ import UIKit
 
 @_spi(SI_SPI) public extension Image {
     static let sparkAddImageOutline = Image("addImageOutline", bundle: .current)
+    static let sparkCameraOutline = Image("cameraOutline", bundle: .current)
     static let sparkCheck = Image("check", bundle: .current)
     static let sparkCross = Image("cross", bundle: .current)
     static let sparkExport = Image("export", bundle: .current)
@@ -27,6 +28,7 @@ import UIKit
 
 @_spi(SI_SPI) public extension UIImage {
     static let sparkAddImageOutline = UIImage(named: "addImageOutline", in: .current, with: nil) ?? UIImage()
+    static let sparkCameraOutline = UIImage(named: "cameraOutline", in: .current, with: nil) ?? UIImage()
     static let sparkCheck = UIImage(named: "check", in: .current, with: nil) ?? UIImage()
     static let sparkCross = UIImage(named: "cross", in: .current, with: nil) ?? UIImage()
     static let sparkExport = UIImage(named: "export", in: .current, with: nil) ?? UIImage()

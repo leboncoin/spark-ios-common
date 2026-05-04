@@ -1,5 +1,5 @@
 //
-//  ScaledVStackSnapshotTests.swift
+//  SparkVStackSnapshotTests.swift
 //  SparkCommon
 //
 //  Created by robin.lemaire on 20/06/2025.
@@ -13,7 +13,7 @@ import XCTest
 import SparkTheme
 import SparkTheming
 
-final class ScaledVStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
+final class SparkVStackSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     // MARK: - Tests
 
