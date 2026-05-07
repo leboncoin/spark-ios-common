@@ -60,7 +60,7 @@ struct SparkFeatureToggleServiceTests {
         #expect(SparkFeatureToggleService.shared is SparkFeatureToggleServicingGeneratedMock, "shared instance should be a mock before reset")
 
         // WHEN
-        SparkFeatureToggleService.shared = SparkFeatureToggleService()
+        SparkFeatureToggleService.reset()
 
         // THEN
         #expect(SparkFeatureToggleService.shared is SparkFeatureToggleService, "shared instance should be of type SparkFeatureToggleService after reset")
