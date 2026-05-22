@@ -7,7 +7,7 @@ on: workflow_call
 env:
   spm_name: ${{ vars.SPM_NAME }}-Package
   swift_version: "6.2"
-  xcode_path: "/Applications/Xcode_26.1.app"
+  xcode_path: "/Applications/Xcode_26.3.app"
   xcodebuild_sdk: -sdk iphonesimulator
   xcodebuild_derivedData: ".spmComponentDerivedData/"
   xcodebuild_destination: -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.2'
