@@ -60,13 +60,13 @@ private struct ScaledCornerRadiusViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-             .clipShape(UnevenRoundedRectangle(
+            .clipShape(UnevenRoundedRectangle(
                 topLeadingRadius: self._topLeadingRadius.value(scaled: self.isScaled),
                 bottomLeadingRadius: self._bottomLeadingRadius.value(scaled: self.isScaled),
                 bottomTrailingRadius: self._bottomTrailingRadius.value(scaled: self.isScaled),
                 topTrailingRadius: self._topTrailingRadius.value(scaled: self.isScaled),
                 isHighlighted: self.isHighlighted
-             ))
+            ))
     }
 }
 
@@ -99,21 +99,16 @@ public extension View {
     ///     .frame(width: 80, height: 30)
     ///     .sparkCornerRadius(12, isScaled: false)
     /// ```
-    @ViewBuilder
     func sparkCornerRadius(
         _ radius: CGFloat,
         isHighlighted: Bool = false,
         isScaled: Bool = true
     ) -> some View {
-        if radius > 0 {
-            self.modifier(ScaledCornerRadiusViewModifier(
-                radius: radius,
-                isHighlighted: isHighlighted,
-                isScaled: isScaled
-            ))
-        } else {
-            self
-        }
+        self.modifier(ScaledCornerRadiusViewModifier(
+            radius: radius,
+            isHighlighted: isHighlighted,
+            isScaled: isScaled
+        ))
     }
 }
 
@@ -161,7 +156,6 @@ public extension View {
     ///         isScaled: false
     ///     )
     /// ```
-    @ViewBuilder
     func sparkCornerRadius(
         topLeading: CGFloat,
         topTrailing: CGFloat,
@@ -170,18 +164,14 @@ public extension View {
         isHighlighted: Bool = false,
         isScaled: Bool = true
     ) -> some View {
-        if topLeading > 0 || topTrailing > 0 || bottomTrailing > 0 || bottomLeading > 0 {
-            self.modifier(ScaledCornerRadiusViewModifier(
-                topLeadingRadius: topLeading,
-                topTrailingRadius: topTrailing,
-                bottomTrailingRadius: bottomTrailing,
-                bottomLeadingRadius: bottomLeading,
-                isHighlighted: isHighlighted,
-                isScaled: isScaled
-            ))
-        } else {
-            self
-        }
+        self.modifier(ScaledCornerRadiusViewModifier(
+            topLeadingRadius: topLeading,
+            topTrailingRadius: topTrailing,
+            bottomTrailingRadius: bottomTrailing,
+            bottomLeadingRadius: bottomLeading,
+            isHighlighted: isHighlighted,
+            isScaled: isScaled
+        ))
     }
 
     /// Add a **Spark** uneven corner radius to the current view.
@@ -218,25 +208,20 @@ public extension View {
     ///         isScaled: false
     ///     )
     /// ```
-    @ViewBuilder
     func sparkCornerRadius(
         top: CGFloat,
         bottom: CGFloat,
         isHighlighted: Bool = false,
         isScaled: Bool = true
     ) -> some View {
-        if top > 0 || bottom > 0 {
-            self.modifier(ScaledCornerRadiusViewModifier(
-                topLeadingRadius: top,
-                topTrailingRadius: top,
-                bottomTrailingRadius: bottom,
-                bottomLeadingRadius: bottom,
-                isHighlighted: isHighlighted,
-                isScaled: isScaled
-            ))
-        } else {
-            self
-        }
+        self.modifier(ScaledCornerRadiusViewModifier(
+            topLeadingRadius: top,
+            topTrailingRadius: top,
+            bottomTrailingRadius: bottom,
+            bottomLeadingRadius: bottom,
+            isHighlighted: isHighlighted,
+            isScaled: isScaled
+        ))
     }
 
     /// Add a **Spark** uneven corner radius to the current view.
@@ -273,24 +258,19 @@ public extension View {
     ///         isScaled: false
     ///     )
     /// ```
-    @ViewBuilder
     func sparkCornerRadius(
         leading: CGFloat,
         trailing: CGFloat,
         isHighlighted: Bool = false,
         isScaled: Bool = true
     ) -> some View {
-        if leading > 0 || trailing > 0 {
-            self.modifier(ScaledCornerRadiusViewModifier(
-                topLeadingRadius: leading,
-                topTrailingRadius: trailing,
-                bottomTrailingRadius: trailing,
-                bottomLeadingRadius: leading,
-                isHighlighted: isHighlighted,
-                isScaled: isScaled
-            ))
-        } else {
-            self
-        }
+        self.modifier(ScaledCornerRadiusViewModifier(
+            topLeadingRadius: leading,
+            topTrailingRadius: trailing,
+            bottomTrailingRadius: trailing,
+            bottomLeadingRadius: leading,
+            isHighlighted: isHighlighted,
+            isScaled: isScaled
+        ))
     }
 }
