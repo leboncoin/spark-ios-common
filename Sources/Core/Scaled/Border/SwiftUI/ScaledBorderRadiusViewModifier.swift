@@ -94,11 +94,11 @@ private struct ScaledBorderRadiusViewModifier: ViewModifier {
             )
             .overlay {
                 UnevenRoundedRectangle(
-                   topLeadingRadius: self._topLeadingRadius.value(scaled: self.isScaled),
-                   bottomLeadingRadius: self._bottomLeadingRadius.value(scaled: self.isScaled),
-                   bottomTrailingRadius: self._bottomTrailingRadius.value(scaled: self.isScaled),
-                   topTrailingRadius: self._topTrailingRadius.value(scaled: self.isScaled),
-                   isHighlighted: self.isHighlighted
+                    topLeadingRadius: self._topLeadingRadius.value(scaled: self.isScaled),
+                    bottomLeadingRadius: self._bottomLeadingRadius.value(scaled: self.isScaled),
+                    bottomTrailingRadius: self._bottomTrailingRadius.value(scaled: self.isScaled),
+                    topTrailingRadius: self._topTrailingRadius.value(scaled: self.isScaled),
+                    isHighlighted: self.isHighlighted
                 )
                 .inset(by: self.position.inset(width: self._width.value(scaled: self.isScaled)))
                 .stroke(
@@ -155,7 +155,6 @@ public extension View {
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
     /// ```
-    @ViewBuilder
     func sparkBorder(
         width: CGFloat,
         radius: CGFloat,
@@ -165,23 +164,15 @@ public extension View {
         position: BorderPosition = .default,
         isScaled: Bool = true
     ) -> some View {
-        if width > 0 {
-            self.modifier(ScaledBorderRadiusViewModifier(
-                width: width,
-                radius: radius,
-                dash: dash,
-                isHighlighted: isHighlighted,
-                colorToken: colorToken,
-                position: position,
-                isScaled: isScaled
-            ))
-        } else {
-            self.sparkCornerRadius(
-                radius,
-                isHighlighted: isHighlighted,
-                isScaled: isScaled
-            )
-        }
+        self.modifier(ScaledBorderRadiusViewModifier(
+            width: width,
+            radius: radius,
+            dash: dash,
+            isHighlighted: isHighlighted,
+            colorToken: colorToken,
+            position: position,
+            isScaled: isScaled
+        ))
     }
 }
 
@@ -238,7 +229,6 @@ public extension View {
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
     /// ```
-    @ViewBuilder
     func sparkBorder(
         width: CGFloat,
         topLeadingRadius: CGFloat,
@@ -251,29 +241,18 @@ public extension View {
         position: BorderPosition = .default,
         isScaled: Bool = true
     ) -> some View {
-        if width > 0, topLeadingRadius > 0 || topTrailingRadius > 0 || bottomTrailingRadius > 0 || bottomLeadingRadius > 0 {
-            self.modifier(ScaledBorderRadiusViewModifier(
-                width: width,
-                topLeadingRadius: topLeadingRadius,
-                topTrailingRadius: topTrailingRadius,
-                bottomTrailingRadius: bottomTrailingRadius,
-                bottomLeadingRadius: bottomLeadingRadius,
-                dash: dash,
-                isHighlighted: isHighlighted,
-                colorToken: colorToken,
-                position: position,
-                isScaled: isScaled
-            ))
-        } else {
-            self.sparkCornerRadius(
-                topLeading: topLeadingRadius,
-                topTrailing: topTrailingRadius,
-                bottomTrailing: bottomTrailingRadius,
-                bottomLeading: bottomLeadingRadius,
-                isHighlighted: isHighlighted,
-                isScaled: isScaled
-            )
-        }
+        self.modifier(ScaledBorderRadiusViewModifier(
+            width: width,
+            topLeadingRadius: topLeadingRadius,
+            topTrailingRadius: topTrailingRadius,
+            bottomTrailingRadius: bottomTrailingRadius,
+            bottomLeadingRadius: bottomLeadingRadius,
+            dash: dash,
+            isHighlighted: isHighlighted,
+            colorToken: colorToken,
+            position: position,
+            isScaled: isScaled
+        ))
     }
 
     /// Add a **Spark** border with corner radius to the current view.
@@ -319,7 +298,6 @@ public extension View {
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
     /// ```
-    @ViewBuilder
     func sparkBorder(
         width: CGFloat,
         topRadius: CGFloat,
@@ -330,27 +308,18 @@ public extension View {
         position: BorderPosition = .default,
         isScaled: Bool = true
     ) -> some View {
-        if width > 0, topRadius > 0 || bottomRadius > 0 {
-            self.modifier(ScaledBorderRadiusViewModifier(
-                width: width,
-                topLeadingRadius: topRadius,
-                topTrailingRadius: topRadius,
-                bottomTrailingRadius: bottomRadius,
-                bottomLeadingRadius: bottomRadius,
-                dash: dash,
-                isHighlighted: isHighlighted,
-                colorToken: colorToken,
-                position: position,
-                isScaled: isScaled
-            ))
-        } else {
-            self.sparkCornerRadius(
-                top: topRadius,
-                bottom: bottomRadius,
-                isHighlighted: isHighlighted,
-                isScaled: isScaled
-            )
-        }
+        self.modifier(ScaledBorderRadiusViewModifier(
+            width: width,
+            topLeadingRadius: topRadius,
+            topTrailingRadius: topRadius,
+            bottomTrailingRadius: bottomRadius,
+            bottomLeadingRadius: bottomRadius,
+            dash: dash,
+            isHighlighted: isHighlighted,
+            colorToken: colorToken,
+            position: position,
+            isScaled: isScaled
+        ))
     }
 
     /// Add a **Spark** border with corner radius to the current view.
@@ -396,7 +365,6 @@ public extension View {
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
     /// ```
-    @ViewBuilder
     func sparkBorder(
         width: CGFloat,
         leadingRadius: CGFloat,
@@ -407,27 +375,18 @@ public extension View {
         position: BorderPosition = .default,
         isScaled: Bool = true
     ) -> some View {
-        if width > 0, leadingRadius > 0 || trailingRadius > 0 {
-            self.modifier(ScaledBorderRadiusViewModifier(
-                width: width,
-                topLeadingRadius: leadingRadius,
-                topTrailingRadius: trailingRadius,
-                bottomTrailingRadius: trailingRadius,
-                bottomLeadingRadius: leadingRadius,
-                dash: dash,
-                isHighlighted: isHighlighted,
-                colorToken: colorToken,
-                position: position,
-                isScaled: isScaled
-            ))
-        } else {
-            self.sparkCornerRadius(
-                leading: leadingRadius,
-                trailing: trailingRadius,
-                isHighlighted: isHighlighted,
-                isScaled: isScaled
-            )
-        }
+        self.modifier(ScaledBorderRadiusViewModifier(
+            width: width,
+            topLeadingRadius: leadingRadius,
+            topTrailingRadius: trailingRadius,
+            bottomTrailingRadius: trailingRadius,
+            bottomLeadingRadius: leadingRadius,
+            dash: dash,
+            isHighlighted: isHighlighted,
+            colorToken: colorToken,
+            position: position,
+            isScaled: isScaled
+        ))
     }
 }
 

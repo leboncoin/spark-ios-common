@@ -93,7 +93,6 @@ public extension View {
     ///         colorToken: YourThemes.shared.colors.main.main
     ///     )
     /// ```
-    @ViewBuilder
     func sparkBorder(
         width: CGFloat,
         dash: CGFloat? = nil,
