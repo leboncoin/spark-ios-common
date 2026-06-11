@@ -147,4 +147,41 @@ public extension View {
             }
         }
     }
+
+    /// Attaches haptic feedback to any `Equatable` trigger with a simple, effect-agnostic API
+    /// and the `condition` closure returns `true`.
+    ///
+    /// - Parameters:
+    ///  - effect: The ``SparkSensoryFeedback``haptic effect to emit. Default is **.impact**.
+    ///  - trigger: Any `Equatable` value; a change (by `==`) fires the haptic once.
+    ///  - condition: A closure to determine whether to play the feedback when `trigger` changes.   
+    @ViewBuilder
+    nonisolated func sparkSensoryFeedback<T>(
+        _ effect: SparkSensoryFeedback = .impact,
+        trigger: T,
+        condition: @escaping (_ oldValue: T, _ newValue: T) -> Bool
+    ) -> some View where T: Equatable {
+        if #available(iOS 17.0, *) {
+            if let feedback = effect.feedback() {
+                self.sensoryFeedback(
+                    feedback,
+                    trigger: trigger,
+                    condition: condition
+                )
+            } else if let sensoryParameters = effect.style?.sensoryImpactParameters {
+                self.sensoryFeedback(
+                    .impact(
+                        weight: sensoryParameters.weight,
+                        intensity: effect.intensity ?? sensoryParameters.intensity
+                    ),
+                    trigger: trigger,
+                    condition: condition
+                )
+            } else {
+                self.sensoryFeedback(.impact, trigger: trigger)
+            }
+        } else {
+            self.sparkSensoryFeedback(effect, trigger: trigger)
+        }
+    }
 }
