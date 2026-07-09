@@ -9,11 +9,11 @@
 @_spi(SI_SPI) import SparkTheming
 import SwiftUI
 
-@_spi(SI_SPI) public extension EnvironmentValues {
+public extension EnvironmentValues {
     @Entry var isSnapshot: Bool = false
 }
 
-@_spi(SI_SPI) public extension View {
+public extension View {
 
     /// Set the **isSnapshot** EnvironmentValues.
     /// Can be usefull to disabled animation on snapshots testing.

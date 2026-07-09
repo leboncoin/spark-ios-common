@@ -11,6 +11,7 @@ import UIKit
 
 @_spi(SI_SPI) public extension Image {
     static let sparkAddImageOutline = Image("addImageOutline", bundle: .current)
+    static let sparkBuildingSquare = Image("buildingSquare", bundle: .current)
     static let sparkCameraOutline = Image("cameraOutline", bundle: .current)
     static let sparkCheck = Image("check", bundle: .current)
     static let sparkCross = Image("cross", bundle: .current)
@@ -20,6 +21,7 @@ import UIKit
     static let sparkImageOutline = Image("imageOutline", bundle: .current)
     static let sparkMinus = Image("minus", bundle: .current)
     static let sparkPdfOutline = Image("pdfOutline", bundle: .current)
+    static let sparkPenOutline = Image("penOutline", bundle: .current)
     static let sparkPlayOutline = Image("playOutline", bundle: .current)
     static let sparkPlus = Image("plus", bundle: .current)
     static let sparkStarFill = Image("starFill", bundle: .current)
@@ -29,6 +31,7 @@ import UIKit
 
 @_spi(SI_SPI) public extension UIImage {
     static let sparkAddImageOutline = UIImage(named: "addImageOutline", in: .current, with: nil) ?? UIImage()
+    static let sparkBuildingSquare = UIImage(named: "buildingSquare", in: .current, with: nil) ?? UIImage()
     static let sparkCameraOutline = UIImage(named: "cameraOutline", in: .current, with: nil) ?? UIImage()
     static let sparkCheck = UIImage(named: "check", in: .current, with: nil) ?? UIImage()
     static let sparkCopyOutline = UIImage(named: "copyOutline", in: .current, with: nil) ?? UIImage()
@@ -38,6 +41,7 @@ import UIKit
     static let sparkImageOutline = UIImage(named: "imageOutline", in: .current, with: nil) ?? UIImage()
     static let sparkMinus = UIImage(named: "minus", in: .current, with: nil) ?? UIImage()
     static let sparkPdfOutline = UIImage(named: "pdfOutline", in: .current, with: nil) ?? UIImage()
+    static let sparkPenOutline = UIImage(named: "penOutline", in: .current, with: nil) ?? UIImage()
     static let sparkPlayOutline = UIImage(named: "playOutline", in: .current, with: nil) ?? UIImage()
     static let sparkPlus = UIImage(named: "plus", in: .current, with: nil) ?? UIImage()
     static let sparkStarFill = UIImage(named: "starFill", in: .current, with: nil) ?? UIImage()
