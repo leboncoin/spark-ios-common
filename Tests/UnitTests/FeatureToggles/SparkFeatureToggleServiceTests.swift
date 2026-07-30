@@ -22,21 +22,21 @@ struct SparkFeatureToggleServiceTests {
 
         // THEN
         #expect(service is SparkFeatureToggleService, "service should be an instance of SparkFeatureToggleService")
-        #expect(!service.appearence, "appearence should be false by default")
+        #expect(!service.appearance, "appearance should be false by default")
         #expect(!service.rebranding, "rebranding should be false by default")
         #expect(!service.visualIdentification, "visualIdentification should be false by default")
     }
 
-    @Test("Appearence setter should update the property value")
-    func appearence_setter() {
+    @Test("Appearance setter should update the property value")
+    func appearance_setter() {
         // GIVEN
-        SparkFeatureToggleService.shared.appearence = true
+        SparkFeatureToggleService.shared.appearance = true
 
         // WHEN
-        let result = SparkFeatureToggleService.shared.appearence
+        let result = SparkFeatureToggleService.shared.appearance
 
         // THEN
-        #expect(result, "appearence getter should return the set value")
+        #expect(result, "appearance getter should return the set value")
     }
 
     @Test("Rebranding setter should update the property value")
@@ -67,7 +67,7 @@ struct SparkFeatureToggleServiceTests {
     func shared_instance_replaceable() {
         // GIVEN
         let mockService = SparkFeatureToggleServicingGeneratedMock()
-        mockService.appearence = true
+        mockService.appearance = true
         mockService.rebranding = true
         mockService.visualIdentification = true
 
@@ -75,7 +75,7 @@ struct SparkFeatureToggleServiceTests {
         SparkFeatureToggleService.shared = mockService
 
         // THEN
-        #expect(SparkFeatureToggleService.shared.appearence, "shared instance should be replaceable with a mock")
+        #expect(SparkFeatureToggleService.shared.appearance, "shared instance should be replaceable with a mock")
         #expect(SparkFeatureToggleService.shared.rebranding, "shared instance should be replaceable with a mock")
         #expect(SparkFeatureToggleService.shared.visualIdentification, "shared instance should be replaceable with a mock")
         #expect(SparkFeatureToggleService.shared is SparkFeatureToggleServicingGeneratedMock, "shared instance should be of type SparkFeatureToggleServicingGeneratedMock")
@@ -85,7 +85,7 @@ struct SparkFeatureToggleServiceTests {
     func shared_instance_reset_from_mock() {
         // GIVEN
         let mockService = SparkFeatureToggleServicingGeneratedMock()
-        mockService.appearence = true
+        mockService.appearance = true
         mockService.rebranding = true
         mockService.visualIdentification = true
         SparkFeatureToggleService.shared = mockService
@@ -96,7 +96,7 @@ struct SparkFeatureToggleServiceTests {
 
         // THEN
         #expect(SparkFeatureToggleService.shared is SparkFeatureToggleService, "shared instance should be of type SparkFeatureToggleService after reset")
-        #expect(!SparkFeatureToggleService.shared.appearence, "appearence should be false after reset")
+        #expect(!SparkFeatureToggleService.shared.appearance, "appearance should be false after reset")
         #expect(!SparkFeatureToggleService.shared.rebranding, "rebranding should be false after reset")
         #expect(!SparkFeatureToggleService.shared.visualIdentification, "visualIdentification should be false after reset")
     }
