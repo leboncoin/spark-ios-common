@@ -22,7 +22,10 @@ final class UIViewVisualIdentificationExtensionSnapshotTests: UIKitComponentSnap
         featureTogglesService.visualIdentification = true
 
         let view = TestView()
-        view.contentStackView.sparkVisualIdentification(featureTogglesService: featureTogglesService)
+        view.contentStackView.sparkVisualIdentification(
+            id: "1",
+            featureTogglesService: featureTogglesService
+        )
 
         // THEN
         self.assertSnapshot(
@@ -39,7 +42,10 @@ final class UIViewVisualIdentificationExtensionSnapshotTests: UIKitComponentSnap
         featureTogglesService.visualIdentification = false
 
         let view = TestView()
-        view.contentStackView.sparkVisualIdentification(featureTogglesService: featureTogglesService)
+        view.contentStackView.sparkVisualIdentification(
+            id: "2",
+            featureTogglesService: featureTogglesService
+        )
 
         // THEN
         self.assertSnapshot(
