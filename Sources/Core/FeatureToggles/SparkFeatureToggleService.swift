@@ -9,8 +9,8 @@
 /// Protocol defining the interface for feature toggle service.
 // sourcery: AutoMockable
 public protocol SparkFeatureToggleServicing {
-    /// Indicates whether the *appearence* feature is enabled.
-    var appearence: Bool { get set }
+    /// Indicates whether the *appearance* feature is enabled.
+    var appearance: Bool { get set }
     /// Indicates whether the *rebranding* feature is enabled.
     var rebranding: Bool { get set }
     /// Indicates whether the *view is a Spark component or custom* feature is enabled.
@@ -27,9 +27,9 @@ public struct SparkFeatureToggleService: SparkFeatureToggleServicing {
 
     // MARK: - Properties
 
-    /// Indicates whether the appearence feature is enabled.
+    /// Indicates whether the appearance feature is enabled.
     /// Default is `false`.
-    public var appearence: Bool = false
+    public var appearance: Bool = false
 
     /// Indicates whether the rebranding feature is enabled.
     /// Default is `false`.
